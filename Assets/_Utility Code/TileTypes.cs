@@ -2,9 +2,15 @@
 public enum TileType
 {
     Space,
+    Special,
     Pink,
+    PinkStar,
     Orange,
+    OrangeStar,
     Yellow,
+    YellowStar,
     Green,
-    Blue
+    GreenStar,
+    Blue,
+    BlueStar,
 }

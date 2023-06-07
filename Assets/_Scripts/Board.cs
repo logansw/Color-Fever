@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardManager : MonoBehaviour
+public class Board : MonoBehaviour
 {
     private TileType[,] _boardData;
-    public delegate void e_OnBoardChange();
-    public static event e_OnBoardChange OnBoardChange;
+    public delegate void OnBoardChange(Board board);
+    public static event OnBoardChange e_OnBoardChange;
+    public int Width;
+    public int Height;
+    public int Index;
 
     public void Initialize() {
-        _boardData = new TileType[10, 5];
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
+        Width = 10;
+        Height = 5;
+        _boardData = new TileType[Width, Height];
+        for (int i = 0; i < Width; i++) {
+            for (int j = 0; j < Height; j++) {
                 _boardData[i, j] = TileType.Space;
             }
         }
@@ -25,10 +30,14 @@ public class BoardManager : MonoBehaviour
         return _boardData[x, y];
     }
 
+    public void QueueUpdate() {
+        e_OnBoardChange(this);
+    }
+
     public void DebugPrintBoard() {
         string boardString = "";
-        for (int j = 4; j >= 0; j--) {
-            for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < Height; j++) {
+            for (int i = 0; i < Width; i++) {
                 switch (_boardData[i, j].ToString()) {
                     case "Space":
                         boardString += "0 ";
