@@ -12,6 +12,10 @@ public class BoardViewer : MonoBehaviour
 
     [HideInInspector] public static BoardViewer s_instance;
 
+    private void Awake() {
+        s_instance = this;
+    }
+
     void OnEnable() {
         Board.e_OnBoardChange += UpdateBoard;
     }
@@ -20,30 +24,35 @@ public class BoardViewer : MonoBehaviour
         Board.e_OnBoardChange -= UpdateBoard;
     }
 
-    private void Awake() {
-        s_instance = this;
-    }
-
     public void Initialize() {
         foreach (Board board in _boards) {
             board.Initialize();
-            GenerateBoard(board);
+            Tile[,] tileObjects = GenerateBoard(board);
+            board.TileObjects = tileObjects;
         }
     }
 
-    public void GenerateBoard(Board board) {
-        for (int i = 0; i < board.Width; i++) {
-            for (int j = 0; j < board.Height; j++) {
+    public Tile[,] GenerateBoard(Board board) {
+        Tile[,] tileObjects = new Tile[board.Width+1, board.Height+1];
+        for (int i = 1; i <= board.Width; i++) {
+            for (int j = 1; j <= board.Height; j++) {
                 Tile tile = Instantiate(_tilePrefab, board.transform.position + new Vector3(i, j, 0), Quaternion.identity);
-                tile.Initialize(board);
+                tile.Initialize(board, i, j);
                 tile.SetColor(board.GetTile(i, j));
                 tile.transform.localScale = new Vector3(0.9f, 0.9f, 1.0f);
                 tile.transform.SetParent(board.transform);
+                tileObjects[i, j] = tile;
             }
         }
+        return tileObjects;
     }
 
     public void UpdateBoard(Board board) {
-
+        for (int i = 1; i <= board.Width; i++) {
+            for (int j = 1; j <= board.Height; j++) {
+                _boards[board.Index].TileObjects[i, j].SetSprite(board.GetTile(i, j));
+                _boards[board.Index].TileObjects[i, j].SetColor(board.GetTile(i, j));
+            }
+        }
     }
 }

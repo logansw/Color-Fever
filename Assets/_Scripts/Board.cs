@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    private TileType[,] _boardData;
+    public TileType[,] BoardData;
+    public Tile[,] TileObjects;
     public delegate void OnBoardChange(Board board);
     public static event OnBoardChange e_OnBoardChange;
     public int Width;
@@ -14,31 +15,48 @@ public class Board : MonoBehaviour
     public void Initialize() {
         Width = 10;
         Height = 5;
-        _boardData = new TileType[Width, Height];
-        for (int i = 0; i < Width; i++) {
-            for (int j = 0; j < Height; j++) {
-                _boardData[i, j] = TileType.Space;
+        BoardData = new TileType[Width+1, Height+1];
+        for (int i = 1; i <= Width; i++) {
+            for (int j = 1; j <= Height; j++) {
+                if (j == 1) {
+                    BoardData[i, j] = TileType.Highlight;
+                } else {
+                    BoardData[i, j] = TileType.Space;
+                }
             }
         }
     }
 
     public void SetTile(int x, int y, TileType tileType) {
-        _boardData[x, y] = tileType;
+        if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
+        BoardData[x, y] = tileType;
+        QueueUpdate();
     }
 
     public TileType GetTile(int x, int y) {
-        return _boardData[x, y];
+        return BoardData[x, y];
     }
 
     public void QueueUpdate() {
         e_OnBoardChange(this);
     }
 
+    public int LowestInColumn(int x) {
+        if (x >= Width+1) { return -1; }
+
+        for (int j = 1; j < Height+1; j++) {
+            if (BoardData[x, j] == TileType.Space) {
+                return j;
+            }
+        }
+        return -1;
+    }
+
     public void DebugPrintBoard() {
         string boardString = "";
         for (int j = 0; j < Height; j++) {
             for (int i = 0; i < Width; i++) {
-                switch (_boardData[i, j].ToString()) {
+                switch (BoardData[i, j].ToString()) {
                     case "Space":
                         boardString += "0 ";
                         break;

@@ -11,6 +11,10 @@ public class Touchable : MonoBehaviour
     public OnTouched e_OnTouched;
     public bool IsTouchable;
 
+    private void Start() {
+        IsTouchable = true;
+    }
+
     private void Update() {
         if (IsTouchable && Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
@@ -22,5 +26,15 @@ public class Touchable : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Disable() {
+        _boxCollider2D.enabled = false;
+        this.enabled = false;
+    }
+
+    public void Enable() {
+        _boxCollider2D.enabled = true;
+        this.enabled = true;
     }
 }

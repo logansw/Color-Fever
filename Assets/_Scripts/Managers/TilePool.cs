@@ -6,6 +6,8 @@ public class TilePool : MonoBehaviour
 {
     public Dictionary<TileType, int> _tilePool;
     private int _totalTiles;
+    public TileSlot[] TileSlots;
+    public int Index;
 
     private void Start() {
         _tilePool = new Dictionary<TileType, int>() {
@@ -23,6 +25,19 @@ public class TilePool : MonoBehaviour
         };
 
         _totalTiles = 97;
+    }
+
+    public void Initialize(int index) {
+        Index = index;
+        foreach (TileSlot tileSlot in TileSlots) {
+            tileSlot.Initialize(this);
+        }
+        TileSlots[0].Disable();
+    }
+
+    public void SetRandomTile() {
+        TileType tile = DrawRandomTile();
+        TileSlots[0].SetTile(tile);
     }
 
     public TileType DrawRandomTile()
@@ -75,6 +90,16 @@ public class TilePool : MonoBehaviour
             return tile;
         } else {
             return DrawRandomTile();
+        }
+    }
+
+    public void ReturnTile(TileType tile) {
+        _tilePool[tile] += 1;
+    }
+
+    public void SetStartingTiles(List<TileType> startTiles) {
+        for (int i = 1; i < TileSlots.Length; i++) {
+            TileSlots[i].SetTile(startTiles[i-1]);
         }
     }
 }

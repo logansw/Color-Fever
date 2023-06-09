@@ -2,6 +2,8 @@
 public enum TileType
 {
     Space,
+    Null,
+    Highlight,
     Special,
     Pink,
     PinkStar,
