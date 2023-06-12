@@ -29,11 +29,11 @@ public class ScoreCalculator : MonoBehaviour
             {0, 0, 1100, 1100, 1100, 1100, 1100, 1100, 1500, 2000},
         },
         {   // 5
-            {0, 0, 400, 400, 400, 400, 400, 400, 440, 500},
-            {0, 0, 400, 400, 400, 400, 400, 400, 450, 530},
-            {0, 0, 460, 460, 460, 460, 460, 460, 520, 625},
-            {0, 0, 520, 520, 520, 520, 520, 520, 640, 875},
-            {0, 0, 625, 625, 625, 625, 625, 625, 950, 1200},
+            {0, 0, 950, 950, 950, 950, 1000, 1200, 1500, 2000},
+            {0, 0, 950, 950, 950, 950, 1200, 1450, 1650, 2400},     // TODO: Check these values
+            {0, 0, 1150, 1150, 1150, 1150, 1550, 2000, 2000, 3000}, // 2000 seems wrong
+            {0, 0, 1500, 1500, 1500, 1500, 2100, 3000, 2700, 3800}, // 3000 seems wrong
+            {0, 0, 2000, 2000, 2000, 2000, 3000, 5000, 3800, 5000}, // 5000 seems wrong
         },
     };
 
@@ -71,6 +71,22 @@ public class ScoreCalculator : MonoBehaviour
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         }
+    };
+
+    private int[] _scoreGridRainbowColumns = {
+        600, 600, 600, 600, 600, 600, 650, 775, 900, 1150
+    };
+
+    private int[,] _scoreGridRainbowRows = {
+        {600, 600, 600, 600, 600, 600, 0, 0, 0, 0},
+        {600, 600, 600, 600, 600, 700, 0, 0, 0, 0},
+        {700, 700, 700, 800, 800, 800, 0, 0, 0, 0},
+        {850, 850, 960, 1125, 1250, 1500, 0, 0, 0, 0},
+        {1000, 1000, 1200, 1400, 1800, 2500, 0, 0, 0, 0},
+    };
+
+    private int[] _scoreGridDoubleRainbow = {
+        5000, 6000, 7000, 8000, 9000
     };
 
     public int GetScore() {
@@ -187,16 +203,93 @@ public class ScoreCalculator : MonoBehaviour
 
     private int ScoreRainbows() {
         int score = 0;
-
+        score += ScoreRainbowColumns();
+        score += ScoreRainbowRows();
+        score += ScoreRainbowDiagonals();
         return score;
+    }
+
+    private int ScoreRainbowColumns() {
+        int score = 0;
+        for (int x = 1; x < board.Width + 1; x++) {
+            HashSet<TileType> tilesInColumn = new HashSet<TileType>();
+            for (int y = 1; y < board.Height + 1; y++) {
+                tilesInColumn.Add(board.BoardData[x, y]);
+            }
+            if (IsRainbow(tilesInColumn)) {
+                score += _scoreGridRainbowColumns[x-1];
+            }
+        }
+        return score;
+    }
+
+    private int ScoreRainbowRows() {
+        int score = 0;
+        for (int y = 1; y < board.Height + 1; y++) {
+            // Check for double rainbow
+            HashSet<TileType> tilesInRowLeft = new HashSet<TileType>();
+            for (int x = 1; x <= 5; x++) {
+                tilesInRowLeft.Add(board.BoardData[x, y]);
+            }
+            HashSet<TileType> tilesInRowRight = new HashSet<TileType>();
+            for (int x = 6; x < board.Width + 1; x++) {
+                tilesInRowRight.Add(board.BoardData[x, y]);
+            }
+            if (IsRainbow(tilesInRowLeft) && IsRainbow(tilesInRowRight)) {
+                score += _scoreGridDoubleRainbow[y-1];
+                continue;
+            }
+
+            // Check for single rainbow
+            for (int x = 1; x < board.Width + 1 - 5; x++) {
+                HashSet<TileType> tilesInRow = new HashSet<TileType>();
+                for (int i = 0; i < 5; i++) {
+                    tilesInRow.Add(board.BoardData[x + i, y]);
+                }
+                if (IsRainbow(tilesInRow)) {
+                    score += _scoreGridRainbowRows[y - 1, x - 1];
+                    break;
+                }
+            }
+        }
+        return score;
+    }
+
+    // TODO:
+    private int ScoreRainbowDiagonals() {
+        return 0;
+    }
+
+    private bool IsRainbow(HashSet<TileType> tiles) {
+        return ((tiles.Contains(TileType.Pink) || tiles.Contains(TileType.PinkStar)) &&
+            (tiles.Contains(TileType.Orange) || tiles.Contains(TileType.OrangeStar)) &&
+            (tiles.Contains(TileType.Yellow) || tiles.Contains(TileType.YellowStar)) &&
+            (tiles.Contains(TileType.Green) || tiles.Contains(TileType.GreenStar)) &&
+            (tiles.Contains(TileType.Blue) || tiles.Contains(TileType.BlueStar)));
     }
 
     private int ScoreStars() {
         int score = 0;
-
+        if (IsStar(board.BoardData[1, 4])) {
+            score += 600;
+        }
+        if (IsStar(board.BoardData[4, 4])) {
+            score += 600;
+        }
+        if (IsStar(board.BoardData[7, 4])) {
+            score += 900;
+        }
+        if (IsStar(board.BoardData[10, 4])) {
+            score += 1200;
+        }
         return score;
     }
 
+    private bool IsStar(TileType tileType) {
+        return tileType == TileType.PinkStar || tileType == TileType.OrangeStar || tileType == TileType.YellowStar || tileType == TileType.GreenStar || tileType == TileType.BlueStar;
+    }
+
+    // TODO:
     private int ScoreCorners() {
         int score = 0;
 

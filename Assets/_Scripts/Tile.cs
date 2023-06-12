@@ -47,7 +47,7 @@ public class Tile : MonoBehaviour
     }
 
     private void DebugUpdateBoard() {
-        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileType.Yellow, x, y);
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.DebugTile, x, y);
         if (result) {
             TileManager.s_instance.DebugForceTilePlacement();
         }

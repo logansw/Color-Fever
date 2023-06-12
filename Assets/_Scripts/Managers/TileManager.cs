@@ -21,6 +21,8 @@ public class TileManager : MonoBehaviour
     public delegate void OnTilePlaced();
     public static OnTilePlaced e_OnTilePlaced;
 
+    public TileType DebugTile;
+
     private void Awake() {
         s_instance = this;
     }
@@ -31,6 +33,9 @@ public class TileManager : MonoBehaviour
         for (int i = 0; i < _tilePools.Length; i++) {
             _tilePools[i].Initialize(i);
             DrawStartTiles(_tilePools[i]);
+        }
+        if (ConfigurationManager.s_instance.DebugMode) {
+            DebugTile = TileType.Pink;
         }
     }
 
@@ -162,5 +167,22 @@ public class TileManager : MonoBehaviour
 
     public void DebugForceTilePlacement() {
         e_OnTilePlaced?.Invoke();
+        switch (DebugTile) {
+            case TileType.Pink:
+                DebugTile = TileType.Orange;
+                break;
+            case TileType.Orange:
+                DebugTile = TileType.Yellow;
+                break;
+            case TileType.Yellow:
+                DebugTile = TileType.Green;
+                break;
+            case TileType.Green:
+                DebugTile = TileType.Blue;
+                break;
+            case TileType.Blue:
+                DebugTile = TileType.Pink;
+                break;
+        }
     }
 }
