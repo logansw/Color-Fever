@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
+
     private Board _parentBoard;
     private int x;
     private int y;

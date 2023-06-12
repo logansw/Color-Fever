@@ -10,6 +10,9 @@ public class BoardViewer : MonoBehaviour
     [Header("External References")]
     [SerializeField] private Board[] _boards;
 
+    [Header("Asset References")]
+    [SerializeField] private Sprite _starEmptySprite;
+
     [HideInInspector] public static BoardViewer s_instance;
 
     private void Awake() {
@@ -42,6 +45,9 @@ public class BoardViewer : MonoBehaviour
                 tile.transform.localScale = new Vector3(0.9f, 0.9f, 1.0f);
                 tile.transform.SetParent(board.transform);
                 tileObjects[i, j] = tile;
+                if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10)) {
+                    tile.SetSprite(_starEmptySprite);
+                }
             }
         }
         return tileObjects;
