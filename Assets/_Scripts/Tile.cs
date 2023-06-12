@@ -12,18 +12,24 @@ public class Tile : MonoBehaviour
     private int x;
     private int y;
 
-    public void Initialize(Board board, int x, int y) {
+    public void Initialize(Board board, int x, int y)
+    {
         _parentBoard = board;
         this.x = x;
         this.y = y;
-    }
-
-    private void OnEnable() {
-        _touchable.e_OnTouched += UpdateBoard;
+        if (ConfigurationManager.s_instance.DebugMode) {
+            _touchable.e_OnTouched += DebugUpdateBoard;
+        } else {
+            _touchable.e_OnTouched += UpdateBoard;
+        }
     }
 
     private void OnDisable() {
-        _touchable.e_OnTouched -= UpdateBoard;
+        if (ConfigurationManager.s_instance.DebugMode) {
+            _touchable.e_OnTouched -= DebugUpdateBoard;
+        } else {
+            _touchable.e_OnTouched -= UpdateBoard;
+        }
     }
 
     private void UpdateBoard() {
@@ -37,6 +43,13 @@ public class Tile : MonoBehaviour
             TileManager.s_instance.DisableSelectedTile();
         } else {
             // Do nothing
+        }
+    }
+
+    private void DebugUpdateBoard() {
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileType.Yellow, x, y);
+        if (result) {
+            TileManager.s_instance.DebugForceTilePlacement();
         }
     }
 

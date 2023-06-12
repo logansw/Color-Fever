@@ -32,8 +32,6 @@ public class BoardManager : MonoBehaviour
             int heightB = board.LowestInColumn(b);
             int heightAB = board.LowestInColumn(a + b);
 
-            Debug.Log($"{heightA}, {heightB}, {heightAB}");
-
             board.SetTile(a, heightA, TileType.Highlight);
             board.SetTile(b, heightB, TileType.Highlight);
             board.SetTile(a + b, heightAB, TileType.Highlight);
@@ -77,8 +75,13 @@ public class BoardManager : MonoBehaviour
     }
 
     public bool SetTile(Board board, TileType tileType, int x, int y) {
-        if (board.GetTile(x, y) != TileType.Highlight) {
-            return false;
+        if (!ConfigurationManager.s_instance.DebugMode) {
+            if (board.GetTile(x, y) != TileType.Highlight) {
+                return false;
+            } else {
+                board.SetTile(x, y, tileType);
+                return true;
+            }
         } else {
             board.SetTile(x, y, tileType);
             return true;

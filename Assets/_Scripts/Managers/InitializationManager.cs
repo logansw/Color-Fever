@@ -9,8 +9,12 @@ public class InitializationManager : MonoBehaviour
     private BoardViewer _boardViewer;
     private DiceManager _diceManager;
     private TileManager _tileManager;
+    private ScoreManager _scoreManager;
+    private ConfigurationManager _configurationManager;
 
     private void Start() {
+        _configurationManager = ConfigurationManager.s_instance;
+        _configurationManager.Initialize();
         _gameManager = GameManager.s_instance;
         _gameManager.Initialize();
         _boardViewer = BoardViewer.s_instance;
@@ -19,5 +23,7 @@ public class InitializationManager : MonoBehaviour
         _diceManager.Initialize();
         _tileManager = TileManager.s_instance;
         _tileManager.Initialize();
+        _scoreManager = ScoreManager.s_instance;
+        _scoreManager.Initialize();
     }
 }

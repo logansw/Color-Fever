@@ -159,4 +159,8 @@ public class TileManager : MonoBehaviour
             tilePool.TileSlots[0].Enable();
         }
     }
+
+    public void DebugForceTilePlacement() {
+        e_OnTilePlaced?.Invoke();
+    }
 }
