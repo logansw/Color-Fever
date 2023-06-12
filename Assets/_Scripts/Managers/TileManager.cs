@@ -96,6 +96,15 @@ public class TileManager : MonoBehaviour
     public bool TileIsValid(TilePool tilePool, TileType tile) {
         GameManager gameManager = GameManager.s_instance;
 
+        if (tile != TileType.Special) {
+            if (tilePool._tilePool[TileType.Special] == 2 && gameManager.RoundsRemaining == 6) {
+                return false;
+            }
+            if (tilePool._tilePool[TileType.Special] == 1 && gameManager.RoundsRemaining == 4) {
+                return false;
+            }
+        }
+
         if (tile == TileType.PinkStar || tile == TileType.OrangeStar || tile == TileType.YellowStar || tile == TileType.GreenStar || tile == TileType.BlueStar) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 5) {
                 return false;
