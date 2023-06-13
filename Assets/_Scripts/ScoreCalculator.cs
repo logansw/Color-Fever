@@ -195,7 +195,6 @@ public class ScoreCalculator : MonoBehaviour
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 score += _scoreGridDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
-                Debug.Log(chain.Origin.x + ", " + chain.Origin.y);
             }
         }
         return score;
@@ -241,7 +240,7 @@ public class ScoreCalculator : MonoBehaviour
             }
 
             // Check for single rainbow
-            for (int x = 1; x < board.Width + 1 - 5; x++) {
+            for (int x = 1; x < board.Width + 1 - 4; x++) {
                 HashSet<TileType> tilesInRow = new HashSet<TileType>();
                 for (int i = 0; i < 5; i++) {
                     tilesInRow.Add(board.BoardData[x + i, y]);
@@ -289,11 +288,54 @@ public class ScoreCalculator : MonoBehaviour
         return tileType == TileType.PinkStar || tileType == TileType.OrangeStar || tileType == TileType.YellowStar || tileType == TileType.GreenStar || tileType == TileType.BlueStar;
     }
 
-    // TODO:
     private int ScoreCorners() {
         int score = 0;
+        Dictionary<TileType, int> cornerTypes = new Dictionary<TileType, int>();
+        List<TileType> cornerTiles = new List<TileType>();
+        TileType bottomLeft = board.BoardData[1, 1];
+        TileType bottomRight = board.BoardData[10, 1];
+        TileType topLeft = board.BoardData[1, 5];
+        TileType topRight = board.BoardData[10, 5];
+        cornerTiles.Add(bottomLeft);
+        cornerTiles.Add(bottomRight);
+        cornerTiles.Add(topLeft);
+        cornerTiles.Add(topRight);
+        foreach(TileType corner in cornerTiles) {
+            if (TileManager.TileIsNormal(corner)) {
+                if (cornerTypes.ContainsKey(corner)) {
+                    cornerTypes[corner] += 1;
+                } else {
+                    cornerTypes.Add(corner, 1);
+                }
+            }
+        }
+        if (cornerTypes.ContainsValue(4)) {
+            score += 475 * 4;
+            return score;
+        } else if (cornerTypes.ContainsValue(3)) {
+            score += 260 * 3;
+            return score;
+        }
+
+        if (ValidCornerPair(bottomLeft, bottomRight) ||
+            ValidCornerPair(bottomLeft, topLeft)) {
+            score += 180 * 2;
+        }
+        if (ValidCornerPair(bottomLeft, bottomRight)) {
+            score += 210 * 2;
+        }
+        if (ValidCornerPair(bottomLeft, topRight)) {
+            score += 220 * 2;
+        }
+        if (ValidCornerPair(bottomRight, topRight)) {
+            score += 240 * 2;
+        }
 
         return score;
+    }
+
+    private bool ValidCornerPair(TileType a, TileType b) {
+        return (TileManager.TileIsNormal(a) && TileManager.TileIsNormal(b)) && (a == b);
     }
 
     private List<Chain> CreateChains(List<Link> links) {

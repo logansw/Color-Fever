@@ -165,6 +165,14 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    public static bool TileIsNormal(TileType tileType) {
+        if (tileType == TileType.Space || tileType == TileType.Null || tileType == TileType.Highlight || tileType == TileType.Special) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void DebugForceTilePlacement() {
         e_OnTilePlaced?.Invoke();
         switch (DebugTile) {

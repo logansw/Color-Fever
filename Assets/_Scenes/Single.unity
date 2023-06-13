@@ -1484,6 +1484,7 @@ MonoBehaviour:
   SelectedTileSlot: {fileID: 602053822}
   _tilePools:
   - {fileID: 1212361317}
+  DebugTile: 0
 --- !u!4 &943462212
 Transform:
   m_ObjectHideFlags: 0
@@ -1784,7 +1785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ece20c245a8e14d90ee23224393601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 0
+  DebugMode: 1
 --- !u!1 &1444207798
 GameObject:
   m_ObjectHideFlags: 0
