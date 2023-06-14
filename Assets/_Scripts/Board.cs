@@ -19,9 +19,9 @@ public class Board : MonoBehaviour
         for (int i = 1; i <= Width; i++) {
             for (int j = 1; j <= Height; j++) {
                 if (j == 1) {
-                    BoardData[i, j] = TileType.Highlight;
+                    BoardData[i, j] = TileType.h;
                 } else {
-                    BoardData[i, j] = TileType.Space;
+                    BoardData[i, j] = TileType.s;
                 }
             }
         }
@@ -45,7 +45,7 @@ public class Board : MonoBehaviour
         if (x >= Width+1) { return -1; }
 
         for (int j = 1; j < Height+1; j++) {
-            if (BoardData[x, j] == TileType.Space) {
+            if (BoardData[x, j] == TileType.s) {
                 return j;
             }
         }
@@ -54,8 +54,8 @@ public class Board : MonoBehaviour
 
     public void DebugPrintBoard() {
         string boardString = "";
-        for (int j = 0; j < Height; j++) {
-            for (int i = 0; i < Width; i++) {
+        for (int j = Height; j > 0; j--) {
+            for (int i = 1; i <= Width; i++) {
                 switch (BoardData[i, j].ToString()) {
                     case "Space":
                         boardString += "0 ";
@@ -74,6 +74,12 @@ public class Board : MonoBehaviour
                         break;
                     case "Blue":
                         boardString += "B ";
+                        break;
+                    case "Highlight":
+                        boardString += "H ";
+                        break;
+                    default:
+                        boardString += "X ";
                         break;
                 }
             }

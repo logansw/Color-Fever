@@ -35,7 +35,7 @@ public class TileManager : MonoBehaviour
             DrawStartTiles(_tilePools[i]);
         }
         if (ConfigurationManager.s_instance.DebugMode) {
-            DebugTile = TileType.Pink;
+            DebugTile = TileType.p;
         }
     }
 
@@ -101,22 +101,22 @@ public class TileManager : MonoBehaviour
     public bool TileIsValid(TilePool tilePool, TileType tile) {
         GameManager gameManager = GameManager.s_instance;
 
-        if (tile != TileType.Special) {
-            if (tilePool._tilePool[TileType.Special] == 2 && gameManager.RoundsRemaining == 6) {
+        if (tile != TileType.S) {
+            if (tilePool._tilePool[TileType.S] == 2 && gameManager.RoundsRemaining == 6) {
                 return false;
             }
-            if (tilePool._tilePool[TileType.Special] == 1 && gameManager.RoundsRemaining == 4) {
+            if (tilePool._tilePool[TileType.S] == 1 && gameManager.RoundsRemaining == 4) {
                 return false;
             }
         }
 
-        if (tile == TileType.PinkStar || tile == TileType.OrangeStar || tile == TileType.YellowStar || tile == TileType.GreenStar || tile == TileType.BlueStar) {
+        if (tile == TileType.P || tile == TileType.O || tile == TileType.Y || tile == TileType.G || tile == TileType.B) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 5) {
                 return false;
             }
         }
 
-        if (tile == TileType.Special) {
+        if (tile == TileType.S) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 4) {
                 return false;
             }
@@ -127,13 +127,13 @@ public class TileManager : MonoBehaviour
 
     public Sprite TileTypeToSprite(TileType tileType) {
         switch (tileType) {
-            case TileType.Pink or TileType.Orange or TileType.Yellow or TileType.Green or TileType.Blue:
+            case TileType.p or TileType.o or TileType.y or TileType.g or TileType.b:
                 return TileSpriteSquare;
-            case TileType.PinkStar or TileType.OrangeStar or TileType.YellowStar or TileType.GreenStar or TileType.BlueStar:
+            case TileType.P or TileType.O or TileType.Y or TileType.G or TileType.B:
                 return TileSpriteStar;
-            case TileType.Special:
+            case TileType.S:
                 return TileSpriteSpecial;
-            case TileType.Space or TileType.Highlight:
+            case TileType.s or TileType.h:
                 return TileSpriteSquare;
             default:
                 return null;
@@ -142,18 +142,18 @@ public class TileManager : MonoBehaviour
 
     public Color32 TileTypeToColor(TileType tileType) {
         switch (tileType) {
-            case TileType.Pink or TileType.PinkStar:
-                return ColorManager.s_colorMap[TileType.Pink];
-            case TileType.Orange or TileType.OrangeStar:
-                return ColorManager.s_colorMap[TileType.Orange];
-            case TileType.Yellow or TileType.YellowStar:
-                return ColorManager.s_colorMap[TileType.Yellow];
-            case TileType.Green or TileType.GreenStar:
-                return ColorManager.s_colorMap[TileType.Green];
-            case TileType.Blue or TileType.BlueStar:
-                return ColorManager.s_colorMap[TileType.Blue];
-            case TileType.Highlight:
-                return ColorManager.s_colorMap[TileType.Highlight];
+            case TileType.p or TileType.P:
+                return ColorManager.s_colorMap[TileType.p];
+            case TileType.o or TileType.O:
+                return ColorManager.s_colorMap[TileType.o];
+            case TileType.y or TileType.Y:
+                return ColorManager.s_colorMap[TileType.y];
+            case TileType.g or TileType.G:
+                return ColorManager.s_colorMap[TileType.g];
+            case TileType.b or TileType.B:
+                return ColorManager.s_colorMap[TileType.b];
+            case TileType.h:
+                return ColorManager.s_colorMap[TileType.h];
             default:
                 return new Color32(255, 255, 255, 255);
         }
@@ -166,30 +166,49 @@ public class TileManager : MonoBehaviour
     }
 
     public static bool TileIsNormal(TileType tileType) {
-        if (tileType == TileType.Space || tileType == TileType.Null || tileType == TileType.Highlight || tileType == TileType.Special) {
+        if (tileType == TileType.s || tileType == TileType.n || tileType == TileType.h || tileType == TileType.S) {
             return false;
         } else {
             return true;
         }
     }
 
+    public static bool TilesChainable(TileType a, TileType b) {
+        if (a == TileType.s || b == TileType.s || a == TileType.n || b == TileType.n || a == TileType.h || b == TileType.h || a == TileType.S || b == TileType.S) {
+            return false;
+        }
+        switch (a) {
+            case TileType.p or TileType.P:
+                return b == TileType.p || b == TileType.P;
+            case TileType.o or TileType.O:
+                return b == TileType.o || b == TileType.O;
+            case TileType.y or TileType.Y:
+                return b == TileType.y || b == TileType.Y;
+            case TileType.g or TileType.G:
+                return b == TileType.g || b == TileType.G;
+            case TileType.b or TileType.B:
+                return b == TileType.b || b == TileType.B;
+        }
+        return false;
+    }
+
     public void DebugForceTilePlacement() {
         e_OnTilePlaced?.Invoke();
         switch (DebugTile) {
-            case TileType.Pink:
-                DebugTile = TileType.Orange;
+            case TileType.p:
+                DebugTile = TileType.o;
                 break;
-            case TileType.Orange:
-                DebugTile = TileType.Yellow;
+            case TileType.o:
+                DebugTile = TileType.y;
                 break;
-            case TileType.Yellow:
-                DebugTile = TileType.Green;
+            case TileType.y:
+                DebugTile = TileType.g;
                 break;
-            case TileType.Green:
-                DebugTile = TileType.Blue;
+            case TileType.g:
+                DebugTile = TileType.b;
                 break;
-            case TileType.Blue:
-                DebugTile = TileType.Pink;
+            case TileType.b:
+                DebugTile = TileType.p;
                 break;
         }
     }

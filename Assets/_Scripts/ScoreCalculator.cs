@@ -7,88 +7,6 @@ public class ScoreCalculator : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private Board board;
 
-    private int[,] _scoreGridColumns = {
-        {400, 400, 400, 400, 400, 400, 450, 540, 660, 800},
-        {625, 625, 625, 625, 625, 625, 675, 800, 925, 1160},
-        {900, 900, 900, 900, 900, 900, 980, 1160, 1320, 1750},
-    };
-
-    private int[,,] _scoreGridRows = {
-        {   // 3
-            {0, 0, 400, 400, 400, 400, 400, 400, 440, 500},
-            {0, 0, 400, 400, 400, 400, 400, 400, 450, 530},
-            {0, 0, 460, 460, 460, 460, 460, 460, 520, 625},
-            {0, 0, 520, 520, 520, 520, 520, 520, 640, 875},
-            {0, 0, 625, 625, 625, 625, 625, 625, 950, 1200},
-        },
-        {   // 4
-            {0, 0, 625, 625, 625, 625, 625, 625, 740, 820},
-            {0, 0, 625, 625, 625, 625, 625, 625, 760, 860},
-            {0, 0, 675, 675, 675, 675, 675, 675, 850, 980},
-            {0, 0, 850, 850, 850, 850, 850, 850, 1175, 1400},
-            {0, 0, 1100, 1100, 1100, 1100, 1100, 1100, 1500, 2000},
-        },
-        {   // 5
-            {0, 0, 950, 950, 950, 950, 1000, 1200, 1500, 2000},
-            {0, 0, 950, 950, 950, 950, 1200, 1450, 1650, 2400},     // TODO: Check these values
-            {0, 0, 1150, 1150, 1150, 1150, 1550, 2000, 2000, 3000}, // 2000 seems wrong
-            {0, 0, 1500, 1500, 1500, 1500, 2100, 3000, 2700, 3800}, // 3000 seems wrong
-            {0, 0, 2000, 2000, 2000, 2000, 3000, 5000, 3800, 5000}, // 5000 seems wrong
-        },
-    };
-
-    private int[,,] _scoreGridDiagonalUp = {
-        {   // 3
-            {400, 400, 400, 400, 400, 400, 525, 750, 0, 0},
-            {400, 400, 400, 400, 400, 400, 600, 800, 0, 0},
-            {775, 775, 775, 775, 775, 875, 1000, 1250, 0, 0},
-        },
-        {   // 4
-            {625, 625, 625, 625, 625, 800, 1050, 0, 0, 0},
-            {750, 750, 750, 750, 750, 975, 1275, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        },
-        {   // 5
-            {1400, 1400, 1400, 1700, 2200, 2800, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        }
-    };
-
-    private int[,,] _scoreGridDiagonalDown = {
-        {   // 3
-            {0, 0, 400, 400, 400, 400, 400, 400, 525, 750},
-            {0, 0, 400, 400, 400, 400, 400, 400, 600, 800},
-            {0, 0, 775, 775, 775, 775, 775, 875, 1000, 1250},
-        },
-        {   // 4
-            {0, 0, 0, 625, 625, 625, 625, 625, 800, 1050},
-            {0, 0, 0, 750, 750, 750, 750, 750, 975, 1275},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        },
-        {   // 5
-            {0, 0, 0, 0, 1400, 1400, 1400, 1700, 2200, 2800},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        }
-    };
-
-    private int[] _scoreGridRainbowColumns = {
-        600, 600, 600, 600, 600, 600, 650, 775, 900, 1150
-    };
-
-    private int[,] _scoreGridRainbowRows = {
-        {600, 600, 600, 600, 600, 600, 0, 0, 0, 0},
-        {600, 600, 600, 600, 600, 700, 0, 0, 0, 0},
-        {700, 700, 700, 800, 800, 800, 0, 0, 0, 0},
-        {850, 850, 960, 1125, 1250, 1500, 0, 0, 0, 0},
-        {1000, 1000, 1200, 1400, 1800, 2500, 0, 0, 0, 0},
-    };
-
-    private int[] _scoreGridDoubleRainbow = {
-        5000, 6000, 7000, 8000, 9000
-    };
-
     public int GetScore() {
         int score = 0;
         score += ScoreColumns();
@@ -99,6 +17,11 @@ public class ScoreCalculator : MonoBehaviour
         score += ScoreCorners();
 
         return score;
+    }
+
+    public int ForceCalculateScore(Board board) {
+        this.board = board;
+        return GetScore();
     }
 
     private int ScoreColumns() {
@@ -118,7 +41,7 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
-                score += _scoreGridColumns[chain.Length-3, chain.Origin.x-1];
+                score += ScoreManager.ScoreGridColumns[chain.Length-3, chain.Origin.x-1];
             }
         }
         return score;
@@ -141,7 +64,7 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += _scoreGridRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+                score += ScoreManager.ScoreGridRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
             }
         }
         return score;
@@ -177,7 +100,7 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
-                score += _scoreGridDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                score += ScoreManager.ScoreGridDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
             }
         }
         return score;
@@ -194,7 +117,7 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += _scoreGridDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+                score += ScoreManager.ScoreGridDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
             }
         }
         return score;
@@ -216,7 +139,7 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInColumn.Add(board.BoardData[x, y]);
             }
             if (IsRainbow(tilesInColumn)) {
-                score += _scoreGridRainbowColumns[x-1];
+                score += ScoreManager.ScoreGridRainbowColumns[x-1];
             }
         }
         return score;
@@ -235,7 +158,7 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInRowRight.Add(board.BoardData[x, y]);
             }
             if (IsRainbow(tilesInRowLeft) && IsRainbow(tilesInRowRight)) {
-                score += _scoreGridDoubleRainbow[y-1];
+                score += ScoreManager.ScoreGridDoubleRainbow[y-1];
                 continue;
             }
 
@@ -246,7 +169,7 @@ public class ScoreCalculator : MonoBehaviour
                     tilesInRow.Add(board.BoardData[x + i, y]);
                 }
                 if (IsRainbow(tilesInRow)) {
-                    score += _scoreGridRainbowRows[y - 1, x - 1];
+                    score += ScoreManager.ScoreGridRainbowRows[y - 1, x - 1];
                     break;
                 }
             }
@@ -254,17 +177,39 @@ public class ScoreCalculator : MonoBehaviour
         return score;
     }
 
-    // TODO:
     private int ScoreRainbowDiagonals() {
-        return 0;
+        int score = 0;
+        // Diagonal Up
+        for (int x = 0; x < board.Width + 1 - 5; x++) {
+            HashSet<TileType> tilesInDiagonal = new HashSet<TileType>();
+            for (int i = 0; i < board.Height; i++) {
+                tilesInDiagonal.Add(board.BoardData[x+i+1, i+1]);
+            }
+            if (IsRainbow(tilesInDiagonal)) {
+                score += ScoreManager.ScoreGridRainbowDiagonal[x];
+            }
+        }
+
+        // Diagonal Down
+        for (int x = 0; x < board.Width + 1 - 5; x++) {
+            HashSet<TileType> tilesInDiagonal = new HashSet<TileType>();
+            for (int i = 0; i < board.Height; i++) {
+                tilesInDiagonal.Add(board.BoardData[x+i+1, board.Height-i]);
+            }
+            if (IsRainbow(tilesInDiagonal)) {
+                score += ScoreManager.ScoreGridRainbowDiagonal[x];
+            }
+        }
+
+        return score;
     }
 
     private bool IsRainbow(HashSet<TileType> tiles) {
-        return ((tiles.Contains(TileType.Pink) || tiles.Contains(TileType.PinkStar)) &&
-            (tiles.Contains(TileType.Orange) || tiles.Contains(TileType.OrangeStar)) &&
-            (tiles.Contains(TileType.Yellow) || tiles.Contains(TileType.YellowStar)) &&
-            (tiles.Contains(TileType.Green) || tiles.Contains(TileType.GreenStar)) &&
-            (tiles.Contains(TileType.Blue) || tiles.Contains(TileType.BlueStar)));
+        return ((tiles.Contains(TileType.p) || tiles.Contains(TileType.P)) &&
+            (tiles.Contains(TileType.o) || tiles.Contains(TileType.O)) &&
+            (tiles.Contains(TileType.y) || tiles.Contains(TileType.Y)) &&
+            (tiles.Contains(TileType.g) || tiles.Contains(TileType.G)) &&
+            (tiles.Contains(TileType.b) || tiles.Contains(TileType.B)));
     }
 
     private int ScoreStars() {
@@ -285,7 +230,7 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool IsStar(TileType tileType) {
-        return tileType == TileType.PinkStar || tileType == TileType.OrangeStar || tileType == TileType.YellowStar || tileType == TileType.GreenStar || tileType == TileType.BlueStar;
+        return tileType == TileType.P || tileType == TileType.O || tileType == TileType.Y || tileType == TileType.G || tileType == TileType.B;
     }
 
     private int ScoreCorners() {
@@ -309,6 +254,7 @@ public class ScoreCalculator : MonoBehaviour
                 }
             }
         }
+
         if (cornerTypes.ContainsValue(4)) {
             score += 475 * 4;
             return score;
@@ -321,7 +267,7 @@ public class ScoreCalculator : MonoBehaviour
             ValidCornerPair(bottomLeft, topLeft)) {
             score += 180 * 2;
         }
-        if (ValidCornerPair(bottomLeft, bottomRight)) {
+        if (ValidCornerPair(topLeft, bottomRight)) {
             score += 210 * 2;
         }
         if (ValidCornerPair(bottomLeft, topRight)) {
@@ -343,8 +289,7 @@ public class ScoreCalculator : MonoBehaviour
         int currentConsecutive = 1;
         Vector2Int origin = links[0].Position;
         for (int i = 0; i < links.Count-1; i++) {
-            if (links[i].TileType != TileType.Space && links[i].TileType != TileType.Null &&
-                links[i].TileType != TileType.Highlight && links[i].TileType == links[i+1].TileType) {
+            if (TileManager.TilesChainable(links[i].TileType, links[i+1].TileType)) {
                 currentConsecutive++;
                 origin = links[i+1].Position;
             } else {

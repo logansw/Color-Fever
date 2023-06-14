@@ -11,17 +11,17 @@ public class TilePool : MonoBehaviour
 
     private void Start() {
         _tilePool = new Dictionary<TileType, int>() {
-            {TileType.Pink, 18},
-            {TileType.PinkStar, 1},
-            {TileType.Orange, 18},
-            {TileType.OrangeStar, 1},
-            {TileType.Yellow, 18},
-            {TileType.YellowStar, 1},
-            {TileType.Green, 18},
-            {TileType.GreenStar, 1},
-            {TileType.Blue, 18},
-            {TileType.BlueStar, 1},
-            {TileType.Special, 2},
+            {TileType.p, 18},
+            {TileType.P, 1},
+            {TileType.o, 18},
+            {TileType.O, 1},
+            {TileType.y, 18},
+            {TileType.Y, 1},
+            {TileType.g, 18},
+            {TileType.G, 1},
+            {TileType.b, 18},
+            {TileType.B, 1},
+            {TileType.S, 2},
         };
 
         _totalTiles = 97;
@@ -44,45 +44,45 @@ public class TilePool : MonoBehaviour
     {
         TileType tile;
         int randomNumber = Random.Range(0, _totalTiles);
-        int pink = _tilePool[TileType.Pink];
-        int orange = _tilePool[TileType.Orange];
-        int yellow = _tilePool[TileType.Yellow];
-        int green = _tilePool[TileType.Green];
-        int blue = _tilePool[TileType.Blue];
+        int pink = _tilePool[TileType.p];
+        int orange = _tilePool[TileType.o];
+        int yellow = _tilePool[TileType.y];
+        int green = _tilePool[TileType.g];
+        int blue = _tilePool[TileType.b];
         switch (randomNumber)
         {
             case int n when (n < pink):
-                tile = TileType.Pink;
+                tile = TileType.p;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar]):
-                tile = TileType.PinkStar;
+            case int n when (n < pink + _tilePool[TileType.P]):
+                tile = TileType.P;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + orange):
-                tile = TileType.Orange;
+            case int n when (n < pink + _tilePool[TileType.P] + orange):
+                tile = TileType.o;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + orange + _tilePool[TileType.OrangeStar]):
-                tile = TileType.OrangeStar;
+            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O]):
+                tile = TileType.O;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + orange + _tilePool[TileType.OrangeStar] + yellow):
-                tile = TileType.Yellow;
+            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow):
+                tile = TileType.y;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + orange + _tilePool[TileType.OrangeStar] + yellow + _tilePool[TileType.YellowStar]):
-                tile = TileType.YellowStar;
+            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y]):
+                tile = TileType.Y;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + pink + _tilePool[TileType.OrangeStar] + yellow + _tilePool[TileType.YellowStar] + green):
-                tile = TileType.Green;
+            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green):
+                tile = TileType.g;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + pink + _tilePool[TileType.OrangeStar] + yellow + _tilePool[TileType.YellowStar] + green + _tilePool[TileType.GreenStar]):
-                tile = TileType.GreenStar;
+            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G]):
+                tile = TileType.G;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + pink + _tilePool[TileType.OrangeStar] + yellow + _tilePool[TileType.YellowStar] + green + _tilePool[TileType.GreenStar] + blue):
-                tile = TileType.Blue;
+            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G] + blue):
+                tile = TileType.b;
                 break;
-            case int n when (n < pink + _tilePool[TileType.PinkStar] + orange + _tilePool[TileType.OrangeStar] + yellow + _tilePool[TileType.YellowStar] + green + _tilePool[TileType.GreenStar] + blue + _tilePool[TileType.BlueStar]):
-                tile = TileType.BlueStar;
+            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G] + blue + _tilePool[TileType.B]):
+                tile = TileType.B;
                 break;
             default:
-                tile = TileType.Special;
+                tile = TileType.S;
                 break;
         }
 

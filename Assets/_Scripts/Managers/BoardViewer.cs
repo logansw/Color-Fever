@@ -57,7 +57,7 @@ public class BoardViewer : MonoBehaviour
         for (int i = 1; i <= board.Width; i++) {
             for (int j = 1; j <= board.Height; j++) {
                 _boards[board.Index].TileObjects[i, j].SetSprite(board.GetTile(i, j));
-                if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10) && _boards[board.Index].BoardData[i, j] == TileType.Space) {
+                if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10) && _boards[board.Index].BoardData[i, j] == TileType.s) {
                     _boards[board.Index].TileObjects[i, j].SetSprite(_starEmptySprite);
                 }
                 _boards[board.Index].TileObjects[i, j].SetColor(board.GetTile(i, j));

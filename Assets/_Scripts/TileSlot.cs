@@ -37,14 +37,14 @@ public class TileSlot : MonoBehaviour
     }
 
     public void Disable() {
-        TileType = TileType.Null;
+        TileType = TileType.n;
         _spriteRenderer.sprite = null;
         _spriteRenderer.color = Color.white;
         _touchable.Disable();
     }
 
     public void Enable() {
-        TileType = TileType.Space;
+        TileType = TileType.s;
         _spriteRenderer.sprite = TileManager.s_instance.TileTypeToSprite(TileType);
         _spriteRenderer.color = TileManager.s_instance.TileTypeToColor(TileType);
         // _touchable.enabled = true;

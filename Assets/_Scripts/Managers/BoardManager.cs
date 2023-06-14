@@ -32,9 +32,9 @@ public class BoardManager : MonoBehaviour
             int heightB = board.LowestInColumn(b);
             int heightAB = board.LowestInColumn(a + b);
 
-            board.SetTile(a, heightA, TileType.Highlight);
-            board.SetTile(b, heightB, TileType.Highlight);
-            board.SetTile(a + b, heightAB, TileType.Highlight);
+            board.SetTile(a, heightA, TileType.h);
+            board.SetTile(b, heightB, TileType.h);
+            board.SetTile(a + b, heightAB, TileType.h);
         }
     }
 
@@ -42,7 +42,7 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j) == TileType.Highlight) {
+                    if (board.GetTile(i, j) == TileType.h) {
                         return false;
                     }
                 }
@@ -55,8 +55,8 @@ public class BoardManager : MonoBehaviour
         Board board =_boards[index];
         for (int i = 0; i < board.Width+1; i++) {
             for (int j = 0; j < board.Height+1; j++) {
-                if (board.GetTile(i, j) == TileType.Highlight) {
-                    board.SetTile(i, j, TileType.Space);
+                if (board.GetTile(i, j) == TileType.h) {
+                    board.SetTile(i, j, TileType.s);
                 }
             }
         }
@@ -66,8 +66,8 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j) == TileType.Highlight) {
-                        board.SetTile(i, j, TileType.Space);
+                    if (board.GetTile(i, j) == TileType.h) {
+                        board.SetTile(i, j, TileType.s);
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class BoardManager : MonoBehaviour
 
     public bool SetTile(Board board, TileType tileType, int x, int y) {
         if (!ConfigurationManager.s_instance.DebugMode) {
-            if (board.GetTile(x, y) != TileType.Highlight) {
+            if (board.GetTile(x, y) != TileType.h) {
                 return false;
             } else {
                 board.SetTile(x, y, tileType);
