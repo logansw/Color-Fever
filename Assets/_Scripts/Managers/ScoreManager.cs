@@ -105,11 +105,11 @@ public class ScoreManager : MonoBehaviour
     }
 
     private void OnEnable() {
-        TileManager.e_OnTilePlaced += UpdateScore;
+        Board.e_OnBoardChange += UpdateScore;
     }
 
     private void OnDisable() {
-        TileManager.e_OnTilePlaced -= UpdateScore;
+        Board.e_OnBoardChange -= UpdateScore;
     }
 
     public void Initialize() {
@@ -117,7 +117,7 @@ public class ScoreManager : MonoBehaviour
         _totalScoreText.text = _totalScore.ToString();
     }
 
-    public void UpdateScore() {
+    public void UpdateScore(Board board) {
         int oldScore = _totalScore;
         foreach (ScoreCalculator calculator in _scoreCalculators) {
             _totalScore = calculator.GetScore();

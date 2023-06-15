@@ -41,10 +41,12 @@ public class TileManager : MonoBehaviour
 
     private void OnEnable() {
         TileSlot.e_OnTileSelected += SelectTile;
+        SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
     }
 
     private void OnDisable() {
         TileSlot.e_OnTileSelected -= SelectTile;
+        SpecialManager.e_OnCornerModeSet -= ConfigureForCornerMode;
     }
 
     private void SelectTile(TileSlot tileSlot) {
@@ -165,6 +167,12 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns true if the tile can be placed on the board.
+    /// This excludes space, null, highlights, and special tiles.
+    /// </summary>
+    /// <param name="tileType">The tile being measured</param>
+    /// <returns>True if normal, false if not.</returns>
     public static bool TileIsNormal(TileType tileType) {
         if (tileType == TileType.s || tileType == TileType.n || tileType == TileType.h || tileType == TileType.S) {
             return false;
@@ -190,6 +198,10 @@ public class TileManager : MonoBehaviour
                 return b == TileType.b || b == TileType.B;
         }
         return false;
+    }
+
+    private void ConfigureForCornerMode(int index) {
+        _tilesRemaining[index] = 1;
     }
 
     public void DebugForceTilePlacement() {

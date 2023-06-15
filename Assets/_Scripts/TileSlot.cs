@@ -10,6 +10,8 @@ public class TileSlot : MonoBehaviour
 
     public delegate void OnTileSelected(TileSlot tileSlot);
     public static OnTileSelected e_OnTileSelected;
+    public delegate void OnSpecialSelected(TileSlot tileSlot);
+    public static OnSpecialSelected e_OnSpecialSelected;
     public TileType TileType;
     public TilePool ParentTilePool { get; private set; }
 
@@ -27,7 +29,11 @@ public class TileSlot : MonoBehaviour
     }
 
     private void SelectTile() {
-        e_OnTileSelected?.Invoke(this);
+        if (TileType == TileType.S) {
+            e_OnSpecialSelected?.Invoke(this);
+        } else {
+            e_OnTileSelected?.Invoke(this);
+        }
     }
 
     public void SetTile(TileType tileType) {

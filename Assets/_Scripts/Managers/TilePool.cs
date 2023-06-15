@@ -7,7 +7,10 @@ public class TilePool : MonoBehaviour
     public Dictionary<TileType, int> _tilePool;
     private int _totalTiles;
     public TileSlot[] TileSlots;
+    public TileSlot[] CornerTileSlots;
     public int Index;
+    public delegate void OnSpecialDrawn(int index);
+    public static OnSpecialDrawn e_OnSpecialDrawn;
 
     private void Start() {
         _tilePool = new Dictionary<TileType, int>() {
@@ -33,11 +36,26 @@ public class TilePool : MonoBehaviour
             tileSlot.Initialize(this);
         }
         TileSlots[0].Disable();
+        foreach (TileSlot tileSlot in CornerTileSlots) {
+            tileSlot.Initialize(this);
+            tileSlot.Disable();
+        }
+    }
+
+    private void OnEnable() {
+        SpecialManager.e_OnCornerModeSet += ShowCornerTiles;
+    }
+
+    private void OnDisable() {
+        SpecialManager.e_OnCornerModeSet -= ShowCornerTiles;
     }
 
     public void SetRandomTile() {
         TileType tile = DrawRandomTile();
         TileSlots[0].SetTile(tile);
+        if (tile == TileType.S) {
+            e_OnSpecialDrawn?.Invoke(Index);
+        }
     }
 
     public TileType DrawRandomTile()
@@ -49,8 +67,7 @@ public class TilePool : MonoBehaviour
         int yellow = _tilePool[TileType.y];
         int green = _tilePool[TileType.g];
         int blue = _tilePool[TileType.b];
-        switch (randomNumber)
-        {
+        switch (randomNumber) {
             case int n when (n < pink):
                 tile = TileType.p;
                 break;
@@ -101,5 +118,22 @@ public class TilePool : MonoBehaviour
         for (int i = 1; i < TileSlots.Length; i++) {
             TileSlots[i].SetTile(startTiles[i-1]);
         }
+    }
+
+    private void ShowCornerTiles(int index) {
+        if (index != Index) {
+            return;
+        }
+        foreach (TileSlot tileSlot in TileSlots) {
+            tileSlot.Disable();
+        }
+        foreach(TileSlot tileSlot in CornerTileSlots) {
+            tileSlot.Enable();
+        }
+        CornerTileSlots[0].SetTile(TileType.p);
+        CornerTileSlots[1].SetTile(TileType.o);
+        CornerTileSlots[2].SetTile(TileType.y);
+        CornerTileSlots[3].SetTile(TileType.g);
+        CornerTileSlots[4].SetTile(TileType.b);
     }
 }

@@ -27,9 +27,18 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void OnEnable() {
+        SpecialManager.e_OnCornerModeSet += HighlightCorners;
+    }
+
+    private void OnDisable() {
+        SpecialManager.e_OnCornerModeSet -= HighlightCorners;
+    }
+
     public void SetTile(int x, int y, TileType tileType) {
         if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
         BoardData[x, y] = tileType;
+        TileObjects[x, y].TileType = tileType;
         QueueUpdate();
     }
 
@@ -50,6 +59,25 @@ public class Board : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    private void HighlightCorners(int index) {
+        if (index != Index) {
+            return;
+        }
+        if (BoardData[1, 1] == TileType.s) {
+            BoardData[1, 1] = TileType.h;
+        }
+        if (BoardData[1, Height] == TileType.s) {
+            BoardData[1, Height] = TileType.h;
+        }
+        if (BoardData[Width, 1] == TileType.s) {
+            BoardData[Width, 1] = TileType.h;
+        }
+        if (BoardData[Width, Height] == TileType.s) {
+            BoardData[Width, Height] = TileType.h;
+        }
+        QueueUpdate();
     }
 
     public void DebugPrintBoard() {

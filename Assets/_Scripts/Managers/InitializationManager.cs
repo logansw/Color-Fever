@@ -11,6 +11,7 @@ public class InitializationManager : MonoBehaviour
     private TileManager _tileManager;
     private ScoreManager _scoreManager;
     private ConfigurationManager _configurationManager;
+    private SpecialManager _specialManager;
     private TestManager _testManager;
 
     private void Start() {
@@ -26,6 +27,8 @@ public class InitializationManager : MonoBehaviour
         _tileManager.Initialize();
         _scoreManager = ScoreManager.s_instance;
         _scoreManager.Initialize();
+        _specialManager = SpecialManager.s_instance;
+        _specialManager.Initialize();
         _testManager = TestManager.s_instance;
         _testManager.Initialize();
     }

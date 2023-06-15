@@ -15,11 +15,14 @@ public class BoardManager : MonoBehaviour
     private void OnEnable() {
         DiceManager.e_OnDiceRoll += SetHighlightTiles;
         TileManager.e_OnSlotEmptied += ClearHighlightTiles;
+        TilePool.e_OnSpecialDrawn += ClearHighlightTiles;
+        SpecialManager.e_OnMoveModeBegun += HighlightLowest;
     }
 
     private void OnDisable() {
         DiceManager.e_OnDiceRoll -= SetHighlightTiles;
         TileManager.e_OnSlotEmptied -= ClearHighlightTiles;
+        TilePool.e_OnSpecialDrawn -= ClearHighlightTiles;
     }
 
     private void SetHighlightTiles() {
@@ -51,7 +54,7 @@ public class BoardManager : MonoBehaviour
         return true;
     }
 
-    private void ClearHighlightTiles(int index) {
+    public void ClearHighlightTiles(int index) {
         Board board =_boards[index];
         for (int i = 0; i < board.Width+1; i++) {
             for (int j = 0; j < board.Height+1; j++) {
@@ -62,7 +65,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private void ClearHighlightTiles() {
+    public void ClearHighlightTiles() {
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
@@ -71,6 +74,17 @@ public class BoardManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void HighlightLowest(int index) {
+        Board board = _boards[index];
+        for (int i = 1; i < board.Width+1; i++) {
+            int lowest = board.LowestInColumn(i);
+            if (lowest == -1 || i < 1 || i >= board.Width+1 || lowest < 1 || i == SpecialManager.s_instance.SelectedTile.X) {
+                continue;
+            }
+            board.SetTile(i, lowest, TileType.h);
         }
     }
 
