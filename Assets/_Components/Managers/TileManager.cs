@@ -125,7 +125,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        if (tile.Equals(TileData.P) || tile.Equals(TileData.O) || tile.Equals(TileData.Y) || tile.Equals(TileData.G) || tile.Equals(TileData.B)) {
+        if (tile.IsStarred) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 5) {
                 return false;
             }
@@ -141,9 +141,9 @@ public class TileManager : MonoBehaviour
     }
 
     public Sprite TileDataToSprite(TileData TileData) {
-        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
+        if (TileData.IsStarred .Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
             return TileSpriteSquare;
-        } else if (TileData.Equals(TileData.P) || TileData.Equals(TileData.O) || TileData.Equals(TileData.Y) || TileData.Equals(TileData.G) || TileData.Equals(TileData.B)) {
+        } else if (TileData.IsStarred) {
             return TileSpriteStar;
         } else if (TileData.Equals(TileData.S)) {
             return TileSpriteSpecial;
@@ -155,15 +155,15 @@ public class TileManager : MonoBehaviour
     }
 
     public Color32 TileDataToColor(TileData TileData) {
-        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.P)) {
+        if (TileData.Color == TileData.TileColor.p) {
             return ColorManager.s_colorMap[TileData.p];
-        } else if (TileData.Equals(TileData.o) || TileData.Equals(TileData.O)) {
+        } else if (TileData.Color == TileData.TileColor.o) {
             return ColorManager.s_colorMap[TileData.o];
-        } else if (TileData.Equals(TileData.y) || TileData.Equals(TileData.Y)) {
+        } else if (TileData.Color == TileData.TileColor.y) {
             return ColorManager.s_colorMap[TileData.y];
-        } else if (TileData.Equals(TileData.g) || TileData.Equals(TileData.G)) {
+        } else if (TileData.Color == TileData.TileColor.g) {
             return ColorManager.s_colorMap[TileData.g];
-        } else if (TileData.Equals(TileData.b) || TileData.Equals(TileData.B)) {
+        } else if (TileData.Color == TileData.TileColor.b) {
             return ColorManager.s_colorMap[TileData.b];
         } else if (TileData.Equals(TileData.h)) {
             return ColorManager.s_colorMap[TileData.h];
@@ -179,19 +179,19 @@ public class TileManager : MonoBehaviour
     }
 
     public static bool TilesChainable(TileData a, TileData b) {
-        if (a.Equals(TileData.s) || b.Equals(TileData.s) || a.Equals(TileData.n) || b.Equals(TileData.n) || a.Equals(TileData.h) || b.Equals(TileData.h) || a.Equals(TileData.S) || b.Equals(TileData.S)) {
+        if (!a.IsNormal() || !b.IsNormal()) {
             return false;
         }
-        if (a.Equals(TileData.p) || a.Equals(TileData.P)) {
-            return b.Equals(TileData.p) || b.Equals(TileData.P);
-        } else if (a.Equals(TileData.o) || a.Equals(TileData.O)) {
-            return b.Equals(TileData.o) || b.Equals(TileData.O);
-        } else if (a.Equals(TileData.y) || a.Equals(TileData.Y)) {
-            return b.Equals(TileData.y) || b.Equals(TileData.Y);
-        } else if (a.Equals(TileData.g) || a.Equals(TileData.G)) {
-            return b.Equals(TileData.g) || b.Equals(TileData.G);
-        } else if (a.Equals(TileData.b) || a.Equals(TileData.B)) {
-            return b.Equals(TileData.b) || b.Equals(TileData.B);
+        if (a.Color == TileData.TileColor.p) {
+            return b.Color == TileData.TileColor.p;
+        } else if (a.Color == TileData.TileColor.o) {
+            return b.Color == TileData.TileColor.o;
+        } else if (a.Color == TileData.TileColor.y) {
+            return b.Color == TileData.TileColor.y;
+        } else if (a.Color == TileData.TileColor.g) {
+            return b.Color == TileData.TileColor.g;
+        } else if (a.Color == TileData.TileColor.b) {
+            return b.Color == TileData.TileColor.b;
         }
         return false;
     }

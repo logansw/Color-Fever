@@ -2979,7 +2979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugMode: 0
-  TestsEnabled: 0
+  TestsEnabled: 1
 --- !u!1001 &1410065725
 PrefabInstance:
   m_ObjectHideFlags: 0

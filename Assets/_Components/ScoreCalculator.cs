@@ -230,7 +230,7 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool IsStar(TileData TileData) {
-        return TileData.Equals(TileData.P) || TileData.Equals(TileData.O) || TileData.Equals(TileData.Y) || TileData.Equals(TileData.G) || TileData.Equals(TileData.B);
+        return TileData.IsStarred;
     }
 
     private int ScoreCorners() {
