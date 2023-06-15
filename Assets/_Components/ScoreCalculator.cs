@@ -246,7 +246,7 @@ public class ScoreCalculator : MonoBehaviour
         cornerTiles.Add(topLeft);
         cornerTiles.Add(topRight);
         foreach(TileData corner in cornerTiles) {
-            if (TileManager.TileIsNormal(corner)) {
+            if (corner.IsNormal()) {
                 if (cornerTypes.ContainsKey(corner)) {
                     cornerTypes[corner] += 1;
                 } else {
@@ -281,7 +281,7 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool ValidCornerPair(TileData a, TileData b) {
-        return (TileManager.TileIsNormal(a) && TileManager.TileIsNormal(b)) && (a.Equals(b));
+        return (a.IsNormal() && b.IsNormal()) && (a.Equals(b));
     }
 
     private List<Chain> CreateChains(List<Link> links) {

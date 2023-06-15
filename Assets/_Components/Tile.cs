@@ -54,6 +54,10 @@ public class Tile : MonoBehaviour
             case SpecialManager.SelectionMode.Remove:
                 UpdateBoardRemove();
                 break;
+            case SpecialManager.SelectionMode.Corner:
+                UpdateBoardNormal();
+                SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+                break;
             default:
                 UpdateBoardNormal();
                 Debug.Log("Fallthrough");
@@ -94,6 +98,7 @@ public class Tile : MonoBehaviour
             _parentBoard.SetTile(X, Y, original.TileData);
             _parentBoard.SetTile(original.X, original.Y, TileData.s);
             BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
+            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
         }
     }
 
@@ -118,12 +123,14 @@ public class Tile : MonoBehaviour
             TileData thisTileData = this.TileData;
             _parentBoard.SetTile(this.X, this.Y, other.TileData);
             _parentBoard.SetTile(other.X, other.Y, thisTileData);
+            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
         }
     }
 
     private void UpdateBoardRemove() {
         if (TileData.IsNormal()) {
             _parentBoard.SetTile(X, Y, TileData.s);
+            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
         }
     }
 

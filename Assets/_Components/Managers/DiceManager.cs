@@ -33,6 +33,7 @@ public class DiceManager : MonoBehaviour
 
     public void Initialize() {
         DiceValues = new int[2];
+        DisableRoll();
     }
 
     public void Roll() {
@@ -46,17 +47,38 @@ public class DiceManager : MonoBehaviour
             DisableRoll();
         }
         e_OnDiceRoll?.Invoke();
+        Rolled = true;
+    }
+
+    // public void CheckEnableRoll() {
+    //     if (TileManager.s_instance.IsSpecial || Rolled || ContinueButton.s_instance.CurrentContinueState == ContinueButton.ContinueState.WaitingForContinue) {
+    //         DisableRoll();
+    //     } else {
+    //         EnableRoll();
+    //     }
+    // }
+
+    private void Update() {
+        if (TileManager.s_instance.IsSpecial) {
+            DisableRoll();
+        }
     }
 
     public void EnableRoll() {
         _rollButton.interactable = true;
+        Rolled = false;
     }
 
     public void DisableRoll() {
         _rollButton.interactable = false;
+        Rolled = true;
     }
 
     public void DisableRoll(int index) {
         DisableRoll();
+    }
+
+    public void DisableRollAlias(int index) {
+        Rolled = true;
     }
 }

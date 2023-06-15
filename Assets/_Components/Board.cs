@@ -39,7 +39,6 @@ public class Board : MonoBehaviour
         if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
         BoardData[x, y] = TileData;
         TileObjects[x, y].TileData = TileData;
-        Debug.Log(TileData.Color);
         QueueUpdate();
     }
 

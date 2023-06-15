@@ -11,6 +11,8 @@ public class TilePool : MonoBehaviour
     public int Index;
     public delegate void OnSpecialDrawn(int index);
     public static OnSpecialDrawn e_OnSpecialDrawn;
+    public delegate void OnNormalDrawn(int index);
+    public static OnNormalDrawn e_OnNormalDrawn;
 
     private void Start() {
         _tilePool = new Dictionary<TileData, int>() {
@@ -27,7 +29,9 @@ public class TilePool : MonoBehaviour
             {TileData.S, 2},
         };
 
-        _totalTiles = 97;
+        foreach (TileData tileData in _tilePool.Keys) {
+            _totalTiles += _tilePool[tileData];
+        }
     }
 
     public void Initialize(int index) {
@@ -44,10 +48,12 @@ public class TilePool : MonoBehaviour
 
     private void OnEnable() {
         SpecialManager.e_OnCornerModeSet += ShowCornerTiles;
+        TileManager.e_OnSlotEmptied += HideCornerTiles;
     }
 
     private void OnDisable() {
         SpecialManager.e_OnCornerModeSet -= ShowCornerTiles;
+        TileManager.e_OnSlotEmptied -= HideCornerTiles;
     }
 
     public void SetRandomTile() {
@@ -55,6 +61,8 @@ public class TilePool : MonoBehaviour
         TileSlots[0].SetTile(tile);
         if (tile.Color == TileData.TileColor.S) {
             e_OnSpecialDrawn?.Invoke(Index);
+        } else {
+            e_OnNormalDrawn?.Invoke(Index);
         }
     }
 
@@ -134,5 +142,16 @@ public class TilePool : MonoBehaviour
         CornerTileSlots[2].SetTile(TileData.y);
         CornerTileSlots[3].SetTile(TileData.g);
         CornerTileSlots[4].SetTile(TileData.b);
+        TileManager.s_instance.TilesRemaining[Index] = 1;
+        SpecialManager.s_instance.ReadyToContinue = true;
+    }
+
+    private void HideCornerTiles(int index) {
+        if (index != Index) {
+            return;
+        }
+        foreach (TileSlot tileSlot in CornerTileSlots) {
+            tileSlot.Disable();
+        }
     }
 }

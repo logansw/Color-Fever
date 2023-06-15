@@ -6,6 +6,7 @@ public class SpecialManager : MonoBehaviour
 {
     public static SpecialManager s_instance;
     public SelectionMode CurrentSelectionMode;
+    public bool ReadyToContinue;
     public enum SelectionMode {
         Normal,
         Corner,
@@ -25,6 +26,8 @@ public class SpecialManager : MonoBehaviour
     public static OnRemoveModeSet e_OnRemoveModeSet;
     public delegate void OnMoveModeBegun(int index);
     public static OnMoveModeBegun e_OnMoveModeBegun;
+    public delegate void OnNormalModeSet(int index);
+    public static OnNormalModeSet e_OnNormalModeSet;
 
     private void Awake() {
         s_instance = this;
@@ -32,6 +35,7 @@ public class SpecialManager : MonoBehaviour
 
     public void Initialize() {
         CurrentSelectionMode = SelectionMode.Normal;
+        ReadyToContinue = true;
     }
 
     public void SetCornerMode(int index) {
@@ -60,5 +64,12 @@ public class SpecialManager : MonoBehaviour
 
     public void SetNormalMode(int index) {
         CurrentSelectionMode = SelectionMode.Normal;
+        e_OnNormalModeSet?.Invoke(index);
+        ReadyToContinue = true;
+        TileManager.s_instance.DisableSelectedTile();
+    }
+
+    public void Pass() {
+        ReadyToContinue = true;
     }
 }

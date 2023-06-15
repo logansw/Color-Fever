@@ -89,7 +89,6 @@ public class BoardManager : MonoBehaviour
     }
 
     public bool SetTile(Board board, TileData TileData, int x, int y) {
-        Debug.Log(TileData.Color);
         if (!ConfigurationManager.s_instance.DebugMode) {
             if (!board.GetTile(x, y).Equals(TileData.h)) {
                 return false;

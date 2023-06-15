@@ -2164,7 +2164,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 889380160}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020386382}
+        m_TargetAssemblyTypeName: SpecialManager, Assembly-CSharp
+        m_MethodName: Pass
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &889380160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,6 +2250,8 @@ MonoBehaviour:
   SelectedTileSlot: {fileID: 602053822}
   _tilePools:
   - {fileID: 1212361317}
+  TilesRemaining: 
+  IsSpecial: 0
 --- !u!4 &943462212
 Transform:
   m_ObjectHideFlags: 0
@@ -2536,6 +2550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentTileSlot: {fileID: 602053822}
   _specialMenuObject: {fileID: 109203690}
+  Index: 0
 --- !u!1001 &1229340263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3279,7 +3294,6 @@ GameObject:
   - component: {fileID: 1555028438}
   - component: {fileID: 1555028437}
   - component: {fileID: 1555028436}
-  - component: {fileID: 1555028435}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -3308,19 +3322,6 @@ RectTransform:
   m_AnchoredPosition: {x: -940, y: 714}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1555028435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555028433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b8e7415c29b754e8bd8ce99ffa5167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 1555028436}
 --- !u!114 &1555028436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3413,7 +3414,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1555028435}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
         m_MethodName: CheckAdvanceState
         m_Mode: 1
@@ -3903,9 +3904,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 587763897}
-        m_TargetAssemblyTypeName: DiceManager, Assembly-CSharp
-        m_MethodName: EnableRoll
+      - m_Target: {fileID: 1811038411}
+        m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
+        m_MethodName: SetContinueButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3915,9 +3916,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1811038411}
-        m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
-        m_MethodName: CheckAdvanceState
+      - m_Target: {fileID: 587763897}
+        m_TargetAssemblyTypeName: DiceManager, Assembly-CSharp
+        m_MethodName: EnableRoll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3978,6 +3979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1811038408}
+  CurrentContinueState: 0
+  ContinueButtonPressed: 0
 --- !u!1001 &1823525788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4356,6 +4359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentSelectionMode: 0
+  ReadyToContinue: 0
   SelectedTile: {fileID: 0}
 --- !u!4 &2020386383
 Transform:

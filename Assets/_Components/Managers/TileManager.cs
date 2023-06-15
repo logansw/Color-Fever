@@ -13,7 +13,8 @@ public class TileManager : MonoBehaviour
 
     public TileSlot SelectedTileSlot;
     [SerializeField] private TilePool[] _tilePools;
-    private int[] _tilesRemaining;
+    public int[] TilesRemaining;
+    public bool IsSpecial;
 
     // Events
     public delegate void OnSlotEmptied(int index);
@@ -29,7 +30,7 @@ public class TileManager : MonoBehaviour
 
     public void Initialize() {
         SelectedTileSlot = null;
-        _tilesRemaining = new int[_tilePools.Length];
+        TilesRemaining = new int[_tilePools.Length];
         for (int i = 0; i < _tilePools.Length; i++) {
             _tilePools[i].Initialize(i);
             DrawStartTiles(_tilePools[i]);
@@ -41,32 +42,43 @@ public class TileManager : MonoBehaviour
 
     private void OnEnable() {
         TileSlot.e_OnTileSelected += SelectTile;
+        TileSlot.e_OnSpecialSelected += SelectTile;
         SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
+        TilePool.e_OnSpecialDrawn += SetIsSpecial;
+        TilePool.e_OnNormalDrawn += SetIsNormal;
     }
 
     private void OnDisable() {
         TileSlot.e_OnTileSelected -= SelectTile;
+        TileSlot.e_OnSpecialSelected -= SelectTile;
         SpecialManager.e_OnCornerModeSet -= ConfigureForCornerMode;
+        TilePool.e_OnSpecialDrawn -= SetIsSpecial;
+        TilePool.e_OnNormalDrawn -= SetIsNormal;
+    }
+
+    private void SetIsSpecial(int index) {
+        IsSpecial = true;
+    }
+
+    private void SetIsNormal(int index) {
+        IsSpecial = false;
     }
 
     private void SelectTile(TileSlot tileSlot) {
         SelectedTileSlot = tileSlot;
-        Debug.Log("Selected tile: " + SelectedTileSlot.ParentTilePool.Index + " " + SelectedTileSlot.TileData.Color);
     }
 
     public void DisableSelectedTile() {
-        _tilesRemaining[SelectedTileSlot.ParentTilePool.Index]--;
-        if (_tilesRemaining[SelectedTileSlot.ParentTilePool.Index] == 0) {
+        if (SelectedTileSlot == null) {
+            return;
+        }
+        TilesRemaining[SelectedTileSlot.ParentTilePool.Index]--;
+        if (TilesRemaining[SelectedTileSlot.ParentTilePool.Index] == 0) {
             e_OnSlotEmptied?.Invoke(SelectedTileSlot.ParentTilePool.Index);
         }
         e_OnTilePlaced?.Invoke();
         SelectedTileSlot.Disable();
         SelectedTileSlot = null;
-        foreach (int remaining in _tilesRemaining) {
-            if (remaining > 0) {
-                return;
-            }
-        }
     }
 
     private void DrawStartTiles(TilePool tilePool) {
@@ -89,14 +101,14 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-        _tilesRemaining[tilePool.Index] += 4;
+        TilesRemaining[tilePool.Index] += 4;
         tilePool.SetStartingTiles(startTiles);
     }
 
     public void DrawNewTiles() {
         foreach (TilePool tilePool in _tilePools) {
             tilePool.SetRandomTile();
-            _tilesRemaining[tilePool.Index] = 1;
+            TilesRemaining[tilePool.Index] = 1;
         }
     }
 
@@ -166,20 +178,6 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns true if the tile can be placed on the board.
-    /// This excludes space, null, highlights, and special tiles.
-    /// </summary>
-    /// <param name="TileData">The tile being measured</param>
-    /// <returns>True if normal, false if not.</returns>
-    public static bool TileIsNormal(TileData TileData) {
-        if (TileData.Equals(TileData.s) || TileData.Equals(TileData.n) || TileData.Equals(TileData.h) || TileData.Equals(TileData.S)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public static bool TilesChainable(TileData a, TileData b) {
         if (a.Equals(TileData.s) || b.Equals(TileData.s) || a.Equals(TileData.n) || b.Equals(TileData.n) || a.Equals(TileData.h) || b.Equals(TileData.h) || a.Equals(TileData.S) || b.Equals(TileData.S)) {
             return false;
@@ -199,7 +197,7 @@ public class TileManager : MonoBehaviour
     }
 
     private void ConfigureForCornerMode(int index) {
-        _tilesRemaining[index] = 1;
+        TilesRemaining[index] = 1;
     }
 
     public void DebugForceTilePlacement() {

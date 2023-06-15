@@ -53,7 +53,7 @@ public class TileSlot : MonoBehaviour
         TileData = TileData.s;
         _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
         _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
-        // _touchable.enabled = true;
+        _touchable.enabled = true;
         _touchable.Enable();
     }
 }
