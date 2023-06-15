@@ -35,10 +35,11 @@ public class Board : MonoBehaviour
         SpecialManager.e_OnCornerModeSet -= HighlightCorners;
     }
 
-    public void SetTile(int x, int y, TileData tileType) {
+    public void SetTile(int x, int y, TileData TileData) {
         if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
-        BoardData[x, y] = tileType;
-        TileObjects[x, y].TileData = tileType;
+        BoardData[x, y] = TileData;
+        TileObjects[x, y].TileData = TileData;
+        Debug.Log(TileData.Color);
         QueueUpdate();
     }
 

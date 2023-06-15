@@ -36,10 +36,10 @@ public class TileSlot : MonoBehaviour
         }
     }
 
-    public void SetTile(TileData tileType) {
-        TileData = tileType;
-        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(tileType);
-        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(tileType);
+    public void SetTile(TileData tileData) {
+        TileData = tileData;
+        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
+        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
     }
 
     public void Disable() {

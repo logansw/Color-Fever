@@ -51,6 +51,7 @@ public class TileManager : MonoBehaviour
 
     private void SelectTile(TileSlot tileSlot) {
         SelectedTileSlot = tileSlot;
+        Debug.Log("Selected tile: " + SelectedTileSlot.ParentTilePool.Index + " " + SelectedTileSlot.TileData.Color);
     }
 
     public void DisableSelectedTile() {
@@ -127,32 +128,32 @@ public class TileManager : MonoBehaviour
         return true;
     }
 
-    public Sprite TileDataToSprite(TileData tileType) {
-        if (tileType.Equals(TileData.p) || tileType.Equals(TileData.o) || tileType.Equals(TileData.y) || tileType.Equals(TileData.g) || tileType.Equals(TileData.b)) {
+    public Sprite TileDataToSprite(TileData TileData) {
+        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
             return TileSpriteSquare;
-        } else if (tileType.Equals(TileData.P) || tileType.Equals(TileData.O) || tileType.Equals(TileData.Y) || tileType.Equals(TileData.G) || tileType.Equals(TileData.B)) {
+        } else if (TileData.Equals(TileData.P) || TileData.Equals(TileData.O) || TileData.Equals(TileData.Y) || TileData.Equals(TileData.G) || TileData.Equals(TileData.B)) {
             return TileSpriteStar;
-        } else if (tileType.Equals(TileData.S)) {
+        } else if (TileData.Equals(TileData.S)) {
             return TileSpriteSpecial;
-        } else if (tileType.Equals(TileData.s) || tileType.Equals(TileData.h)) {
+        } else if (TileData.Equals(TileData.s) || TileData.Equals(TileData.h)) {
             return TileSpriteSquare;
         } else {
             return null;
         }
     }
 
-    public Color32 TileDataToColor(TileData tileType) {
-        if (tileType.Equals(TileData.p) || tileType.Equals(TileData.P)) {
+    public Color32 TileDataToColor(TileData TileData) {
+        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.P)) {
             return ColorManager.s_colorMap[TileData.p];
-        } else if (tileType.Equals(TileData.o) || tileType.Equals(TileData.O)) {
+        } else if (TileData.Equals(TileData.o) || TileData.Equals(TileData.O)) {
             return ColorManager.s_colorMap[TileData.o];
-        } else if (tileType.Equals(TileData.y) || tileType.Equals(TileData.Y)) {
+        } else if (TileData.Equals(TileData.y) || TileData.Equals(TileData.Y)) {
             return ColorManager.s_colorMap[TileData.y];
-        } else if (tileType.Equals(TileData.g) || tileType.Equals(TileData.G)) {
+        } else if (TileData.Equals(TileData.g) || TileData.Equals(TileData.G)) {
             return ColorManager.s_colorMap[TileData.g];
-        } else if (tileType.Equals(TileData.b) || tileType.Equals(TileData.B)) {
+        } else if (TileData.Equals(TileData.b) || TileData.Equals(TileData.B)) {
             return ColorManager.s_colorMap[TileData.b];
-        } else if (tileType.Equals(TileData.h)) {
+        } else if (TileData.Equals(TileData.h)) {
             return ColorManager.s_colorMap[TileData.h];
         } else {
             return new Color32(255, 255, 255, 255);
@@ -169,10 +170,10 @@ public class TileManager : MonoBehaviour
     /// Returns true if the tile can be placed on the board.
     /// This excludes space, null, highlights, and special tiles.
     /// </summary>
-    /// <param name="tileType">The tile being measured</param>
+    /// <param name="TileData">The tile being measured</param>
     /// <returns>True if normal, false if not.</returns>
-    public static bool TileIsNormal(TileData tileType) {
-        if (tileType.Equals(TileData.s) || tileType.Equals(TileData.n) || tileType.Equals(TileData.h) || tileType.Equals(TileData.S)) {
+    public static bool TileIsNormal(TileData TileData) {
+        if (TileData.Equals(TileData.s) || TileData.Equals(TileData.n) || TileData.Equals(TileData.h) || TileData.Equals(TileData.S)) {
             return false;
         } else {
             return true;

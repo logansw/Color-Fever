@@ -229,8 +229,8 @@ public class ScoreCalculator : MonoBehaviour
         return score;
     }
 
-    private bool IsStar(TileData tileType) {
-        return tileType.Equals(TileData.P) || tileType.Equals(TileData.O) || tileType.Equals(TileData.Y) || tileType.Equals(TileData.G) || tileType.Equals(TileData.B);
+    private bool IsStar(TileData TileData) {
+        return TileData.Equals(TileData.P) || TileData.Equals(TileData.O) || TileData.Equals(TileData.Y) || TileData.Equals(TileData.G) || TileData.Equals(TileData.B);
     }
 
     private int ScoreCorners() {

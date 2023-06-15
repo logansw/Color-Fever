@@ -88,16 +88,17 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public bool SetTile(Board board, TileData tileType, int x, int y) {
+    public bool SetTile(Board board, TileData TileData, int x, int y) {
+        Debug.Log(TileData.Color);
         if (!ConfigurationManager.s_instance.DebugMode) {
             if (!board.GetTile(x, y).Equals(TileData.h)) {
                 return false;
             } else {
-                board.SetTile(x, y, tileType);
+                board.SetTile(x, y, TileData);
                 return true;
             }
         } else {
-            board.SetTile(x, y, tileType);
+            board.SetTile(x, y, TileData);
             return true;
         }
     }

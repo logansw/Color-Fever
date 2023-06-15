@@ -138,15 +138,15 @@ public class Tile : MonoBehaviour
         _spriteRenderer.color = color;
     }
 
-    public void SetColor(TileData tileType) {
-        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(tileType);
+    public void SetColor(TileData TileData) {
+        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
     }
 
     public void SetSprite(Sprite sprite) {
         _spriteRenderer.sprite = sprite;
     }
 
-    public void SetSprite(TileData tileType) {
-        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(tileType);
+    public void SetSprite(TileData TileData) {
+        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
     }
 }
