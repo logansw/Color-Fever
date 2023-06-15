@@ -134,7 +134,7 @@ public class ScoreCalculator : MonoBehaviour
     private int ScoreRainbowColumns() {
         int score = 0;
         for (int x = 1; x < board.Width + 1; x++) {
-            HashSet<TileType> tilesInColumn = new HashSet<TileType>();
+            HashSet<TileData> tilesInColumn = new HashSet<TileData>();
             for (int y = 1; y < board.Height + 1; y++) {
                 tilesInColumn.Add(board.BoardData[x, y]);
             }
@@ -149,11 +149,11 @@ public class ScoreCalculator : MonoBehaviour
         int score = 0;
         for (int y = 1; y < board.Height + 1; y++) {
             // Check for double rainbow
-            HashSet<TileType> tilesInRowLeft = new HashSet<TileType>();
+            HashSet<TileData> tilesInRowLeft = new HashSet<TileData>();
             for (int x = 1; x <= 5; x++) {
                 tilesInRowLeft.Add(board.BoardData[x, y]);
             }
-            HashSet<TileType> tilesInRowRight = new HashSet<TileType>();
+            HashSet<TileData> tilesInRowRight = new HashSet<TileData>();
             for (int x = 6; x < board.Width + 1; x++) {
                 tilesInRowRight.Add(board.BoardData[x, y]);
             }
@@ -164,7 +164,7 @@ public class ScoreCalculator : MonoBehaviour
 
             // Check for single rainbow
             for (int x = 1; x < board.Width + 1 - 4; x++) {
-                HashSet<TileType> tilesInRow = new HashSet<TileType>();
+                HashSet<TileData> tilesInRow = new HashSet<TileData>();
                 for (int i = 0; i < 5; i++) {
                     tilesInRow.Add(board.BoardData[x + i, y]);
                 }
@@ -181,7 +181,7 @@ public class ScoreCalculator : MonoBehaviour
         int score = 0;
         // Diagonal Up
         for (int x = 0; x < board.Width + 1 - 5; x++) {
-            HashSet<TileType> tilesInDiagonal = new HashSet<TileType>();
+            HashSet<TileData> tilesInDiagonal = new HashSet<TileData>();
             for (int i = 0; i < board.Height; i++) {
                 tilesInDiagonal.Add(board.BoardData[x+i+1, i+1]);
             }
@@ -192,7 +192,7 @@ public class ScoreCalculator : MonoBehaviour
 
         // Diagonal Down
         for (int x = 0; x < board.Width + 1 - 5; x++) {
-            HashSet<TileType> tilesInDiagonal = new HashSet<TileType>();
+            HashSet<TileData> tilesInDiagonal = new HashSet<TileData>();
             for (int i = 0; i < board.Height; i++) {
                 tilesInDiagonal.Add(board.BoardData[x+i+1, board.Height-i]);
             }
@@ -204,12 +204,12 @@ public class ScoreCalculator : MonoBehaviour
         return score;
     }
 
-    private bool IsRainbow(HashSet<TileType> tiles) {
-        return ((tiles.Contains(TileType.p) || tiles.Contains(TileType.P)) &&
-            (tiles.Contains(TileType.o) || tiles.Contains(TileType.O)) &&
-            (tiles.Contains(TileType.y) || tiles.Contains(TileType.Y)) &&
-            (tiles.Contains(TileType.g) || tiles.Contains(TileType.G)) &&
-            (tiles.Contains(TileType.b) || tiles.Contains(TileType.B)));
+    private bool IsRainbow(HashSet<TileData> tiles) {
+        return ((tiles.Contains(TileData.p) || tiles.Contains(TileData.P)) &&
+            (tiles.Contains(TileData.o) || tiles.Contains(TileData.O)) &&
+            (tiles.Contains(TileData.y) || tiles.Contains(TileData.Y)) &&
+            (tiles.Contains(TileData.g) || tiles.Contains(TileData.G)) &&
+            (tiles.Contains(TileData.b) || tiles.Contains(TileData.B)));
     }
 
     private int ScoreStars() {
@@ -229,23 +229,23 @@ public class ScoreCalculator : MonoBehaviour
         return score;
     }
 
-    private bool IsStar(TileType tileType) {
-        return tileType == TileType.P || tileType == TileType.O || tileType == TileType.Y || tileType == TileType.G || tileType == TileType.B;
+    private bool IsStar(TileData tileType) {
+        return tileType.Equals(TileData.P) || tileType.Equals(TileData.O) || tileType.Equals(TileData.Y) || tileType.Equals(TileData.G) || tileType.Equals(TileData.B);
     }
 
     private int ScoreCorners() {
         int score = 0;
-        Dictionary<TileType, int> cornerTypes = new Dictionary<TileType, int>();
-        List<TileType> cornerTiles = new List<TileType>();
-        TileType bottomLeft = board.BoardData[1, 1];
-        TileType bottomRight = board.BoardData[10, 1];
-        TileType topLeft = board.BoardData[1, 5];
-        TileType topRight = board.BoardData[10, 5];
+        Dictionary<TileData, int> cornerTypes = new Dictionary<TileData, int>();
+        List<TileData> cornerTiles = new List<TileData>();
+        TileData bottomLeft = board.BoardData[1, 1];
+        TileData bottomRight = board.BoardData[10, 1];
+        TileData topLeft = board.BoardData[1, 5];
+        TileData topRight = board.BoardData[10, 5];
         cornerTiles.Add(bottomLeft);
         cornerTiles.Add(bottomRight);
         cornerTiles.Add(topLeft);
         cornerTiles.Add(topRight);
-        foreach(TileType corner in cornerTiles) {
+        foreach(TileData corner in cornerTiles) {
             if (TileManager.TileIsNormal(corner)) {
                 if (cornerTypes.ContainsKey(corner)) {
                     cornerTypes[corner] += 1;
@@ -280,8 +280,8 @@ public class ScoreCalculator : MonoBehaviour
         return score;
     }
 
-    private bool ValidCornerPair(TileType a, TileType b) {
-        return (TileManager.TileIsNormal(a) && TileManager.TileIsNormal(b)) && (a == b);
+    private bool ValidCornerPair(TileData a, TileData b) {
+        return (TileManager.TileIsNormal(a) && TileManager.TileIsNormal(b)) && (a.Equals(b));
     }
 
     private List<Chain> CreateChains(List<Link> links) {
@@ -289,7 +289,7 @@ public class ScoreCalculator : MonoBehaviour
         int currentConsecutive = 1;
         Vector2Int origin = links[0].Position;
         for (int i = 0; i < links.Count-1; i++) {
-            if (TileManager.TilesChainable(links[i].TileType, links[i+1].TileType)) {
+            if (TileManager.TilesChainable(links[i].TileData, links[i+1].TileData)) {
                 currentConsecutive++;
                 origin = links[i+1].Position;
             } else {

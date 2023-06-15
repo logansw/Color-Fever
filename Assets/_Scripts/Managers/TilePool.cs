@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TilePool : MonoBehaviour
 {
-    public Dictionary<TileType, int> _tilePool;
+    public Dictionary<TileData, int> _tilePool;
     private int _totalTiles;
     public TileSlot[] TileSlots;
     public TileSlot[] CornerTileSlots;
@@ -13,18 +13,18 @@ public class TilePool : MonoBehaviour
     public static OnSpecialDrawn e_OnSpecialDrawn;
 
     private void Start() {
-        _tilePool = new Dictionary<TileType, int>() {
-            {TileType.p, 18},
-            {TileType.P, 1},
-            {TileType.o, 18},
-            {TileType.O, 1},
-            {TileType.y, 18},
-            {TileType.Y, 1},
-            {TileType.g, 18},
-            {TileType.G, 1},
-            {TileType.b, 18},
-            {TileType.B, 1},
-            {TileType.S, 2},
+        _tilePool = new Dictionary<TileData, int>() {
+            {TileData.p, 18},
+            {TileData.P, 1},
+            {TileData.o, 18},
+            {TileData.O, 1},
+            {TileData.y, 18},
+            {TileData.Y, 1},
+            {TileData.g, 18},
+            {TileData.G, 1},
+            {TileData.b, 18},
+            {TileData.B, 1},
+            {TileData.S, 2},
         };
 
         _totalTiles = 97;
@@ -51,55 +51,54 @@ public class TilePool : MonoBehaviour
     }
 
     public void SetRandomTile() {
-        TileType tile = DrawRandomTile();
+        TileData tile = DrawRandomTile();
         TileSlots[0].SetTile(tile);
-        if (tile == TileType.S) {
+        if (tile.Color == TileData.TileColor.S) {
             e_OnSpecialDrawn?.Invoke(Index);
         }
     }
 
-    public TileType DrawRandomTile()
-    {
-        TileType tile;
+    public TileData DrawRandomTile() {
+        TileData tile;
         int randomNumber = Random.Range(0, _totalTiles);
-        int pink = _tilePool[TileType.p];
-        int orange = _tilePool[TileType.o];
-        int yellow = _tilePool[TileType.y];
-        int green = _tilePool[TileType.g];
-        int blue = _tilePool[TileType.b];
+        int pink = _tilePool[TileData.p];
+        int orange = _tilePool[TileData.o];
+        int yellow = _tilePool[TileData.y];
+        int green = _tilePool[TileData.g];
+        int blue = _tilePool[TileData.b];
         switch (randomNumber) {
             case int n when (n < pink):
-                tile = TileType.p;
+                tile = TileData.p;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P]):
-                tile = TileType.P;
+            case int n when (n < pink + _tilePool[TileData.P]):
+                tile = TileData.P;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + orange):
-                tile = TileType.o;
+            case int n when (n < pink + _tilePool[TileData.P] + orange):
+                tile = TileData.o;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O]):
-                tile = TileType.O;
+            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O]):
+                tile = TileData.O;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow):
-                tile = TileType.y;
+            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow):
+                tile = TileData.y;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y]):
-                tile = TileType.Y;
+            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y]):
+                tile = TileData.Y;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green):
-                tile = TileType.g;
+            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green):
+                tile = TileData.g;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G]):
-                tile = TileType.G;
+            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G]):
+                tile = TileData.G;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + pink + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G] + blue):
-                tile = TileType.b;
+            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue):
+                tile = TileData.b;
                 break;
-            case int n when (n < pink + _tilePool[TileType.P] + orange + _tilePool[TileType.O] + yellow + _tilePool[TileType.Y] + green + _tilePool[TileType.G] + blue + _tilePool[TileType.B]):
-                tile = TileType.B;
+            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue + _tilePool[TileData.B]):
+                tile = TileData.B;
                 break;
             default:
-                tile = TileType.S;
+                tile = TileData.S;
                 break;
         }
 
@@ -110,11 +109,11 @@ public class TilePool : MonoBehaviour
         }
     }
 
-    public void ReturnTile(TileType tile) {
+    public void ReturnTile(TileData tile) {
         _tilePool[tile] += 1;
     }
 
-    public void SetStartingTiles(List<TileType> startTiles) {
+    public void SetStartingTiles(List<TileData> startTiles) {
         for (int i = 1; i < TileSlots.Length; i++) {
             TileSlots[i].SetTile(startTiles[i-1]);
         }
@@ -130,10 +129,10 @@ public class TilePool : MonoBehaviour
         foreach(TileSlot tileSlot in CornerTileSlots) {
             tileSlot.Enable();
         }
-        CornerTileSlots[0].SetTile(TileType.p);
-        CornerTileSlots[1].SetTile(TileType.o);
-        CornerTileSlots[2].SetTile(TileType.y);
-        CornerTileSlots[3].SetTile(TileType.g);
-        CornerTileSlots[4].SetTile(TileType.b);
+        CornerTileSlots[0].SetTile(TileData.p);
+        CornerTileSlots[1].SetTile(TileData.o);
+        CornerTileSlots[2].SetTile(TileData.y);
+        CornerTileSlots[3].SetTile(TileData.g);
+        CornerTileSlots[4].SetTile(TileData.b);
     }
 }

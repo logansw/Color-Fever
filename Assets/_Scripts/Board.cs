@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    public TileType[,] BoardData;
+    public TileData[,] BoardData;
     public Tile[,] TileObjects;
     public delegate void OnBoardChange(Board board);
     public static event OnBoardChange e_OnBoardChange;
@@ -15,13 +15,13 @@ public class Board : MonoBehaviour
     public void Initialize() {
         Width = 10;
         Height = 5;
-        BoardData = new TileType[Width+1, Height+1];
+        BoardData = new TileData[Width+1, Height+1];
         for (int i = 1; i <= Width; i++) {
             for (int j = 1; j <= Height; j++) {
                 if (j == 1) {
-                    BoardData[i, j] = TileType.h;
+                    BoardData[i, j] = TileData.h;
                 } else {
-                    BoardData[i, j] = TileType.s;
+                    BoardData[i, j] = TileData.s;
                 }
             }
         }
@@ -35,14 +35,14 @@ public class Board : MonoBehaviour
         SpecialManager.e_OnCornerModeSet -= HighlightCorners;
     }
 
-    public void SetTile(int x, int y, TileType tileType) {
+    public void SetTile(int x, int y, TileData tileType) {
         if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
         BoardData[x, y] = tileType;
-        TileObjects[x, y].TileType = tileType;
+        TileObjects[x, y].TileData = tileType;
         QueueUpdate();
     }
 
-    public TileType GetTile(int x, int y) {
+    public TileData GetTile(int x, int y) {
         return BoardData[x, y];
     }
 
@@ -54,7 +54,7 @@ public class Board : MonoBehaviour
         if (x >= Width+1) { return -1; }
 
         for (int j = 1; j < Height+1; j++) {
-            if (BoardData[x, j] == TileType.s) {
+            if (BoardData[x, j].Equals(TileData.s)) {
                 return j;
             }
         }
@@ -65,17 +65,17 @@ public class Board : MonoBehaviour
         if (index != Index) {
             return;
         }
-        if (BoardData[1, 1] == TileType.s) {
-            BoardData[1, 1] = TileType.h;
+        if (BoardData[1, 1].Equals(TileData.s)) {
+            BoardData[1, 1] = TileData.h;
         }
-        if (BoardData[1, Height] == TileType.s) {
-            BoardData[1, Height] = TileType.h;
+        if (BoardData[1, Height].Equals(TileData.s)) {
+            BoardData[1, Height] = TileData.h;
         }
-        if (BoardData[Width, 1] == TileType.s) {
-            BoardData[Width, 1] = TileType.h;
+        if (BoardData[Width, 1].Equals(TileData.s)) {
+            BoardData[Width, 1] = TileData.h;
         }
-        if (BoardData[Width, Height] == TileType.s) {
-            BoardData[Width, Height] = TileType.h;
+        if (BoardData[Width, Height].Equals(TileData.s)) {
+            BoardData[Width, Height] = TileData.h;
         }
         QueueUpdate();
     }

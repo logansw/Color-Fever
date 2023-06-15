@@ -21,7 +21,7 @@ public class TileManager : MonoBehaviour
     public delegate void OnTilePlaced();
     public static OnTilePlaced e_OnTilePlaced;
 
-    public TileType DebugTile;
+    public TileData DebugTile;
 
     private void Awake() {
         s_instance = this;
@@ -35,7 +35,7 @@ public class TileManager : MonoBehaviour
             DrawStartTiles(_tilePools[i]);
         }
         if (ConfigurationManager.s_instance.DebugMode) {
-            DebugTile = TileType.p;
+            DebugTile = TileData.p;
         }
     }
 
@@ -69,10 +69,10 @@ public class TileManager : MonoBehaviour
     }
 
     private void DrawStartTiles(TilePool tilePool) {
-        List<TileType> startTiles = new List<TileType>();
-        Dictionary<TileType, int> tileCounts = new Dictionary<TileType, int>();
+        List<TileData> startTiles = new List<TileData>();
+        Dictionary<TileData, int> tileCounts = new Dictionary<TileData, int>();
         while (startTiles.Count < 4) {
-            TileType tile = tilePool.DrawRandomTile();
+            TileData tile = tilePool.DrawRandomTile();
             if (TileIsValid(tilePool, tile)) {
                 startTiles.Add(tile);
                 if (tileCounts.ContainsKey(tile)) {
@@ -100,25 +100,25 @@ public class TileManager : MonoBehaviour
     }
 
     // TODO: Complete these rules
-    public bool TileIsValid(TilePool tilePool, TileType tile) {
+    public bool TileIsValid(TilePool tilePool, TileData tile) {
         GameManager gameManager = GameManager.s_instance;
 
-        if (tile != TileType.S) {
-            if (tilePool._tilePool[TileType.S] == 2 && gameManager.RoundsRemaining == 6) {
+        if (!tile.Equals(TileData.S)) {
+            if (tilePool._tilePool[TileData.S] == 2 && gameManager.RoundsRemaining == 6) {
                 return false;
             }
-            if (tilePool._tilePool[TileType.S] == 1 && gameManager.RoundsRemaining == 4) {
+            if (tilePool._tilePool[TileData.S] == 1 && gameManager.RoundsRemaining == 4) {
                 return false;
             }
         }
 
-        if (tile == TileType.P || tile == TileType.O || tile == TileType.Y || tile == TileType.G || tile == TileType.B) {
+        if (tile.Equals(TileData.P) || tile.Equals(TileData.O) || tile.Equals(TileData.Y) || tile.Equals(TileData.G) || tile.Equals(TileData.B)) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 5) {
                 return false;
             }
         }
 
-        if (tile == TileType.S) {
+        if (tile.Equals(TileData.S)) {
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 4) {
                 return false;
             }
@@ -127,37 +127,35 @@ public class TileManager : MonoBehaviour
         return true;
     }
 
-    public Sprite TileTypeToSprite(TileType tileType) {
-        switch (tileType) {
-            case TileType.p or TileType.o or TileType.y or TileType.g or TileType.b:
-                return TileSpriteSquare;
-            case TileType.P or TileType.O or TileType.Y or TileType.G or TileType.B:
-                return TileSpriteStar;
-            case TileType.S:
-                return TileSpriteSpecial;
-            case TileType.s or TileType.h:
-                return TileSpriteSquare;
-            default:
-                return null;
+    public Sprite TileDataToSprite(TileData tileType) {
+        if (tileType.Equals(TileData.p) || tileType.Equals(TileData.o) || tileType.Equals(TileData.y) || tileType.Equals(TileData.g) || tileType.Equals(TileData.b)) {
+            return TileSpriteSquare;
+        } else if (tileType.Equals(TileData.P) || tileType.Equals(TileData.O) || tileType.Equals(TileData.Y) || tileType.Equals(TileData.G) || tileType.Equals(TileData.B)) {
+            return TileSpriteStar;
+        } else if (tileType.Equals(TileData.S)) {
+            return TileSpriteSpecial;
+        } else if (tileType.Equals(TileData.s) || tileType.Equals(TileData.h)) {
+            return TileSpriteSquare;
+        } else {
+            return null;
         }
     }
 
-    public Color32 TileTypeToColor(TileType tileType) {
-        switch (tileType) {
-            case TileType.p or TileType.P:
-                return ColorManager.s_colorMap[TileType.p];
-            case TileType.o or TileType.O:
-                return ColorManager.s_colorMap[TileType.o];
-            case TileType.y or TileType.Y:
-                return ColorManager.s_colorMap[TileType.y];
-            case TileType.g or TileType.G:
-                return ColorManager.s_colorMap[TileType.g];
-            case TileType.b or TileType.B:
-                return ColorManager.s_colorMap[TileType.b];
-            case TileType.h:
-                return ColorManager.s_colorMap[TileType.h];
-            default:
-                return new Color32(255, 255, 255, 255);
+    public Color32 TileDataToColor(TileData tileType) {
+        if (tileType.Equals(TileData.p) || tileType.Equals(TileData.P)) {
+            return ColorManager.s_colorMap[TileData.p];
+        } else if (tileType.Equals(TileData.o) || tileType.Equals(TileData.O)) {
+            return ColorManager.s_colorMap[TileData.o];
+        } else if (tileType.Equals(TileData.y) || tileType.Equals(TileData.Y)) {
+            return ColorManager.s_colorMap[TileData.y];
+        } else if (tileType.Equals(TileData.g) || tileType.Equals(TileData.G)) {
+            return ColorManager.s_colorMap[TileData.g];
+        } else if (tileType.Equals(TileData.b) || tileType.Equals(TileData.B)) {
+            return ColorManager.s_colorMap[TileData.b];
+        } else if (tileType.Equals(TileData.h)) {
+            return ColorManager.s_colorMap[TileData.h];
+        } else {
+            return new Color32(255, 255, 255, 255);
         }
     }
 
@@ -173,29 +171,28 @@ public class TileManager : MonoBehaviour
     /// </summary>
     /// <param name="tileType">The tile being measured</param>
     /// <returns>True if normal, false if not.</returns>
-    public static bool TileIsNormal(TileType tileType) {
-        if (tileType == TileType.s || tileType == TileType.n || tileType == TileType.h || tileType == TileType.S) {
+    public static bool TileIsNormal(TileData tileType) {
+        if (tileType.Equals(TileData.s) || tileType.Equals(TileData.n) || tileType.Equals(TileData.h) || tileType.Equals(TileData.S)) {
             return false;
         } else {
             return true;
         }
     }
 
-    public static bool TilesChainable(TileType a, TileType b) {
-        if (a == TileType.s || b == TileType.s || a == TileType.n || b == TileType.n || a == TileType.h || b == TileType.h || a == TileType.S || b == TileType.S) {
+    public static bool TilesChainable(TileData a, TileData b) {
+        if (a.Equals(TileData.s) || b.Equals(TileData.s) || a.Equals(TileData.n) || b.Equals(TileData.n) || a.Equals(TileData.h) || b.Equals(TileData.h) || a.Equals(TileData.S) || b.Equals(TileData.S)) {
             return false;
         }
-        switch (a) {
-            case TileType.p or TileType.P:
-                return b == TileType.p || b == TileType.P;
-            case TileType.o or TileType.O:
-                return b == TileType.o || b == TileType.O;
-            case TileType.y or TileType.Y:
-                return b == TileType.y || b == TileType.Y;
-            case TileType.g or TileType.G:
-                return b == TileType.g || b == TileType.G;
-            case TileType.b or TileType.B:
-                return b == TileType.b || b == TileType.B;
+        if (a.Equals(TileData.p) || a.Equals(TileData.P)) {
+            return b.Equals(TileData.p) || b.Equals(TileData.P);
+        } else if (a.Equals(TileData.o) || a.Equals(TileData.O)) {
+            return b.Equals(TileData.o) || b.Equals(TileData.O);
+        } else if (a.Equals(TileData.y) || a.Equals(TileData.Y)) {
+            return b.Equals(TileData.y) || b.Equals(TileData.Y);
+        } else if (a.Equals(TileData.g) || a.Equals(TileData.G)) {
+            return b.Equals(TileData.g) || b.Equals(TileData.G);
+        } else if (a.Equals(TileData.b) || a.Equals(TileData.B)) {
+            return b.Equals(TileData.b) || b.Equals(TileData.B);
         }
         return false;
     }
@@ -206,22 +203,16 @@ public class TileManager : MonoBehaviour
 
     public void DebugForceTilePlacement() {
         e_OnTilePlaced?.Invoke();
-        switch (DebugTile) {
-            case TileType.p:
-                DebugTile = TileType.o;
-                break;
-            case TileType.o:
-                DebugTile = TileType.y;
-                break;
-            case TileType.y:
-                DebugTile = TileType.g;
-                break;
-            case TileType.g:
-                DebugTile = TileType.b;
-                break;
-            case TileType.b:
-                DebugTile = TileType.p;
-                break;
+        if (DebugTile.Equals(TileData.p)) {
+            DebugTile = TileData.o;
+        } else if (DebugTile.Equals(TileData.o)) {
+            DebugTile = TileData.y;
+        } else if (DebugTile.Equals(TileData.y)) {
+            DebugTile = TileData.g;
+        } else if (DebugTile.Equals(TileData.g)) {
+            DebugTile = TileData.b;
+        } else if (DebugTile.Equals(TileData.b)) {
+            DebugTile = TileData.p;
         }
     }
 }

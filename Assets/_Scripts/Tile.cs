@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
 
-    public TileType TileType;
+    public TileData TileData;
     private Board _parentBoard;
     public int X { get; private set; }
     public int Y { get; private set; }
@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
         } else {
             _touchable.e_OnTouched += UpdateBoard;
         }
-        TileType = TileType.s;
+        TileData = TileData.s;
     }
 
     private void OnDisable() {
@@ -67,7 +67,7 @@ public class Tile : MonoBehaviour
             return;
         }
 
-        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileType, X, Y);
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileData, X, Y);
         if (result) {
             TileManager.s_instance.DisableSelectedTile();
         } else {
@@ -76,7 +76,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardMoveA() {
-        if (!TileManager.TileIsNormal(TileType) || (_parentBoard.LowestInColumn(X) != Y + 1 && Y != _parentBoard.Height)) {
+        if (!TileData.IsNormal() || (_parentBoard.LowestInColumn(X) != Y + 1 && Y != _parentBoard.Height)) {
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
@@ -89,16 +89,16 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SelectedTile = null;
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
         }
-        if (TileType == TileType.h) {
+        if (TileData.Equals(TileData.h)) {
             Tile original = SpecialManager.s_instance.SelectedTile;
-            _parentBoard.SetTile(X, Y, original.TileType);
-            _parentBoard.SetTile(original.X, original.Y, TileType.s);
+            _parentBoard.SetTile(X, Y, original.TileData);
+            _parentBoard.SetTile(original.X, original.Y, TileData.s);
             BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
         }
     }
 
     private void UpdateBoardSwapA() {
-        if (!TileManager.TileIsNormal(TileType)) {
+        if (!TileData.IsNormal()) {
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
@@ -106,7 +106,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardSwapB() {
-        if (!TileManager.TileIsNormal(TileType)) {
+        if (!TileData.IsNormal()) {
             return;
         }
         // Deselect
@@ -115,15 +115,15 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.SwapA;
         } else {
             Tile other = SpecialManager.s_instance.SelectedTile;
-            TileType thisTileType = this.TileType;
-            _parentBoard.SetTile(this.X, this.Y, other.TileType);
-            _parentBoard.SetTile(other.X, other.Y, thisTileType);
+            TileData thisTileData = this.TileData;
+            _parentBoard.SetTile(this.X, this.Y, other.TileData);
+            _parentBoard.SetTile(other.X, other.Y, thisTileData);
         }
     }
 
     private void UpdateBoardRemove() {
-        if (TileManager.TileIsNormal(TileType)) {
-            _parentBoard.SetTile(X, Y, TileType.s);
+        if (TileData.IsNormal()) {
+            _parentBoard.SetTile(X, Y, TileData.s);
         }
     }
 
@@ -138,15 +138,15 @@ public class Tile : MonoBehaviour
         _spriteRenderer.color = color;
     }
 
-    public void SetColor(TileType tileType) {
-        _spriteRenderer.color = TileManager.s_instance.TileTypeToColor(tileType);
+    public void SetColor(TileData tileType) {
+        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(tileType);
     }
 
     public void SetSprite(Sprite sprite) {
         _spriteRenderer.sprite = sprite;
     }
 
-    public void SetSprite(TileType tileType) {
-        _spriteRenderer.sprite = TileManager.s_instance.TileTypeToSprite(tileType);
+    public void SetSprite(TileData tileType) {
+        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(tileType);
     }
 }

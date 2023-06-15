@@ -12,7 +12,7 @@ public class TileSlot : MonoBehaviour
     public static OnTileSelected e_OnTileSelected;
     public delegate void OnSpecialSelected(TileSlot tileSlot);
     public static OnSpecialSelected e_OnSpecialSelected;
-    public TileType TileType;
+    public TileData TileData;
     public TilePool ParentTilePool { get; private set; }
 
     private void OnEnable() {
@@ -29,30 +29,30 @@ public class TileSlot : MonoBehaviour
     }
 
     private void SelectTile() {
-        if (TileType == TileType.S) {
+        if (TileData.Equals(TileData.S)) {
             e_OnSpecialSelected?.Invoke(this);
         } else {
             e_OnTileSelected?.Invoke(this);
         }
     }
 
-    public void SetTile(TileType tileType) {
-        TileType = tileType;
-        _spriteRenderer.sprite = TileManager.s_instance.TileTypeToSprite(tileType);
-        _spriteRenderer.color = TileManager.s_instance.TileTypeToColor(tileType);
+    public void SetTile(TileData tileType) {
+        TileData = tileType;
+        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(tileType);
+        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(tileType);
     }
 
     public void Disable() {
-        TileType = TileType.n;
+        TileData = TileData.n;
         _spriteRenderer.sprite = null;
         _spriteRenderer.color = Color.white;
         _touchable.Disable();
     }
 
     public void Enable() {
-        TileType = TileType.s;
-        _spriteRenderer.sprite = TileManager.s_instance.TileTypeToSprite(TileType);
-        _spriteRenderer.color = TileManager.s_instance.TileTypeToColor(TileType);
+        TileData = TileData.s;
+        _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
+        _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
         // _touchable.enabled = true;
         _touchable.Enable();
     }

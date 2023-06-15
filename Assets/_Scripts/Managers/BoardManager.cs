@@ -35,9 +35,9 @@ public class BoardManager : MonoBehaviour
             int heightB = board.LowestInColumn(b);
             int heightAB = board.LowestInColumn(a + b);
 
-            board.SetTile(a, heightA, TileType.h);
-            board.SetTile(b, heightB, TileType.h);
-            board.SetTile(a + b, heightAB, TileType.h);
+            board.SetTile(a, heightA, TileData.h);
+            board.SetTile(b, heightB, TileData.h);
+            board.SetTile(a + b, heightAB, TileData.h);
         }
     }
 
@@ -45,7 +45,7 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j) == TileType.h) {
+                    if (board.GetTile(i, j).Equals(TileData.h)) {
                         return false;
                     }
                 }
@@ -58,8 +58,8 @@ public class BoardManager : MonoBehaviour
         Board board =_boards[index];
         for (int i = 0; i < board.Width+1; i++) {
             for (int j = 0; j < board.Height+1; j++) {
-                if (board.GetTile(i, j) == TileType.h) {
-                    board.SetTile(i, j, TileType.s);
+                if (board.GetTile(i, j).Equals(TileData.h)) {
+                    board.SetTile(i, j, TileData.s);
                 }
             }
         }
@@ -69,8 +69,8 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j) == TileType.h) {
-                        board.SetTile(i, j, TileType.s);
+                    if (board.GetTile(i, j).Equals(TileData.h)) {
+                        board.SetTile(i, j, TileData.s);
                     }
                 }
             }
@@ -84,13 +84,13 @@ public class BoardManager : MonoBehaviour
             if (lowest == -1 || i < 1 || i >= board.Width+1 || lowest < 1 || i == SpecialManager.s_instance.SelectedTile.X) {
                 continue;
             }
-            board.SetTile(i, lowest, TileType.h);
+            board.SetTile(i, lowest, TileData.h);
         }
     }
 
-    public bool SetTile(Board board, TileType tileType, int x, int y) {
+    public bool SetTile(Board board, TileData tileType, int x, int y) {
         if (!ConfigurationManager.s_instance.DebugMode) {
-            if (board.GetTile(x, y) != TileType.h) {
+            if (!board.GetTile(x, y).Equals(TileData.h)) {
                 return false;
             } else {
                 board.SetTile(x, y, tileType);

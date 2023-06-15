@@ -5,10 +5,10 @@ using UnityEngine;
 public class Link
 {
     public Vector2Int Position;
-    public TileType TileType;
+    public TileData TileData;
 
-    public Link(Vector2Int position, TileType type) {
+    public Link(Vector2Int position, TileData data) {
         Position = position;
-        TileType = type;
+        TileData = data;
     }
 }

@@ -2238,7 +2238,6 @@ MonoBehaviour:
   SelectedTileSlot: {fileID: 602053822}
   _tilePools:
   - {fileID: 1212361317}
-  DebugTile: 0
 --- !u!4 &943462212
 Transform:
   m_ObjectHideFlags: 0
