@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class TilePool : MonoBehaviour
 {
@@ -111,6 +112,9 @@ public class TilePool : MonoBehaviour
         }
 
         if (TileManager.s_instance.TileIsValid(this, tile)) {
+            // TODO: Test that this subtraction works properly
+            _tilePool[tile]--;
+            Assert.AreNotEqual(-1, _tilePool[tile]);
             return tile;
         } else {
             return DrawRandomTile();

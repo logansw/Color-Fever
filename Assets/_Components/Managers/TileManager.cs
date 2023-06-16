@@ -141,7 +141,7 @@ public class TileManager : MonoBehaviour
     }
 
     public Sprite TileDataToSprite(TileData TileData) {
-        if (TileData.IsStarred .Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
+        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
             return TileSpriteSquare;
         } else if (TileData.IsStarred) {
             return TileSpriteStar;

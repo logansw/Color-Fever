@@ -44,6 +44,12 @@ public class ScoreCalculator : MonoBehaviour
                 score += ScoreManager.ScoreGridColumns[chain.Length-3, chain.Origin.x-1];
             }
         }
+        chains = CreateStarChains(links);
+        foreach (Chain chain in chains) {
+            if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
+                score += ScoreManager.ScoreGridStarColumns[chain.Length-3, chain.Origin.x-1];
+            }
+        }
         return score;
     }
 
@@ -65,6 +71,12 @@ public class ScoreCalculator : MonoBehaviour
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 score += ScoreManager.ScoreGridRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+            }
+        }
+        chains = CreateStarChains(links);
+        foreach (Chain chain in chains) {
+            if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
+                score += ScoreManager.ScoreGridStarRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
             }
         }
         return score;
@@ -100,7 +112,13 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
-                score += ScoreManager.ScoreGridDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                score += ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+            }
+        }
+        chains = CreateStarChains(links);
+        foreach (Chain chain in chains) {
+            if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
+                score += ScoreManager.ScoreGridStarDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
             }
         }
         return score;
@@ -117,7 +135,13 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += ScoreManager.ScoreGridDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+                score += ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+            }
+        }
+        chains = CreateStarChains(links);
+        foreach (Chain chain in chains) {
+            if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
+                score += ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
             }
         }
         return score;
@@ -290,6 +314,24 @@ public class ScoreCalculator : MonoBehaviour
         Vector2Int origin = links[0].Position;
         for (int i = 0; i < links.Count-1; i++) {
             if (TileManager.TilesChainable(links[i].TileData, links[i+1].TileData)) {
+                currentConsecutive++;
+                origin = links[i+1].Position;
+            } else {
+                chains.Add(new Chain(currentConsecutive, origin));
+                currentConsecutive = 1;
+                origin = links[i].Position;
+            }
+        }
+        chains.Add(new Chain(currentConsecutive, origin));
+        return chains;
+    }
+
+    private List<Chain> CreateStarChains(List<Link> links) {
+        List<Chain> chains = new List<Chain>();
+        int currentConsecutive = 1;
+        Vector2Int origin = links[0].Position;
+        for (int i = 0; i < links.Count-1; i++) {
+            if (links[i].TileData.IsStarred && links[i+1].TileData.IsStarred) {
                 currentConsecutive++;
                 origin = links[i+1].Position;
             } else {
