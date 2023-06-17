@@ -92,6 +92,7 @@ public class Tile : MonoBehaviour
         if (SpecialManager.s_instance.SelectedTile == this) {
             SpecialManager.s_instance.SelectedTile = null;
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
+            BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
         }
         if (TileData.Equals(TileData.h)) {
             Tile original = SpecialManager.s_instance.SelectedTile;

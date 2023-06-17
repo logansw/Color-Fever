@@ -15,6 +15,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private TilePool[] _tilePools;
     public int[] TilesRemaining;
     public bool IsSpecial;
+    public TileData ForcedDraw;
 
     // Events
     public delegate void OnSlotEmptied(int index);
@@ -31,6 +32,7 @@ public class TileManager : MonoBehaviour
     public void Initialize() {
         SelectedTileSlot = null;
         TilesRemaining = new int[_tilePools.Length];
+        ForcedDraw = TileData.n;
         for (int i = 0; i < _tilePools.Length; i++) {
             _tilePools[i].Initialize(i);
             DrawStartTiles(_tilePools[i]);
@@ -116,11 +118,17 @@ public class TileManager : MonoBehaviour
     public bool TileIsValid(TilePool tilePool, TileData tile) {
         GameManager gameManager = GameManager.s_instance;
 
+        if (ConfigurationManager.s_instance.DisableValidTileChecker && gameManager.RoundsRemaining != 34) {
+            return true;
+        }
+
         if (!tile.Equals(TileData.S)) {
             if (tilePool._tilePool[TileData.S] == 2 && gameManager.RoundsRemaining == 6) {
+                ForcedDraw = TileData.S;
                 return false;
             }
             if (tilePool._tilePool[TileData.S] == 1 && gameManager.RoundsRemaining == 4) {
+                ForcedDraw = TileData.S;
                 return false;
             }
         }

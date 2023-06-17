@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Text;
 
 public class TilePool : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class TilePool : MonoBehaviour
             {TileData.G, 1},
             {TileData.b, 18},
             {TileData.B, 1},
-            {TileData.S, 2},
+            {TileData.S, 200},
         };
 
         foreach (TileData tileData in _tilePool.Keys) {
@@ -58,12 +59,23 @@ public class TilePool : MonoBehaviour
     }
 
     public void SetRandomTile() {
-        TileData tile = DrawRandomTile();
+        TileData tile = DrawTile();
         TileSlots[0].SetTile(tile);
         if (tile.Color == TileData.TileColor.S) {
             e_OnSpecialDrawn?.Invoke(Index);
         } else {
             e_OnNormalDrawn?.Invoke(Index);
+        }
+    }
+
+    public TileData DrawTile() {
+        if (!TileManager.s_instance.ForcedDraw.Equals(TileData.n)) {
+            TileData tileToDraw = TileManager.s_instance.ForcedDraw;
+            TileManager.s_instance.ForcedDraw = TileData.n;
+            _tilePool[tileToDraw]--;
+            return tileToDraw;
+        } else {
+            return DrawRandomTile();
         }
     }
 
@@ -114,10 +126,15 @@ public class TilePool : MonoBehaviour
         if (TileManager.s_instance.TileIsValid(this, tile)) {
             // TODO: Test that this subtraction works properly
             _tilePool[tile]--;
+            _totalTiles--;
+            if (_tilePool[tile] < 0) {
+                Debug.Log(tile.Color);
+            }
             Assert.AreNotEqual(-1, _tilePool[tile]);
+            DebugPrintTilePool();
             return tile;
         } else {
-            return DrawRandomTile();
+            return DrawTile();
         }
     }
 
@@ -157,5 +174,44 @@ public class TilePool : MonoBehaviour
         foreach (TileSlot tileSlot in CornerTileSlots) {
             tileSlot.Disable();
         }
+    }
+
+    private void DebugPrintTilePool() {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Tile Pool: ");
+        foreach (TileData tileData in _tilePool.Keys) {
+            string tileName;
+            switch (tileData.Color) {
+                case TileData.TileColor.p:
+                    tileName = "Pink";
+                    break;
+                case TileData.TileColor.o:
+                    tileName = "Orange";
+                    break;
+                case TileData.TileColor.y:
+                    tileName = "Yellow";
+                    break;
+                case TileData.TileColor.g:
+                    tileName = "Green";
+                    break;
+                case TileData.TileColor.b:
+                    tileName = "Blue";
+                    break;
+                case TileData.TileColor.S:
+                    tileName = "Special";
+                    break;
+                default:
+                    tileName = "Error";
+                    break;
+            }
+            if (tileData.IsStarred) {
+                tileName += " Star";
+            }
+            sb.Append(tileName);
+            sb.Append(": ");
+            sb.AppendLine("" + _tilePool[tileData]);
+        }
+        sb.AppendLine("Total Tiles Remaining: " + _totalTiles);
+        Debug.Log(sb.ToString());
     }
 }

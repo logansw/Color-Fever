@@ -7,6 +7,7 @@ public class ConfigurationManager : MonoBehaviour
     [HideInInspector] public static ConfigurationManager s_instance;
     public bool DebugMode;
     public bool TestsEnabled;
+    public bool DisableValidTileChecker;
 
     private void Awake() {
         s_instance = this;
