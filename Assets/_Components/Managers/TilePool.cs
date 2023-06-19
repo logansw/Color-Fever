@@ -15,6 +15,7 @@ public class TilePool : MonoBehaviour
     public static OnSpecialDrawn e_OnSpecialDrawn;
     public delegate void OnNormalDrawn(int index);
     public static OnNormalDrawn e_OnNormalDrawn;
+    [SerializeField] private TimelineInstance _timelineInstance;
 
     private void Start() {
         _tilePool = new Dictionary<TileData, int>() {
@@ -51,11 +52,13 @@ public class TilePool : MonoBehaviour
     private void OnEnable() {
         SpecialManager.e_OnCornerModeSet += ShowCornerTiles;
         TileManager.e_OnSlotEmptied += HideCornerTiles;
+        SpecialManager.e_OnNormalModeSet += HideCornerTiles;
     }
 
     private void OnDisable() {
         SpecialManager.e_OnCornerModeSet -= ShowCornerTiles;
         TileManager.e_OnSlotEmptied -= HideCornerTiles;
+        SpecialManager.e_OnNormalModeSet -= HideCornerTiles;
     }
 
     public void SetRandomTile() {
@@ -66,6 +69,8 @@ public class TilePool : MonoBehaviour
         } else {
             e_OnNormalDrawn?.Invoke(Index);
         }
+        ShowTileSlots();
+        _timelineInstance.Lock();
     }
 
     public TileData DrawTile() {
@@ -124,14 +129,12 @@ public class TilePool : MonoBehaviour
         }
 
         if (TileManager.s_instance.TileIsValid(this, tile)) {
-            // TODO: Test that this subtraction works properly
             _tilePool[tile]--;
             _totalTiles--;
             if (_tilePool[tile] < 0) {
                 Debug.Log(tile.Color);
             }
             Assert.AreNotEqual(-1, _tilePool[tile]);
-            DebugPrintTilePool();
             return tile;
         } else {
             return DrawTile();
@@ -174,6 +177,50 @@ public class TilePool : MonoBehaviour
         foreach (TileSlot tileSlot in CornerTileSlots) {
             tileSlot.Disable();
         }
+    }
+
+    public Dictionary<TileData, int> CopyTilePool() {
+        Dictionary<TileData, int> copy = new Dictionary<TileData, int>();
+        foreach (TileData tileData in _tilePool.Keys) {
+            copy.Add(tileData, _tilePool[tileData]);
+        }
+        return copy;
+    }
+
+    public Dictionary<TileData, int> CopyTilePool(Dictionary<TileData, int> reference) {
+        Dictionary<TileData, int> copy = new Dictionary<TileData, int>();
+        foreach (TileData tileData in reference.Keys) {
+            copy.Add(tileData, reference[tileData]);
+        }
+        return copy;
+    }
+
+    public TileData[] CopyTileSlots(TileSlot[] reference) {
+        TileData[] copy = new TileData[reference.Length];
+        for (int i = 0; i < reference.Length; i++) {
+            copy[i] = reference[i].TileData;
+        }
+        return copy;
+    }
+
+    public void ShowTileSlots() {
+        foreach (TileSlot tileSlot in TileSlots) {
+            if (tileSlot.TileData.Equals(TileData.n)) {
+                tileSlot.Hide();
+            } else {
+                tileSlot.Show();
+            }
+        }
+    }
+
+    public void MatchToTimeline() {
+        _tilePool = CopyTilePool(_timelineInstance.TilePoolTimeline.GetCurrentFrame());
+        TileData[] tileData = _timelineInstance.TileSlotsDataTimeline.GetCurrentFrame();
+
+        for (int i = 0; i < tileData.Length; i++) {
+            TileSlots[i].SetTile(tileData[i]);
+        }
+        ShowTileSlots();
     }
 
     private void DebugPrintTilePool() {

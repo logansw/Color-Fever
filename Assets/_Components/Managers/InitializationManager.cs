@@ -13,6 +13,7 @@ public class InitializationManager : MonoBehaviour
     private ConfigurationManager _configurationManager;
     private SpecialManager _specialManager;
     private TestManager _testManager;
+    [SerializeField] private TimelineInstance[] _timelineInstances;
 
     private void Start() {
         _configurationManager = ConfigurationManager.s_instance;
@@ -29,6 +30,9 @@ public class InitializationManager : MonoBehaviour
         _scoreManager.Initialize();
         _specialManager = SpecialManager.s_instance;
         _specialManager.Initialize();
+        foreach(TimelineInstance timelineInstance in _timelineInstances) {
+            timelineInstance.Initialize();
+        }
         _testManager = TestManager.s_instance;
         _testManager.Initialize();
     }

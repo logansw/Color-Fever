@@ -16,6 +16,8 @@ public class TileManager : MonoBehaviour
     public int[] TilesRemaining;
     public bool IsSpecial;
     public TileData ForcedDraw;
+    [SerializeField] private TimelineInstance[] _timelineInstances;
+    [SerializeField] private SpecialMenu[] _specialMenus;
 
     // Events
     public delegate void OnSlotEmptied(int index);
@@ -48,6 +50,7 @@ public class TileManager : MonoBehaviour
         SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
         TilePool.e_OnSpecialDrawn += SetIsSpecial;
         TilePool.e_OnNormalDrawn += SetIsNormal;
+        SpecialManager.e_OnNormalModeSet += EnableCenterSlots;
     }
 
     private void OnDisable() {
@@ -56,12 +59,21 @@ public class TileManager : MonoBehaviour
         SpecialManager.e_OnCornerModeSet -= ConfigureForCornerMode;
         TilePool.e_OnSpecialDrawn -= SetIsSpecial;
         TilePool.e_OnNormalDrawn -= SetIsNormal;
+        SpecialManager.e_OnNormalModeSet -= EnableCenterSlots;
     }
 
+    /// <summary>
+    /// This is called when a special tile is drawn.
+    /// </summary>
+    /// <param name="index"></param>
     private void SetIsSpecial(int index) {
         IsSpecial = true;
     }
 
+    /// <summary>
+    /// This is called when a normal tile is drawn.
+    /// </summary>
+    /// <param name="index"></param>
     private void SetIsNormal(int index) {
         IsSpecial = false;
     }
@@ -148,15 +160,15 @@ public class TileManager : MonoBehaviour
         return true;
     }
 
-    public Sprite TileDataToSprite(TileData TileData) {
-        if (TileData.Equals(TileData.p) || TileData.Equals(TileData.o) || TileData.Equals(TileData.y) || TileData.Equals(TileData.g) || TileData.Equals(TileData.b)) {
+    public Sprite TileDataToSprite(TileData tileData) {
+        if (tileData.Color == TileData.TileColor.p || tileData.Color == TileData.TileColor.o ||
+            tileData.Color == TileData.TileColor.y || tileData.Color == TileData.TileColor.g ||
+            tileData.Color == TileData.TileColor.b || tileData.Color == TileData.TileColor.s) {
             return TileSpriteSquare;
-        } else if (TileData.IsStarred) {
-            return TileSpriteStar;
-        } else if (TileData.Equals(TileData.S)) {
+        } else if (tileData.Color == TileData.TileColor.S) {
             return TileSpriteSpecial;
-        } else if (TileData.Equals(TileData.s) || TileData.Equals(TileData.h)) {
-            return TileSpriteSquare;
+        } else if (tileData.IsStarred) {
+            return TileSpriteStar;
         } else {
             return null;
         }
@@ -173,11 +185,13 @@ public class TileManager : MonoBehaviour
             return ColorManager.s_colorMap[TileData.g];
         } else if (TileData.Color == TileData.TileColor.b) {
             return ColorManager.s_colorMap[TileData.b];
-        } else if (TileData.Equals(TileData.h)) {
-            return ColorManager.s_colorMap[TileData.h];
         } else {
             return new Color32(255, 255, 255, 255);
         }
+    }
+
+    public void EnableCenterSlots(int index) {
+        _tilePools[index].TileSlots[0].Enable();
     }
 
     public void EnableCenterSlots() {
@@ -221,5 +235,17 @@ public class TileManager : MonoBehaviour
         } else if (DebugTile.Equals(TileData.b)) {
             DebugTile = TileData.p;
         }
+    }
+
+    public void MatchToTimeline(int index) {
+        TilesRemaining[index] = _timelineInstances[index].TilesRemainingTimeline.GetCurrentFrame();
+        IsSpecial = _timelineInstances[index].IsSpecialTimeline.GetCurrentFrame();
+        if (_tilePools[index].TileSlots[0].TileData.Equals(TileData.S)) {
+            _specialMenus[index].ShowMenu(index);
+        }
+    }
+
+    public void HideCenterSlot(int index) {
+        _tilePools[index].TileSlots[0].Disable();
     }
 }

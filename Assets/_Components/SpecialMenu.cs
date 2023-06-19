@@ -13,24 +13,22 @@ public class SpecialMenu : MonoBehaviour
     }
 
     private void OnEnable() {
-        TileSlot.e_OnSpecialSelected += ShowMenu;
-        SpecialManager.e_OnNormalModeSet += HideMenu;
+        TilePool.e_OnSpecialDrawn += ShowMenu;
     }
 
     private void OnDisable() {
-        TileSlot.e_OnSpecialSelected -= ShowMenu;
-        SpecialManager.e_OnNormalModeSet -= HideMenu;
+        TilePool.e_OnSpecialDrawn -= ShowMenu;
     }
 
-    private void ShowMenu(TileSlot tileSlot) {
-        if (tileSlot != _parentTileSlot) {
+    public void ShowMenu(int index) {
+        if (index != Index) {
             return;
         } else {
             _specialMenuObject.SetActive(true);
         }
     }
 
-    private void HideMenu(int index) {
+    public void HideMenu(int index) {
         if (index != Index) {
             return;
         } else {

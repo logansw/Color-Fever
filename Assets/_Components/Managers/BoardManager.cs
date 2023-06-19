@@ -17,12 +17,25 @@ public class BoardManager : MonoBehaviour
         TileManager.e_OnSlotEmptied += ClearHighlightTiles;
         TilePool.e_OnSpecialDrawn += ClearHighlightTiles;
         SpecialManager.e_OnMoveModeBegun += HighlightLowest;
+        SpecialManager.e_OnCornerModeSet += HighlightCorners;
+        SpecialManager.e_OnMoveModeSet += HighlightMovable;
+        SpecialManager.e_OnMoveModeBegun += UnhighlightMovable;
+        SpecialManager.e_OnRemoveModeSet += HighlightTiles;
+        SpecialManager.e_OnSwapModeSet += HighlightTiles;
+        SpecialManager.e_OnNormalModeSet += ClearHighlightTiles;
     }
 
     private void OnDisable() {
         DiceManager.e_OnDiceRoll -= SetHighlightTiles;
         TileManager.e_OnSlotEmptied -= ClearHighlightTiles;
         TilePool.e_OnSpecialDrawn -= ClearHighlightTiles;
+        SpecialManager.e_OnMoveModeBegun -= HighlightLowest;
+        SpecialManager.e_OnCornerModeSet -= HighlightCorners;
+        SpecialManager.e_OnMoveModeSet -= HighlightMovable;
+        SpecialManager.e_OnMoveModeBegun -= UnhighlightMovable;
+        SpecialManager.e_OnRemoveModeSet -= HighlightTiles;
+        SpecialManager.e_OnSwapModeSet -= HighlightTiles;
+        SpecialManager.e_OnNormalModeSet -= ClearHighlightTiles;
     }
 
     private void SetHighlightTiles() {
@@ -35,9 +48,9 @@ public class BoardManager : MonoBehaviour
             int heightB = board.LowestInColumn(b);
             int heightAB = board.LowestInColumn(a + b);
 
-            board.SetTile(a, heightA, TileData.h);
-            board.SetTile(b, heightB, TileData.h);
-            board.SetTile(a + b, heightAB, TileData.h);
+            board.HighlightTile(a, heightA, true);
+            board.HighlightTile(b, heightB, true);
+            board.HighlightTile(a + b, heightAB, true);
         }
     }
 
@@ -45,7 +58,7 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j).Equals(TileData.h)) {
+                    if (board.GetTile(i, j).IsHighlighted) {
                         return false;
                     }
                 }
@@ -56,11 +69,9 @@ public class BoardManager : MonoBehaviour
 
     public void ClearHighlightTiles(int index) {
         Board board =_boards[index];
-        for (int i = 0; i < board.Width+1; i++) {
-            for (int j = 0; j < board.Height+1; j++) {
-                if (board.GetTile(i, j).Equals(TileData.h)) {
-                    board.SetTile(i, j, TileData.s);
-                }
+        for (int i = 1; i < board.Width+1; i++) {
+            for (int j = 1; j < board.Height+1; j++) {
+                board.HighlightTile(i, j, false);
             }
         }
     }
@@ -69,9 +80,7 @@ public class BoardManager : MonoBehaviour
         foreach (Board board in _boards) {
             for (int i = 0; i < board.Width+1; i++) {
                 for (int j = 0; j < board.Height+1; j++) {
-                    if (board.GetTile(i, j).Equals(TileData.h)) {
-                        board.SetTile(i, j, TileData.s);
-                    }
+                    board.HighlightTile(i, j, false);
                 }
             }
         }
@@ -79,18 +88,74 @@ public class BoardManager : MonoBehaviour
 
     private void HighlightLowest(int index) {
         Board board = _boards[index];
+        ClearHighlightTiles(index);
         for (int i = 1; i < board.Width+1; i++) {
             int lowest = board.LowestInColumn(i);
             if (lowest == -1 || i < 1 || i >= board.Width+1 || lowest < 1 || i == SpecialManager.s_instance.SelectedTile.X) {
                 continue;
             }
-            board.SetTile(i, lowest, TileData.h);
+            board.HighlightTile(i, lowest, true);
+        }
+    }
+
+    private void HighlightCorners(int index) {
+        Board b = _boards[index];
+        ClearHighlightTiles(index);
+        if (b.BoardData[1, 1].Equals(TileData.s)) {
+            b.HighlightTile(1, 1, true);
+        }
+        if (b.BoardData[1, b.Height].Equals(TileData.s)) {
+            b.HighlightTile(1, b.Height, true);
+        }
+        if (b.BoardData[b.Width, 1].Equals(TileData.s)) {
+            b.HighlightTile(b.Width, 1, true);
+        }
+        if (b.BoardData[b.Width, b.Height].Equals(TileData.s)) {
+            b.HighlightTile(b.Width, b.Height, true);
+        }
+        b.QueueUpdate();
+    }
+
+    private void HighlightMovable(int index) {
+        Board b = _boards[index];
+        ClearHighlightTiles(index);
+        for (int i = 1; i < b.Width+1; i++) {
+            int lowestSpaceInColumn = b.LowestInColumn(i);
+            if (lowestSpaceInColumn <= 1) {
+                continue;
+            } else {
+                b.HighlightTile(i, lowestSpaceInColumn - 1, true);
+            }
+        }
+    }
+
+    private void UnhighlightMovable(int index) {
+        Board b = _boards[index];
+        for (int i = 1; i < b.Width+1; i++) {
+            int lowestSpaceInColumn = b.LowestInColumn(i);
+            if (lowestSpaceInColumn <= 1) {
+                continue;
+            } else {
+                b.HighlightTile(i, lowestSpaceInColumn - 1, false);
+            }
+        }
+    }
+
+    private void HighlightTiles(int index) {
+        Board b = _boards[index];
+        ClearHighlightTiles(index);
+        for (int i = 1; i < b.Width + 1; i++) {
+            for (int j = 1; j < b.Height + 1; j++) {
+                if (b.GetTile(i, j).Color != TileData.TileColor.s) {
+                    b.HighlightTile(i, j, true);
+                }
+            }
         }
     }
 
     public bool SetTile(Board board, TileData TileData, int x, int y) {
         if (!ConfigurationManager.s_instance.DebugMode) {
-            if (!board.GetTile(x, y).Equals(TileData.h)) {
+            if (!board.GetTile(x, y).IsHighlighted) {
                 return false;
             } else {
                 board.SetTile(x, y, TileData);

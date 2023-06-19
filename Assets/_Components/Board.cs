@@ -11,6 +11,8 @@ public class Board : MonoBehaviour
     public int Width;
     public int Height;
     public int Index;
+    public bool _updateQueued;
+    [SerializeField] private TimelineInstance _timelineInstance;
 
     public void Initialize() {
         Width = 10;
@@ -18,25 +20,27 @@ public class Board : MonoBehaviour
         BoardData = new TileData[Width+1, Height+1];
         for (int i = 1; i <= Width; i++) {
             for (int j = 1; j <= Height; j++) {
+                BoardData[i, j] = TileData.s;
                 if (j == 1) {
-                    BoardData[i, j] = TileData.h;
+                    BoardData[i, j].SetHighlight(true);
                 } else {
-                    BoardData[i, j] = TileData.s;
+                    BoardData[i, j].SetHighlight(false);
                 }
             }
         }
+        _updateQueued = true;
     }
 
-    private void OnEnable() {
-        SpecialManager.e_OnCornerModeSet += HighlightCorners;
-    }
-
-    private void OnDisable() {
-        SpecialManager.e_OnCornerModeSet -= HighlightCorners;
+    private void Update() {
+        if (_updateQueued) {
+            e_OnBoardChange(this);
+            _updateQueued = false;
+            _timelineInstance.Advance();
+        }
     }
 
     public void SetTile(int x, int y, TileData TileData) {
-        if (x < 0 || x >= Width+1 || y < 0 || y >= Height+1) { return; }
+        if (x < 1 || x >= Width+1 || y < 1 || y >= Height+1) { return; }
         BoardData[x, y] = TileData;
         TileObjects[x, y].TileData = TileData;
         QueueUpdate();
@@ -47,37 +51,23 @@ public class Board : MonoBehaviour
     }
 
     public void QueueUpdate() {
-        e_OnBoardChange(this);
+        _updateQueued = true;
     }
 
+    /// <summary>
+    /// Returns the lowest empty space in column <paramref name="x"/>, or Board.Height+1 if the column is full.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns>Returns -1 the specified column x is out of bounds</returns>
     public int LowestInColumn(int x) {
-        if (x >= Width+1) { return -1; }
+        if (x < 0 || x >= Width+1) { return -1; }
 
         for (int j = 1; j < Height+1; j++) {
-            if (BoardData[x, j].Equals(TileData.s)) {
+            if (BoardData[x, j].Color == TileData.TileColor.s) {
                 return j;
             }
         }
-        return -1;
-    }
-
-    private void HighlightCorners(int index) {
-        if (index != Index) {
-            return;
-        }
-        if (BoardData[1, 1].Equals(TileData.s)) {
-            BoardData[1, 1] = TileData.h;
-        }
-        if (BoardData[1, Height].Equals(TileData.s)) {
-            BoardData[1, Height] = TileData.h;
-        }
-        if (BoardData[Width, 1].Equals(TileData.s)) {
-            BoardData[Width, 1] = TileData.h;
-        }
-        if (BoardData[Width, Height].Equals(TileData.s)) {
-            BoardData[Width, Height] = TileData.h;
-        }
-        QueueUpdate();
+        return Height+1;
     }
 
     public void DebugPrintBoard() {
@@ -114,5 +104,38 @@ public class Board : MonoBehaviour
             boardString += "\n";
         }
         Debug.Log(boardString);
+    }
+
+    public void HighlightTile(int x, int y, bool on) {
+        if (x < 1 || x >= Width+1 || y < 1 || y >= Height+1) { return; }
+        TileData newTileData = GetTile(x, y);
+        newTileData.SetHighlight(on);
+        SetTile(x, y, newTileData);
+        QueueUpdate();
+    }
+
+    public TileData[,] CopyBoard() {
+        TileData[,] copy = new TileData[BoardData.GetLength(0), BoardData.GetLength(1)];
+        for (int i = 0; i < BoardData.GetLength(0); i++) {
+            for (int j = 0; j < BoardData.GetLength(1); j++) {
+                copy[i, j] = BoardData[i, j];
+            }
+        }
+        return copy;
+    }
+
+    public TileData[,] CopyBoard(TileData[,] reference) {
+        TileData[,] copy = new TileData[reference.GetLength(0), reference.GetLength(1)];
+        for (int i = 0; i < reference.GetLength(0); i++) {
+            for (int j = 0; j < reference.GetLength(1); j++) {
+                copy[i, j] = reference[i, j];
+            }
+        }
+        return copy;
+    }
+
+    public void MatchToTimeline() {
+        BoardData = CopyBoard(_timelineInstance.BoardTimeline.GetCurrentFrame());
+        e_OnBoardChange?.Invoke(this);
     }
 }

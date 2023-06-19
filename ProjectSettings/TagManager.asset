@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Shadow
+    uniqueID: 528033095
+    locked: 0
+  - name: Board
+    uniqueID: 1825765651
+    locked: 0
+  - name: Outline
+    uniqueID: 1220204393
+    locked: 0

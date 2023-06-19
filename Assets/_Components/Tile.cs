@@ -8,6 +8,10 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
 
+    [Header("External References")]
+    public SpriteRenderer OutlineSR;
+    public SpriteRenderer ShadowSR;
+
     public TileData TileData;
     private Board _parentBoard;
     public int X { get; private set; }
@@ -55,13 +59,29 @@ public class Tile : MonoBehaviour
                 UpdateBoardRemove();
                 break;
             case SpecialManager.SelectionMode.Corner:
-                UpdateBoardNormal();
-                SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+                UpdateBoardCorner();
                 break;
             default:
                 UpdateBoardNormal();
                 Debug.Log("Fallthrough");
                 break;
+        }
+    }
+
+    private void UpdateBoardCorner() {
+        TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot;
+        if (selectedTileSlot == null) {
+            return;
+        }
+
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileData, X, Y);
+        if (result) {
+            TileManager.s_instance.DisableSelectedTile();
+            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
+            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
+        } else {
+            // Do nothing
         }
     }
 
@@ -94,12 +114,14 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
             BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
         }
-        if (TileData.Equals(TileData.h)) {
+        if (TileData.IsHighlighted) {
             Tile original = SpecialManager.s_instance.SelectedTile;
             _parentBoard.SetTile(X, Y, original.TileData);
             _parentBoard.SetTile(original.X, original.Y, TileData.s);
             BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
             SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
+            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
         }
     }
 
@@ -109,6 +131,7 @@ public class Tile : MonoBehaviour
         }
         SpecialManager.s_instance.SelectedTile = this;
         SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.SwapB;
+        _parentBoard.HighlightTile(X, Y, false);
     }
 
     private void UpdateBoardSwapB() {
@@ -125,6 +148,8 @@ public class Tile : MonoBehaviour
             _parentBoard.SetTile(this.X, this.Y, other.TileData);
             _parentBoard.SetTile(other.X, other.Y, thisTileData);
             SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
+            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
         }
     }
 
@@ -132,6 +157,8 @@ public class Tile : MonoBehaviour
         if (TileData.IsNormal()) {
             _parentBoard.SetTile(X, Y, TileData.s);
             SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
+            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
+            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
         }
     }
 

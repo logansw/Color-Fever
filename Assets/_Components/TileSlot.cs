@@ -56,4 +56,14 @@ public class TileSlot : MonoBehaviour
         _touchable.enabled = true;
         _touchable.Enable();
     }
+
+    public void Show() {
+        _spriteRenderer.enabled = true;
+        _touchable.Enable();
+    }
+
+    public void Hide() {
+        _spriteRenderer.enabled = false;
+        _touchable.Disable();
+    }
 }

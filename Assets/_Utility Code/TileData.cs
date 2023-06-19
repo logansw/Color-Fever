@@ -5,7 +5,7 @@ using UnityEngine;
 public struct TileData {
     public TileColor Color;
     public bool IsStarred;
-    public bool IsHighlighted;
+    public bool IsHighlighted { get; private set; }
     public TileData(TileColor color, bool isStarred, bool isHighlighted) {
         Color = color;
         IsStarred = isStarred;
@@ -31,6 +31,10 @@ public struct TileData {
         }
     }
 
+    public void SetHighlight(bool isHighlighted) {
+        IsHighlighted = isHighlighted;
+    }
+
     public static TileData p = new TileData(TileColor.p, false, false);
     public static TileData o = new TileData(TileColor.o, false, false);
     public static TileData y = new TileData(TileColor.y, false, false);
@@ -42,7 +46,7 @@ public struct TileData {
     public static TileData G = new TileData(TileColor.g, true, false);
     public static TileData B = new TileData(TileColor.b, true, false);
     public static TileData s = new TileData(TileColor.s, false, false);
-    public static TileData h = new TileData(TileColor.s, false, true);
+    // public static TileData h = new TileData(TileColor.s, false, true);
     public static TileData S = new TileData(TileColor.S, false, false);
     public static TileData n = new TileData(TileColor.n, false, false);
 }

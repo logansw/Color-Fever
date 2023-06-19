@@ -56,11 +56,20 @@ public class BoardViewer : MonoBehaviour
     public void UpdateBoard(Board board) {
         for (int i = 1; i <= board.Width; i++) {
             for (int j = 1; j <= board.Height; j++) {
-                _boards[board.Index].TileObjects[i, j].SetSprite(board.GetTile(i, j));
-                if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10) && _boards[board.Index].BoardData[i, j].Equals(TileData.s)) {
-                    _boards[board.Index].TileObjects[i, j].SetSprite(_starEmptySprite);
+                Tile tile = _boards[board.Index].TileObjects[i, j];
+                tile.SetSprite(board.GetTile(i, j));
+                if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10) &&
+                    _boards[board.Index].BoardData[i, j].Color == TileData.TileColor.s) {
+                    tile.SetSprite(_starEmptySprite);
                 }
-                _boards[board.Index].TileObjects[i, j].SetColor(board.GetTile(i, j));
+                tile.SetColor(board.GetTile(i, j));
+                if (board.GetTile(i, j).IsHighlighted) {
+                    tile.ShadowSR.enabled = true;
+                    tile.OutlineSR.enabled = true;
+                } else {
+                    tile.ShadowSR.enabled = false;
+                    tile.OutlineSR.enabled = false;
+                }
             }
         }
     }
