@@ -35,7 +35,6 @@ public class Board : MonoBehaviour
         if (_updateQueued) {
             e_OnBoardChange(this);
             _updateQueued = false;
-            _timelineInstance.Advance();
         }
     }
 
@@ -44,6 +43,7 @@ public class Board : MonoBehaviour
         BoardData[x, y] = TileData;
         TileObjects[x, y].TileData = TileData;
         QueueUpdate();
+        _timelineInstance.QueueAdvance();
     }
 
     public TileData GetTile(int x, int y) {

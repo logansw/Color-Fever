@@ -70,7 +70,7 @@ public class TilePool : MonoBehaviour
             e_OnNormalDrawn?.Invoke(Index);
         }
         ShowTileSlots();
-        _timelineInstance.Lock();
+        _timelineInstance.QueueLock();
     }
 
     public TileData DrawTile() {

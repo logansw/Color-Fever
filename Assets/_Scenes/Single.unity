@@ -2119,7 +2119,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1500160681}
         m_TargetAssemblyTypeName: TimelineInstance, Assembly-CSharp
-        m_MethodName: Lock
+        m_MethodName: QueueLock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3595,6 +3595,8 @@ MonoBehaviour:
   _tilePool: {fileID: 1212361317}
   _tileManager: {fileID: 943462211}
   _undoButton: {fileID: 1020075550}
+  AdvanceQueued: 0
+  LockQueued: 0
   Index: 0
 --- !u!4 &1500160682
 Transform:
@@ -4270,7 +4272,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1500160681}
         m_TargetAssemblyTypeName: TimelineInstance, Assembly-CSharp
-        m_MethodName: Advance
+        m_MethodName: QueueAdvance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4282,7 +4284,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1500160681}
         m_TargetAssemblyTypeName: TimelineInstance, Assembly-CSharp
-        m_MethodName: Lock
+        m_MethodName: QueueLock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
