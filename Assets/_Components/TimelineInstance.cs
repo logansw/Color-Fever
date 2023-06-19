@@ -50,18 +50,15 @@ public class TimelineInstance : MonoBehaviour
     }
 
     private void Advance() {
-        Debug.Log("Advance Start");
         BoardTimeline.Advance(_board.CopyBoard());
         TilePoolTimeline.Advance(_tilePool.CopyTilePool());
         TilesRemainingTimeline.Advance(_tileManager.TilesRemaining[Index]);
         IsSpecialTimeline.Advance(_tileManager.IsSpecial);
         TileSlotsDataTimeline.Advance(_tilePool.CopyTileSlots(_tilePool.TileSlots));
         ToggleUndoButtonStatus();
-        Debug.Log("Advance End");
     }
 
     public void Undo() {
-        Debug.Log("Undo Start");
         if (GameManager.s_instance.RoundsRemaining == 34) {
             BoardTimeline.Undo(1);
             TilePoolTimeline.Undo(1);
@@ -81,19 +78,15 @@ public class TimelineInstance : MonoBehaviour
         _tilePool.MatchToTimeline();
         _tileManager.MatchToTimeline(Index);
         ToggleUndoButtonStatus();
-        Debug.Log("Undo End");
     }
 
     private void Lock() {
-        Debug.Log("Lock Start");
         BoardTimeline.Lock();
         TilePoolTimeline.Lock();
         TilesRemainingTimeline.Lock();
         IsSpecialTimeline.Lock();
         TileSlotsDataTimeline.Lock();
-        Debug.Log(BoardTimeline.CanUndo());
         ToggleUndoButtonStatus();
-        Debug.Log("Lock End");
     }
 
     private void ToggleUndoButtonStatus() {

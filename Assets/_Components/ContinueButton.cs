@@ -64,4 +64,10 @@ public class ContinueButton : MonoBehaviour
         SpecialManager.s_instance.ReadyToContinue = false;
         _button.interactable = false;
     }
+
+    public void OnUndo() {
+        CurrentContinueState = ContinueState.WaitingForPlacement;
+        _button.interactable = false;
+        // SpecialManager.s_instance.ReadyToContinue is set within TileManager.cs. This is sketchy.
+    }
 }

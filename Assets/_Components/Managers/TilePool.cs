@@ -29,7 +29,7 @@ public class TilePool : MonoBehaviour
             {TileData.G, 1},
             {TileData.b, 18},
             {TileData.B, 1},
-            {TileData.S, 200},
+            {TileData.S, 2},
         };
 
         foreach (TileData tileData in _tilePool.Keys) {
