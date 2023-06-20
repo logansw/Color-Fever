@@ -7,7 +7,12 @@ public class ScoreCalculator : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private Board board;
 
+    [Header("External References")]
+    [SerializeField] private ScoreDisplayer _scoreDisplayer;
+
     public int GetScore() {
+        // _scoreDisplayer.ClearMarks();
+
         int score = 0;
         score += ScoreColumns();
         score += ScoreRows();
