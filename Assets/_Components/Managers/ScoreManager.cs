@@ -159,16 +159,28 @@ public class ScoreManager : MonoBehaviour
 
     private void OnEnable() {
         Board.e_OnBoardChange += UpdateScore;
+        GameManager.e_OnGameEnd += RecordScores;
     }
 
     private void OnDisable() {
         Board.e_OnBoardChange -= UpdateScore;
+        GameManager.e_OnGameEnd -= RecordScores;
     }
 
     public void Initialize() {
         _totalScore = 0;
         _totalScoreText.text = _totalScore.ToString();
         _individualScores = new int[_scoreCalculators.Length];
+        if (!JSONTool.FileExists("SingleScores.json")) {
+            HighscoreData data = new HighscoreData();
+            data = data.CreateNewFile();
+            JSONTool.WriteData(data, "SingleScores.json");
+        }
+        if (!JSONTool.FileExists("DoubleScores.json")) {
+            HighscoreData data = new HighscoreData();
+            data = data.CreateNewFile();
+            JSONTool.WriteData(data, "DoubleScores.json");
+        }
     }
 
     public void UpdateScore(Board board) {
@@ -178,5 +190,24 @@ public class ScoreManager : MonoBehaviour
             _totalScore += _individualScores[i];
         }
         _totalScoreText.text = _totalScore.ToString();
+    }
+
+    public void RecordScores() {
+        Debug.Log("Recording scores");
+        HighscoreData singleData = JSONTool.ReadData<HighscoreData>("SingleScores.json");
+        HighscoreData doubleData = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
+
+        int count = _scoreCalculators.Length;
+        int[] scores = new int[count];
+        for (int i = 0; i < count; i++) {
+            scores[i] = _scoreCalculators[i].GetScore();
+            singleData.Highscores.Add(scores[i]);
+        }
+
+        if (count == 2) {
+            doubleData.Highscores.Add(scores[0] + scores[1]);
+        }
+        JSONTool.WriteData<HighscoreData>(singleData, "SingleScores.json");
+        JSONTool.WriteData<HighscoreData>(doubleData, "DoubleScores.json");
     }
 }

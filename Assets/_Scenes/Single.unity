@@ -3592,7 +3592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugMode: 0
   TestsEnabled: 0
-  DisableValidTileChecker: 1
+  DisableValidTileChecker: 0
 --- !u!1001 &1410065725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4502,64 +4502,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1332701770}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: AdvanceTurn
-        m_Mode: 1
+      - m_Target: {fileID: 1332701768}
+        m_TargetAssemblyTypeName: SceneMan, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 943462211}
-        m_TargetAssemblyTypeName: TileManager, Assembly-CSharp
-        m_MethodName: EnableCenterSlots
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 943462211}
-        m_TargetAssemblyTypeName: TileManager, Assembly-CSharp
-        m_MethodName: DrawNewTiles
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 587763897}
-        m_TargetAssemblyTypeName: DiceManager, Assembly-CSharp
-        m_MethodName: EnableRoll
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
-        m_MethodName: CheckAdvanceState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Title
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1555028437
@@ -5894,6 +5846,7 @@ MonoBehaviour:
   SpecialMenus:
   - {fileID: 1694156647}
   SelectedTile: {fileID: 0}
+  SelectedIndex: 0
 --- !u!4 &2020386383
 Transform:
   m_ObjectHideFlags: 0
