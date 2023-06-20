@@ -44,9 +44,9 @@ public class BoardManager : MonoBehaviour
         int a = diceValues[0];
         int b = diceValues[1];
         foreach (Board board in _boards) {
-            int heightA = board.LowestInColumn(a);
-            int heightB = board.LowestInColumn(b);
-            int heightAB = board.LowestInColumn(a + b);
+            int heightA = board.LowestSpaceInColumn(a);
+            int heightB = board.LowestSpaceInColumn(b);
+            int heightAB = board.LowestSpaceInColumn(a + b);
 
             board.HighlightTile(a, heightA, true);
             board.HighlightTile(b, heightB, true);
@@ -90,7 +90,7 @@ public class BoardManager : MonoBehaviour
         Board board = _boards[index];
         ClearHighlightTiles(index);
         for (int i = 1; i < board.Width+1; i++) {
-            int lowest = board.LowestInColumn(i);
+            int lowest = board.LowestSpaceInColumn(i);
             if (lowest == -1 || i < 1 || i >= board.Width+1 || lowest < 1 || i == SpecialManager.s_instance.SelectedTile.X) {
                 continue;
             }
@@ -120,11 +120,9 @@ public class BoardManager : MonoBehaviour
         Board b = _boards[index];
         ClearHighlightTiles(index);
         for (int i = 1; i < b.Width+1; i++) {
-            int lowestSpaceInColumn = b.LowestInColumn(i);
-            if (lowestSpaceInColumn <= 1) {
-                continue;
-            } else {
-                b.HighlightTile(i, lowestSpaceInColumn - 1, true);
+            int highestTileInColumn = b.HighestTileInColumn(i);
+            if (highestTileInColumn != -1) {
+                b.HighlightTile(i, highestTileInColumn, true);
             }
         }
     }
@@ -132,7 +130,7 @@ public class BoardManager : MonoBehaviour
     private void UnhighlightMovable(int index) {
         Board b = _boards[index];
         for (int i = 1; i < b.Width+1; i++) {
-            int lowestSpaceInColumn = b.LowestInColumn(i);
+            int lowestSpaceInColumn = b.LowestSpaceInColumn(i);
             if (lowestSpaceInColumn <= 1) {
                 continue;
             } else {

@@ -59,7 +59,7 @@ public class Board : MonoBehaviour
     /// </summary>
     /// <param name="x"></param>
     /// <returns>Returns -1 the specified column x is out of bounds</returns>
-    public int LowestInColumn(int x) {
+    public int LowestSpaceInColumn(int x) {
         if (x < 0 || x >= Width+1) { return -1; }
 
         for (int j = 1; j < Height+1; j++) {
@@ -68,6 +68,17 @@ public class Board : MonoBehaviour
             }
         }
         return Height+1;
+    }
+
+    public int HighestTileInColumn(int x) {
+        if (x < 0 || x >= Width + 1) { return -1; }
+        for (int j = Height; j > 0; j--) {
+            if (BoardData[x, j].IsNormal()) {
+                return j;
+            }
+        }
+
+        return -1;
     }
 
     public void DebugPrintBoard() {

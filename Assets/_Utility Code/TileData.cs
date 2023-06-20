@@ -23,6 +23,9 @@ public struct TileData {
         b, // blue
     }
 
+    /// <summary>
+    /// Returns true if the tile is a normal or star tile (not space, null, or special).
+    /// </summary>
     public bool IsNormal() {
         if (Color == TileColor.s || Color == TileColor.n || Color == TileColor.S) {
             return false;

@@ -102,7 +102,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardMoveA() {
-        if (!TileData.IsNormal() || (_parentBoard.LowestInColumn(X) != Y + 1 && Y != _parentBoard.Height)) {
+        if (!TileData.IsNormal() || (_parentBoard.HighestTileInColumn(X) != Y)) {
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
