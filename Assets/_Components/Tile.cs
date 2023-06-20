@@ -102,7 +102,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardMoveA() {
-        if (!TileData.IsNormal() || (_parentBoard.HighestTileInColumn(X) != Y)) {
+        if (SpecialManager.s_instance.SelectedIndex != Index || !TileData.IsNormal() || (_parentBoard.HighestTileInColumn(X) != Y)) {
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
@@ -116,7 +116,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
             BoardManager.s_instance.ClearHighlightTiles(Index);
         }
-        if (TileData.IsHighlighted) {
+        if (TileData.IsHighlighted && SpecialManager.s_instance.SelectedIndex == Index) {
             Tile original = SpecialManager.s_instance.SelectedTile;
             _parentBoard.SetTile(X, Y, original.TileData);
             _parentBoard.SetTile(original.X, original.Y, TileData.s);
@@ -128,7 +128,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardSwapA() {
-        if (!TileData.IsNormal()) {
+        if (SpecialManager.s_instance.SelectedIndex != Index || !TileData.IsNormal()) {
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
@@ -137,7 +137,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardSwapB() {
-        if (!TileData.IsNormal()) {
+        if (SpecialManager.s_instance.SelectedIndex != Index || !TileData.IsNormal()) {
             return;
         }
         // Deselect
@@ -156,6 +156,10 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardRemove() {
+        if (SpecialManager.s_instance.SelectedIndex != Index) {
+            return;
+        }
+
         if (TileData.IsNormal()) {
             _parentBoard.SetTile(X, Y, TileData.s);
             SpecialManager.s_instance.SetNormalMode(Index);

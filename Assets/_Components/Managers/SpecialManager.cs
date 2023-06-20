@@ -16,6 +16,7 @@ public class SpecialManager : MonoBehaviour
         Remove,
     }
     public Tile SelectedTile;
+    public int SelectedIndex;
 
     public delegate void OnCornerModeSet(int index);
     public static OnCornerModeSet e_OnCornerModeSet;
@@ -57,18 +58,21 @@ public class SpecialManager : MonoBehaviour
         CurrentSelectionMode = SelectionMode.Corner;
         e_OnCornerModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
+        SelectedIndex = index;
     }
 
     public void SetMoveMode(int index) {
         CurrentSelectionMode = SelectionMode.MoveA;
         e_OnMoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
+        SelectedIndex = index;
     }
 
     public void SetSwapMode(int index) {
         CurrentSelectionMode = SelectionMode.SwapA;
         e_OnSwapModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
+        SelectedIndex = index;
     }
 
     public void InvokeMoveModeBegun(int index) {
@@ -79,6 +83,7 @@ public class SpecialManager : MonoBehaviour
         CurrentSelectionMode = SelectionMode.Remove;
         e_OnRemoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
+        SelectedIndex = index;
     }
 
     public void SetNormalMode(int index) {
@@ -95,5 +100,6 @@ public class SpecialManager : MonoBehaviour
     public void Pass(int index) {
         SpecialMenus[index].ReadyToContinue = true;
         SpecialMenus[index].DeactivateMenu(index);
+        SelectedIndex = index;
     }
 }
