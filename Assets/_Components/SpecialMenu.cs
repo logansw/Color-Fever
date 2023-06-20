@@ -13,6 +13,7 @@ public class SpecialMenu : MonoBehaviour
     [SerializeField] private TimelineInstance _timelineInstance;
     public Dictionary<CustomButton, bool> ButtonsRemaining;
     public int Index;
+    public bool ReadyToContinue;
 
     public void Initialize() {
         ButtonsRemaining = new Dictionary<CustomButton, bool>();
@@ -21,6 +22,7 @@ public class SpecialMenu : MonoBehaviour
         ButtonsRemaining.Add(_moveButton, true);
         ButtonsRemaining.Add(_removeButton, true);
         ButtonsRemaining.Add(_passButton, true);
+        ReadyToContinue = true;
         RenderButtons();
         DeactivateMenu(Index);
     }

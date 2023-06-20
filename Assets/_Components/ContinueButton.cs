@@ -61,7 +61,7 @@ public class ContinueButton : MonoBehaviour
     public void OnSpecialDrawn(int index) {
         DiceManager.s_instance.DisableRoll();
         CurrentContinueState = ContinueState.WaitingForPlacement;
-        SpecialManager.s_instance.ReadyToContinue = false;
+        SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = false;
         _button.Interactable = false;
     }
 

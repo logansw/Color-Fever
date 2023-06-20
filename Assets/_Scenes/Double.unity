@@ -1807,6 +1807,7 @@ MonoBehaviour:
   - {fileID: 1895427095}
   Index: 1
   _timelineInstance: {fileID: 489994897}
+  IsSpecial: 0
 --- !u!1001 &775648314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5706,6 +5707,7 @@ MonoBehaviour:
   _passButton: {fileID: 641776106}
   _timelineInstance: {fileID: 489994897}
   Index: 1
+  ReadyToContinue: 0
 --- !u!4 &1681747421
 Transform:
   m_ObjectHideFlags: 0
@@ -6149,6 +6151,7 @@ MonoBehaviour:
   _passButton: {fileID: 1381900587}
   _timelineInstance: {fileID: 292220707}
   Index: 0
+  ReadyToContinue: 0
 --- !u!4 &1838281617
 Transform:
   m_ObjectHideFlags: 0
@@ -6675,7 +6678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentSelectionMode: 0
   ReadyToContinue: 0
-  _specialMenus:
+  SpecialMenus:
   - {fileID: 1838281616}
   - {fileID: 1681747420}
   SelectedTile: {fileID: 0}
@@ -7133,6 +7136,7 @@ MonoBehaviour:
   - {fileID: 1133068237}
   Index: 0
   _timelineInstance: {fileID: 292220707}
+  IsSpecial: 0
 --- !u!1 &2077189557
 GameObject:
   m_ObjectHideFlags: 0

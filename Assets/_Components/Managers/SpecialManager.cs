@@ -7,7 +7,7 @@ public class SpecialManager : MonoBehaviour
     public static SpecialManager s_instance;
     public SelectionMode CurrentSelectionMode;
     public bool ReadyToContinue;
-    [SerializeField] private SpecialMenu[] _specialMenus;
+    public SpecialMenu[] SpecialMenus;
     public enum SelectionMode {
         Normal,
         Corner,
@@ -37,27 +37,38 @@ public class SpecialManager : MonoBehaviour
     public void Initialize() {
         CurrentSelectionMode = SelectionMode.Normal;
         ReadyToContinue = true;
-        foreach (SpecialMenu specialMenu in _specialMenus) {
+        foreach (SpecialMenu specialMenu in SpecialMenus) {
             specialMenu.Initialize();
+        }
+    }
+
+    private void Update() {
+        foreach (SpecialMenu specialMenu in SpecialMenus) {
+            if (specialMenu.ReadyToContinue) {
+                ReadyToContinue = true;
+            } else {
+                ReadyToContinue = false;
+                break;
+            }
         }
     }
 
     public void SetCornerMode(int index) {
         CurrentSelectionMode = SelectionMode.Corner;
         e_OnCornerModeSet?.Invoke(index);
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].DeactivateMenu(index);
     }
 
     public void SetMoveMode(int index) {
         CurrentSelectionMode = SelectionMode.MoveA;
         e_OnMoveModeSet?.Invoke(index);
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].DeactivateMenu(index);
     }
 
     public void SetSwapMode(int index) {
         CurrentSelectionMode = SelectionMode.SwapA;
         e_OnSwapModeSet?.Invoke(index);
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].DeactivateMenu(index);
     }
 
     public void InvokeMoveModeBegun(int index) {
@@ -67,22 +78,22 @@ public class SpecialManager : MonoBehaviour
     public void SetRemoveMode(int index) {
         CurrentSelectionMode = SelectionMode.Remove;
         e_OnRemoveModeSet?.Invoke(index);
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].DeactivateMenu(index);
     }
 
     public void SetNormalMode(int index) {
         CurrentSelectionMode = SelectionMode.Normal;
         e_OnNormalModeSet?.Invoke(index);
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].DeactivateMenu(index);
     }
 
     public void SpecialActionComplete(int index) {
-        ReadyToContinue = true;
+        SpecialMenus[index].ReadyToContinue = true;
         TileManager.s_instance.DisableSelectedTile();
     }
 
     public void Pass(int index) {
-        ReadyToContinue = true;
-        _specialMenus[index].DeactivateMenu(index);
+        SpecialMenus[index].ReadyToContinue = true;
+        SpecialMenus[index].DeactivateMenu(index);
     }
 }

@@ -243,9 +243,9 @@ public class TileManager : MonoBehaviour
         IsSpecial = _timelineInstances[index].IsSpecialTimeline.GetCurrentFrame();
         if (_tilePools[index].TileSlots[0].TileData.Equals(TileData.S)) {
             _specialMenus[index].ActivateMenu(index);
-            SpecialManager.s_instance.ReadyToContinue = false;
+            SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = false;
         } else {
-            SpecialManager.s_instance.ReadyToContinue = true;
+            SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = true;
         }
     }
 

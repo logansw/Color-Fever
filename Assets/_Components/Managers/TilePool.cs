@@ -191,7 +191,7 @@ public class TilePool : MonoBehaviour
         CornerTileSlots[3].SetTile(TileData.g);
         CornerTileSlots[4].SetTile(TileData.b);
         TileManager.s_instance.TilesRemaining[Index] = 1;
-        SpecialManager.s_instance.ReadyToContinue = true;
+        SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = true;
     }
 
     public void HideCornerTiles(int index) {
