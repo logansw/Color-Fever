@@ -9,7 +9,7 @@ public class TimelineInstance : MonoBehaviour
     [SerializeField] private Board _board;
     [SerializeField] private TilePool _tilePool;
     [SerializeField] private TileManager _tileManager;
-    [SerializeField] private Button _undoButton;
+    [SerializeField] private CustomButton _undoButton;
 
     public bool AdvanceQueued;
     public bool LockQueued;
@@ -91,9 +91,9 @@ public class TimelineInstance : MonoBehaviour
 
     private void ToggleUndoButtonStatus() {
         if (BoardTimeline.CanUndo()) {
-            _undoButton.interactable = true;
+            _undoButton.Interactable = true;
         } else {
-            _undoButton.interactable = false;
+            _undoButton.Interactable = false;
         }
     }
 }

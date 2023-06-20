@@ -12,7 +12,7 @@ public class DiceManager : MonoBehaviour
 
     [Header("External References")]
     [SerializeField] private SpriteRenderer[] _diceRenderers;
-    [SerializeField] private Button _rollButton;
+    [SerializeField] private CustomButton _rollButton;
 
     public int[] DiceValues;
     public delegate void OnDiceRoll();
@@ -65,12 +65,12 @@ public class DiceManager : MonoBehaviour
     }
 
     public void EnableRoll() {
-        _rollButton.interactable = true;
+        _rollButton.Interactable = true;
         Rolled = false;
     }
 
     public void DisableRoll() {
-        _rollButton.interactable = false;
+        _rollButton.Interactable = false;
         Rolled = true;
     }
 

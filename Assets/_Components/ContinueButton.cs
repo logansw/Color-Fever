@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ContinueButton : MonoBehaviour
 {
     public static ContinueButton s_instance;
-    [SerializeField] private Button _button;
+    [SerializeField] private CustomButton _button;
 
     public enum ContinueState {
         WaitingForRoll,
@@ -19,7 +19,7 @@ public class ContinueButton : MonoBehaviour
 
     private void Start() {
         s_instance = this;
-        _button.interactable = false;
+        _button.Interactable = false;
         CurrentContinueState = ContinueState.WaitingForPlacement;
     }
 
@@ -41,14 +41,14 @@ public class ContinueButton : MonoBehaviour
             case ContinueState.WaitingForPlacement:
                 if (BoardManager.s_instance.NoHighlightTiles() && SpecialManager.s_instance.ReadyToContinue) {
                     CurrentContinueState = ContinueState.WaitingForContinue;
-                    _button.interactable = true;
+                    _button.Interactable = true;
                 }
                 break;
             case ContinueState.WaitingForContinue:
                 if (ContinueButtonPressed) {
                     CurrentContinueState = ContinueState.WaitingForRoll;
                     ContinueButtonPressed = false;
-                    _button.interactable = false;
+                    _button.Interactable = false;
                 }
                 break;
         }
@@ -62,12 +62,12 @@ public class ContinueButton : MonoBehaviour
         DiceManager.s_instance.DisableRoll();
         CurrentContinueState = ContinueState.WaitingForPlacement;
         SpecialManager.s_instance.ReadyToContinue = false;
-        _button.interactable = false;
+        _button.Interactable = false;
     }
 
     public void OnUndo() {
         CurrentContinueState = ContinueState.WaitingForPlacement;
-        _button.interactable = false;
+        _button.Interactable = false;
         // SpecialManager.s_instance.ReadyToContinue is set within TileManager.cs. This is sketchy.
     }
 }
