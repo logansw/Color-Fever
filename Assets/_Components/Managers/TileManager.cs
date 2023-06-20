@@ -14,6 +14,7 @@ public class TileManager : MonoBehaviour
     public TileSlot SelectedTileSlot;
     [SerializeField] private TilePool[] _tilePools;
     public int[] TilesRemaining;
+    /// True if the last tile drawn was a special tile.
     public bool IsSpecial;
     public TileData ForcedDraw;
     [SerializeField] private TimelineInstance[] _timelineInstances;
@@ -241,7 +242,7 @@ public class TileManager : MonoBehaviour
         TilesRemaining[index] = _timelineInstances[index].TilesRemainingTimeline.GetCurrentFrame();
         IsSpecial = _timelineInstances[index].IsSpecialTimeline.GetCurrentFrame();
         if (_tilePools[index].TileSlots[0].TileData.Equals(TileData.S)) {
-            _specialMenus[index].ShowMenu(index);
+            _specialMenus[index].ActivateMenu(index);
             SpecialManager.s_instance.ReadyToContinue = false;
         } else {
             SpecialManager.s_instance.ReadyToContinue = true;

@@ -568,6 +568,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1694156647}
+        m_TargetAssemblyTypeName: SpecialMenu, Assembly-CSharp
+        m_MethodName: RemoveButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 260418125}
+          m_ObjectArgumentAssemblyTypeName: CustomButton, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Interactable: 1
 --- !u!61 &260418126
 BoxCollider2D:
@@ -2675,7 +2687,7 @@ MonoBehaviour:
   _timelineInstances:
   - {fileID: 1500160681}
   _specialMenus:
-  - {fileID: 1212361319}
+  - {fileID: 1694156647}
 --- !u!4 &943462212
 Transform:
   m_ObjectHideFlags: 0
@@ -3089,7 +3101,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1212361318}
   - component: {fileID: 1212361317}
-  - component: {fileID: 1212361319}
   m_Layer: 0
   m_Name: TilePool
   m_TagString: Untagged
@@ -3141,21 +3152,6 @@ Transform:
   m_Father: {fileID: 943462212}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1212361319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212361316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 495e3a8cbe554ce4fa69ff5ad08b4434, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parentTileSlot: {fileID: 602053822}
-  _specialMenuObject: {fileID: 1694156645}
-  Index: 0
 --- !u!1001 &1229340263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3661,6 +3657,151 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a9ff79fc250ad43974c8b2bd839058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1410549830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1410549831}
+  - component: {fileID: 1410549834}
+  - component: {fileID: 1410549833}
+  - component: {fileID: 1410549832}
+  m_Layer: 0
+  m_Name: Pass Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1410549831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410549830}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.38, y: -2.51, z: -1607.3818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1694156646}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1410549832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410549830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc86a98b2fdf9c643b57dbdbfa0a5547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boxCollider2D: {fileID: 1410549833}
+  _spriteRenderer: {fileID: 1410549834}
+  _activeSprite: {fileID: 21300000, guid: 9d2f033de2dbb4f47a151cbd9089f332, type: 3}
+  _pressedSprite: {fileID: 21300000, guid: e948c44debe76ba4a86c13a879984dab, type: 3}
+  _disabledSprite: {fileID: 21300000, guid: b9c769dddb1443b44a5138288c70a3a1, type: 3}
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2020386382}
+        m_TargetAssemblyTypeName: SpecialManager, Assembly-CSharp
+        m_MethodName: Pass
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Interactable: 1
+--- !u!61 &1410549833
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410549830}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!212 &1410549834
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410549830}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: e948c44debe76ba4a86c13a879984dab, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1444207798
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,6 +3947,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1694156647}
+        m_TargetAssemblyTypeName: SpecialMenu, Assembly-CSharp
+        m_MethodName: RemoveButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1489828542}
+          m_ObjectArgumentAssemblyTypeName: CustomButton, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4057,6 +4210,7 @@ MonoBehaviour:
   _tilePool: {fileID: 1212361317}
   _tileManager: {fileID: 943462211}
   _undoButton: {fileID: 896328489}
+  _specialMenu: {fileID: 1694156647}
   AdvanceQueued: 0
   LockQueued: 0
   Index: 0
@@ -4147,6 +4301,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1694156647}
+        m_TargetAssemblyTypeName: SpecialMenu, Assembly-CSharp
+        m_MethodName: RemoveButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1538640471}
+          m_ObjectArgumentAssemblyTypeName: CustomButton, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4486,6 +4652,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1694156646}
+  - component: {fileID: 1694156647}
   m_Layer: 0
   m_Name: SpecialMenu
   m_TagString: Untagged
@@ -4501,7 +4668,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694156645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5096321, y: -0.9138229, z: 1607.3818}
+  m_LocalPosition: {x: 0, y: -4.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4509,9 +4676,29 @@ Transform:
   - {fileID: 1489828540}
   - {fileID: 1538640469}
   - {fileID: 260418123}
+  - {fileID: 1410549831}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1694156647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694156645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495e3a8cbe554ce4fa69ff5ad08b4434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cornerButton: {fileID: 1833073964}
+  _moveButton: {fileID: 1489828542}
+  _swapButton: {fileID: 1538640471}
+  _removeButton: {fileID: 260418125}
+  _passButton: {fileID: 1410549832}
+  _timelineInstance: {fileID: 1500160681}
+  Index: 0
 --- !u!1001 &1729751119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5285,6 +5472,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1694156647}
+        m_TargetAssemblyTypeName: SpecialMenu, Assembly-CSharp
+        m_MethodName: RemoveButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1833073964}
+          m_ObjectArgumentAssemblyTypeName: CustomButton, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Interactable: 1
 --- !u!61 &1833073965
 BoxCollider2D:
@@ -5671,7 +5870,7 @@ MonoBehaviour:
   CurrentSelectionMode: 0
   ReadyToContinue: 0
   _specialMenus:
-  - {fileID: 1212361319}
+  - {fileID: 1694156647}
   SelectedTile: {fileID: 0}
 --- !u!4 &2020386383
 Transform:

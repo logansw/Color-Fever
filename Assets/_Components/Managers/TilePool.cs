@@ -65,6 +65,7 @@ public class TilePool : MonoBehaviour
         TileData tile = DrawTile();
         TileSlots[0].SetTile(tile);
         if (tile.Color == TileData.TileColor.S) {
+            Debug.Log("Special drawn");
             e_OnSpecialDrawn?.Invoke(Index);
         } else {
             e_OnNormalDrawn?.Invoke(Index);

@@ -42,19 +42,19 @@ public class SpecialManager : MonoBehaviour
     public void SetCornerMode(int index) {
         CurrentSelectionMode = SelectionMode.Corner;
         e_OnCornerModeSet?.Invoke(index);
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 
     public void SetMoveMode(int index) {
         CurrentSelectionMode = SelectionMode.MoveA;
         e_OnMoveModeSet?.Invoke(index);
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 
     public void SetSwapMode(int index) {
         CurrentSelectionMode = SelectionMode.SwapA;
         e_OnSwapModeSet?.Invoke(index);
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 
     public void InvokeMoveModeBegun(int index) {
@@ -64,13 +64,13 @@ public class SpecialManager : MonoBehaviour
     public void SetRemoveMode(int index) {
         CurrentSelectionMode = SelectionMode.Remove;
         e_OnRemoveModeSet?.Invoke(index);
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 
     public void SetNormalMode(int index) {
         CurrentSelectionMode = SelectionMode.Normal;
         e_OnNormalModeSet?.Invoke(index);
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 
     public void SpecialActionComplete(int index) {
@@ -80,6 +80,6 @@ public class SpecialManager : MonoBehaviour
 
     public void Pass(int index) {
         ReadyToContinue = true;
-        _specialMenus[index].HideMenu(index);
+        _specialMenus[index].DeactivateMenu(index);
     }
 }

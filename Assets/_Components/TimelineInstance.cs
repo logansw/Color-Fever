@@ -10,6 +10,7 @@ public class TimelineInstance : MonoBehaviour
     [SerializeField] private TilePool _tilePool;
     [SerializeField] private TileManager _tileManager;
     [SerializeField] private CustomButton _undoButton;
+    [SerializeField] private SpecialMenu _specialMenu;
 
     public bool AdvanceQueued;
     public bool LockQueued;
@@ -21,6 +22,7 @@ public class TimelineInstance : MonoBehaviour
     public Timeline<int> TilesRemainingTimeline;
     public Timeline<bool> IsSpecialTimeline;
     public Timeline<TileData[]> TileSlotsDataTimeline;
+    public Timeline<Dictionary<CustomButton, bool>> ButtonsRemainingTimeline;
 
     public void Initialize() {
         BoardTimeline = new Timeline<TileData[,]>(5, _board.CopyBoard());
@@ -28,6 +30,7 @@ public class TimelineInstance : MonoBehaviour
         TilesRemainingTimeline = new Timeline<int>(5, _tileManager.TilesRemaining[Index]);
         IsSpecialTimeline = new Timeline<bool>(5, _tileManager.IsSpecial);
         TileSlotsDataTimeline = new Timeline<TileData[]>(5, _tilePool.CopyTileSlots(_tilePool.TileSlots));
+        ButtonsRemainingTimeline = new Timeline<Dictionary<CustomButton, bool>>(5, _specialMenu.CopyButtonsRemaining(_specialMenu.ButtonsRemaining));
     }
 
     private void Update() {
@@ -55,6 +58,7 @@ public class TimelineInstance : MonoBehaviour
         TilesRemainingTimeline.Advance(_tileManager.TilesRemaining[Index]);
         IsSpecialTimeline.Advance(_tileManager.IsSpecial);
         TileSlotsDataTimeline.Advance(_tilePool.CopyTileSlots(_tilePool.TileSlots));
+        ButtonsRemainingTimeline.Advance(_specialMenu.CopyButtonsRemaining(_specialMenu.ButtonsRemaining));
         ToggleUndoButtonStatus();
     }
 
@@ -65,18 +69,21 @@ public class TimelineInstance : MonoBehaviour
             TilesRemainingTimeline.Undo(1);
             IsSpecialTimeline.Undo(1);
             TileSlotsDataTimeline.Undo(1);
+            ButtonsRemainingTimeline.Undo(1);
         } else {
             BoardTimeline.UndoUntilLock();
             TilePoolTimeline.UndoUntilLock();
             TilesRemainingTimeline.UndoUntilLock();
             IsSpecialTimeline.UndoUntilLock();
             TileSlotsDataTimeline.UndoUntilLock();
+            ButtonsRemainingTimeline.UndoUntilLock();
         }
 
         _tileManager.SelectedTileSlot = null;
         _board.MatchToTimeline();
         _tilePool.MatchToTimeline();
         _tileManager.MatchToTimeline(Index);
+        _specialMenu.MatchToTimeline();
         ToggleUndoButtonStatus();
     }
 
