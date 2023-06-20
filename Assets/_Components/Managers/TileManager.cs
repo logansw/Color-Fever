@@ -241,6 +241,7 @@ public class TileManager : MonoBehaviour
         if (_tilePools[index].TileSlots[0].TileData.Equals(TileData.S)) {
             _specialMenus[index].ActivateMenu(index);
             SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = false;
+            SpecialManager.s_instance.ReadyToContinue = false;
         } else {
             SpecialManager.s_instance.SpecialMenus[index].ReadyToContinue = true;
         }

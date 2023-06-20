@@ -111,4 +111,13 @@ public class SpecialMenu : MonoBehaviour
             ActivateMenu(Index);
         }
     }
+
+    public void SetReadyToContinue(bool ready) {
+        if (TileManager.s_instance.IsSpecial) {
+            ReadyToContinue = ready;
+            if (!ready) {
+                SpecialManager.s_instance.ReadyToContinue = false;
+            }
+        }
+    }
 }

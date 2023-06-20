@@ -15,7 +15,6 @@ public class BoardManager : MonoBehaviour
     private void OnEnable() {
         DiceManager.e_OnDiceRoll += SetHighlightTiles;
         TileManager.e_OnSlotEmptied += ClearHighlightTiles;
-        TilePool.e_OnSpecialDrawn += ClearHighlightTiles;
         SpecialManager.e_OnMoveModeBegun += HighlightLowest;
         SpecialManager.e_OnCornerModeSet += HighlightCorners;
         SpecialManager.e_OnMoveModeSet += HighlightMovable;
@@ -28,7 +27,6 @@ public class BoardManager : MonoBehaviour
     private void OnDisable() {
         DiceManager.e_OnDiceRoll -= SetHighlightTiles;
         TileManager.e_OnSlotEmptied -= ClearHighlightTiles;
-        TilePool.e_OnSpecialDrawn -= ClearHighlightTiles;
         SpecialManager.e_OnMoveModeBegun -= HighlightLowest;
         SpecialManager.e_OnCornerModeSet -= HighlightCorners;
         SpecialManager.e_OnMoveModeSet -= HighlightMovable;

@@ -95,6 +95,5 @@ public class SpecialManager : MonoBehaviour
     public void Pass(int index) {
         SpecialMenus[index].ReadyToContinue = true;
         SpecialMenus[index].DeactivateMenu(index);
-
     }
 }
