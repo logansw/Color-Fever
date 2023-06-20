@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
     [Header("ExternalReferences")]
     [SerializeField] private ScoreCalculator[] _scoreCalculators;
     [SerializeField] private TMP_Text _totalScoreText;
+    private int[] _individualScores;
     private int _totalScore;
 
     public static int[,] ScoreGridColumns = {
@@ -167,16 +168,15 @@ public class ScoreManager : MonoBehaviour
     public void Initialize() {
         _totalScore = 0;
         _totalScoreText.text = _totalScore.ToString();
+        _individualScores = new int[_scoreCalculators.Length];
     }
 
     public void UpdateScore(Board board) {
-        int oldScore = _totalScore;
-        foreach (ScoreCalculator calculator in _scoreCalculators) {
-            _totalScore = calculator.GetScore();
+        _totalScore = 0;
+        for (int i = 0; i < _scoreCalculators.Length; i++) {
+            _individualScores[i] = _scoreCalculators[i].GetScore();
+            _totalScore += _individualScores[i];
         }
         _totalScoreText.text = _totalScore.ToString();
-        if (ConfigurationManager.s_instance.DebugMode) {
-            Debug.Log(_totalScore - oldScore);
-        }
     }
 }
