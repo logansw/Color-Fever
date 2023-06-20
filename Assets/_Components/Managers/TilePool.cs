@@ -16,8 +16,10 @@ public class TilePool : MonoBehaviour
     public delegate void OnNormalDrawn(int index);
     public static OnNormalDrawn e_OnNormalDrawn;
     [SerializeField] private TimelineInstance _timelineInstance;
+    public bool IsSpecial;
 
-    private void Start() {
+    public void Initialize(int index) {
+        Index = index;
         _tilePool = new Dictionary<TileData, int>() {
             {TileData.p, 18},
             {TileData.P, 1},
@@ -35,10 +37,7 @@ public class TilePool : MonoBehaviour
         foreach (TileData tileData in _tilePool.Keys) {
             _totalTiles += _tilePool[tileData];
         }
-    }
 
-    public void Initialize(int index) {
-        Index = index;
         foreach (TileSlot tileSlot in TileSlots) {
             tileSlot.Initialize(this);
         }
@@ -61,6 +60,19 @@ public class TilePool : MonoBehaviour
         SpecialManager.e_OnNormalModeSet -= HideCornerTiles;
     }
 
+    private void Update() {
+        if (TileSlots[0].TileData.Equals(TileData.S)) {
+            IsSpecial = true;
+        } else {
+            IsSpecial = false;
+        }
+
+        if (TileManager.s_instance.IsSpecial &&
+            !(TileSlots[0].TileData.Equals(TileData.S) || TileSlots[0].TileData.Equals(TileData.n))) {
+            ForceSpecialTile(Index);
+        }
+    }
+
     public void SetRandomTile() {
         TileData tile = DrawTile();
         TileSlots[0].SetTile(tile);
@@ -72,6 +84,15 @@ public class TilePool : MonoBehaviour
         }
         ShowTileSlots();
         _timelineInstance.QueueLock();
+    }
+
+    public void ForceSpecialTile(int index) {
+        Debug.Log("Force special");
+        TileSlot tileSlot = TileSlots[0];
+        ReturnTile(tileSlot.TileData);
+        tileSlot.SetTile(TileData.S);
+        _tilePool[tileSlot.TileData]--;
+        e_OnSpecialDrawn?.Invoke(index);
     }
 
     public TileData DrawTile() {
@@ -143,7 +164,9 @@ public class TilePool : MonoBehaviour
     }
 
     public void ReturnTile(TileData tile) {
-        _tilePool[tile] += 1;
+        if (_tilePool.ContainsKey(tile)) {
+            _tilePool[tile] += 1;
+        }
     }
 
     public void SetStartingTiles(List<TileData> startTiles) {
@@ -171,7 +194,7 @@ public class TilePool : MonoBehaviour
         SpecialManager.s_instance.ReadyToContinue = true;
     }
 
-    private void HideCornerTiles(int index) {
+    public void HideCornerTiles(int index) {
         if (index != Index) {
             return;
         }

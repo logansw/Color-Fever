@@ -49,34 +49,34 @@ public class TileManager : MonoBehaviour
         TileSlot.e_OnTileSelected += SelectTile;
         TileSlot.e_OnSpecialSelected += SelectTile;
         SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
-        TilePool.e_OnSpecialDrawn += SetIsSpecial;
-        TilePool.e_OnNormalDrawn += SetIsNormal;
+        // TilePool.e_OnSpecialDrawn += SetIsSpecial;
+        // TilePool.e_OnNormalDrawn += SetIsNormal;
         SpecialManager.e_OnNormalModeSet += EnableCenterSlots;
+        // TilePool.e_OnSpecialDrawn += CoordinateSpecialTiles;
     }
 
     private void OnDisable() {
         TileSlot.e_OnTileSelected -= SelectTile;
         TileSlot.e_OnSpecialSelected -= SelectTile;
         SpecialManager.e_OnCornerModeSet -= ConfigureForCornerMode;
-        TilePool.e_OnSpecialDrawn -= SetIsSpecial;
-        TilePool.e_OnNormalDrawn -= SetIsNormal;
         SpecialManager.e_OnNormalModeSet -= EnableCenterSlots;
     }
 
-    /// <summary>
-    /// This is called when a special tile is drawn.
-    /// </summary>
-    /// <param name="index"></param>
-    private void SetIsSpecial(int index) {
-        IsSpecial = true;
-    }
-
-    /// <summary>
-    /// This is called when a normal tile is drawn.
-    /// </summary>
-    /// <param name="index"></param>
-    private void SetIsNormal(int index) {
+    private void Update() {
         IsSpecial = false;
+        // If any tilepool is special
+        foreach (TilePool tilePool in _tilePools) {
+            if (tilePool.IsSpecial) {
+                IsSpecial = true;
+            }
+        }
+        // Make all the tilepools special
+        if (IsSpecial) {
+            foreach (TilePool tilePool in _tilePools) {
+                tilePool.IsSpecial = true;
+            }
+        }
+
     }
 
     private void SelectTile(TileSlot tileSlot) {

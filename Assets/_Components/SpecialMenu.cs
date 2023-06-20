@@ -14,7 +14,7 @@ public class SpecialMenu : MonoBehaviour
     public Dictionary<CustomButton, bool> ButtonsRemaining;
     public int Index;
 
-    private void Start() {
+    public void Initialize() {
         ButtonsRemaining = new Dictionary<CustomButton, bool>();
         ButtonsRemaining.Add(_cornerButton, true);
         ButtonsRemaining.Add(_swapButton, true);

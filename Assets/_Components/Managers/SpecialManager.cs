@@ -37,6 +37,9 @@ public class SpecialManager : MonoBehaviour
     public void Initialize() {
         CurrentSelectionMode = SelectionMode.Normal;
         ReadyToContinue = true;
+        foreach (SpecialMenu specialMenu in _specialMenus) {
+            specialMenu.Initialize();
+        }
     }
 
     public void SetCornerMode(int index) {

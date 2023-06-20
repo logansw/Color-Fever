@@ -14,6 +14,7 @@ public class TileSlot : MonoBehaviour
     public static OnSpecialSelected e_OnSpecialSelected;
     public TileData TileData;
     public TilePool ParentTilePool { get; private set; }
+    [HideInInspector] public int Index;
 
     private void OnEnable() {
         _touchable.e_OnTouched += SelectTile;
@@ -26,6 +27,7 @@ public class TileSlot : MonoBehaviour
     public void Initialize(TilePool tilePool) {
         _spriteRenderer.sprite = null;
         ParentTilePool = tilePool;
+        Index = ParentTilePool.Index;
     }
 
     private void SelectTile() {

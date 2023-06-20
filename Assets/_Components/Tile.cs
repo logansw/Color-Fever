@@ -16,12 +16,14 @@ public class Tile : MonoBehaviour
     private Board _parentBoard;
     public int X { get; private set; }
     public int Y { get; private set; }
+    [HideInInspector] public int Index;
 
     public void Initialize(Board board, int x, int y)
     {
         _parentBoard = board;
         this.X = x;
         this.Y = y;
+        Index = _parentBoard.Index;
         if (ConfigurationManager.s_instance.DebugMode) {
             _touchable.e_OnTouched += DebugUpdateBoard;
         } else {
@@ -77,9 +79,9 @@ public class Tile : MonoBehaviour
         bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileData, X, Y);
         if (result) {
             TileManager.s_instance.DisableSelectedTile();
-            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
-            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
-            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
+            SpecialManager.s_instance.SetNormalMode(Index);
+            SpecialManager.s_instance.SpecialActionComplete(Index);
+            TileManager.s_instance.HideCenterSlot(Index);
         } else {
             // Do nothing
         }
@@ -87,7 +89,7 @@ public class Tile : MonoBehaviour
 
     private void UpdateBoardNormal() {
         TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot;
-        if (selectedTileSlot == null) {
+        if (selectedTileSlot == null || selectedTileSlot.Index != Index) {
             return;
         }
 
@@ -105,23 +107,23 @@ public class Tile : MonoBehaviour
         }
         SpecialManager.s_instance.SelectedTile = this;
         SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveB;
-        SpecialManager.s_instance.InvokeMoveModeBegun(_parentBoard.Index);
+        SpecialManager.s_instance.InvokeMoveModeBegun(Index);
     }
 
     private void UpdateBoardMoveB() {
         if (SpecialManager.s_instance.SelectedTile == this) {
             SpecialManager.s_instance.SelectedTile = null;
             SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
-            BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
+            BoardManager.s_instance.ClearHighlightTiles(Index);
         }
         if (TileData.IsHighlighted) {
             Tile original = SpecialManager.s_instance.SelectedTile;
             _parentBoard.SetTile(X, Y, original.TileData);
             _parentBoard.SetTile(original.X, original.Y, TileData.s);
-            BoardManager.s_instance.ClearHighlightTiles(_parentBoard.Index);
-            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
-            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
-            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
+            BoardManager.s_instance.ClearHighlightTiles(Index);
+            SpecialManager.s_instance.SetNormalMode(Index);
+            SpecialManager.s_instance.SpecialActionComplete(Index);
+            TileManager.s_instance.HideCenterSlot(Index);
         }
     }
 
@@ -147,18 +149,18 @@ public class Tile : MonoBehaviour
             TileData thisTileData = this.TileData;
             _parentBoard.SetTile(this.X, this.Y, other.TileData);
             _parentBoard.SetTile(other.X, other.Y, thisTileData);
-            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
-            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
-            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
+            SpecialManager.s_instance.SetNormalMode(Index);
+            SpecialManager.s_instance.SpecialActionComplete(Index);
+            TileManager.s_instance.HideCenterSlot(Index);
         }
     }
 
     private void UpdateBoardRemove() {
         if (TileData.IsNormal()) {
             _parentBoard.SetTile(X, Y, TileData.s);
-            SpecialManager.s_instance.SetNormalMode(_parentBoard.Index);
-            SpecialManager.s_instance.SpecialActionComplete(_parentBoard.Index);
-            TileManager.s_instance.HideCenterSlot(_parentBoard.Index);
+            SpecialManager.s_instance.SetNormalMode(Index);
+            SpecialManager.s_instance.SpecialActionComplete(Index);
+            TileManager.s_instance.HideCenterSlot(Index);
         }
     }
 

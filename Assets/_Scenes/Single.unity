@@ -2486,7 +2486,6 @@ GameObject:
   - component: {fileID: 896328491}
   - component: {fileID: 896328490}
   - component: {fileID: 896328489}
-  - component: {fileID: 896328488}
   m_Layer: 0
   m_Name: Undo Button
   m_TagString: Untagged
@@ -2494,21 +2493,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &896328488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896328487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b8e7415c29b754e8bd8ce99ffa5167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 896328489}
-  CurrentContinueState: 0
-  ContinueButtonPressed: 0
 --- !u!114 &896328489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2545,6 +2529,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
         m_MethodName: OnUndo
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1212361317}
+        m_TargetAssemblyTypeName: TilePool, Assembly-CSharp
+        m_MethodName: HideCornerTiles
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
