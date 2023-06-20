@@ -49,10 +49,7 @@ public class TileManager : MonoBehaviour
         TileSlot.e_OnTileSelected += SelectTile;
         TileSlot.e_OnSpecialSelected += SelectTile;
         SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
-        // TilePool.e_OnSpecialDrawn += SetIsSpecial;
-        // TilePool.e_OnNormalDrawn += SetIsNormal;
         SpecialManager.e_OnNormalModeSet += EnableCenterSlots;
-        // TilePool.e_OnSpecialDrawn += CoordinateSpecialTiles;
     }
 
     private void OnDisable() {
@@ -251,5 +248,9 @@ public class TileManager : MonoBehaviour
 
     public void HideCenterSlot(int index) {
         _tilePools[index].TileSlots[0].Disable();
+    }
+
+    public bool TilePoolIsSpecial(int index) {
+        return _tilePools[index].IsSpecial;
     }
 }

@@ -107,7 +107,7 @@ public class SpecialMenu : MonoBehaviour
             RestoreButton(_removeButton);
         }
         RenderButtons();
-        if (TileManager.s_instance.IsSpecial) {
+        if (TileManager.s_instance.TilePoolIsSpecial(Index)) {
             ActivateMenu(Index);
         }
     }

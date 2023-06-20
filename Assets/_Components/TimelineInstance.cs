@@ -82,8 +82,8 @@ public class TimelineInstance : MonoBehaviour
         _tileManager.SelectedTileSlot = null;
         _board.MatchToTimeline();
         _tilePool.MatchToTimeline();
-        _tileManager.MatchToTimeline(Index);
         _specialMenu.MatchToTimeline();
+        _tileManager.MatchToTimeline(Index);
         ToggleUndoButtonStatus();
     }
 

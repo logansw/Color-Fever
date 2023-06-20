@@ -3130,6 +3130,7 @@ MonoBehaviour:
   - {fileID: 1410065727}
   Index: 0
   _timelineInstance: {fileID: 1500160681}
+  IsSpecial: 0
 --- !u!4 &1212361318
 Transform:
   m_ObjectHideFlags: 0
@@ -4695,6 +4696,7 @@ MonoBehaviour:
   _passButton: {fileID: 1410549832}
   _timelineInstance: {fileID: 1500160681}
   Index: 0
+  ReadyToContinue: 0
 --- !u!1001 &1729751119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5865,7 +5867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentSelectionMode: 0
   ReadyToContinue: 0
-  _specialMenus:
+  SpecialMenus:
   - {fileID: 1694156647}
   SelectedTile: {fileID: 0}
 --- !u!4 &2020386383
