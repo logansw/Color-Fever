@@ -22,7 +22,7 @@ public class TilePool : MonoBehaviour
         Index = index;
         _tilePool = new Dictionary<TileData, int>() {
             {TileData.p, 18},
-            {TileData.P, 1},
+            {TileData.P, 1000},
             {TileData.o, 18},
             {TileData.O, 1},
             {TileData.y, 18},

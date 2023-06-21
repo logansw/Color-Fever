@@ -264,7 +264,7 @@ public class ScoreCalculator : MonoBehaviour
 
     private int ScoreCorners() {
         int score = 0;
-        Dictionary<TileData, int> cornerTypes = new Dictionary<TileData, int>();
+        Dictionary<TileData.TileColor, int> cornerTypes = new Dictionary<TileData.TileColor, int>();
         List<TileData> cornerTiles = new List<TileData>();
         TileData bottomLeft = board.BoardData[1, 1];
         TileData bottomRight = board.BoardData[10, 1];
@@ -276,10 +276,10 @@ public class ScoreCalculator : MonoBehaviour
         cornerTiles.Add(topRight);
         foreach(TileData corner in cornerTiles) {
             if (corner.IsNormal()) {
-                if (cornerTypes.ContainsKey(corner)) {
-                    cornerTypes[corner] += 1;
+                if (cornerTypes.ContainsKey(corner.Color)) {
+                    cornerTypes[corner.Color] += 1;
                 } else {
-                    cornerTypes.Add(corner, 1);
+                    cornerTypes.Add(corner.Color, 1);
                 }
             }
         }
@@ -310,7 +310,7 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool ValidCornerPair(TileData a, TileData b) {
-        return (a.IsNormal() && b.IsNormal()) && (a.Equals(b));
+        return (a.IsNormal() && b.IsNormal()) && (a.Color.Equals(b.Color));
     }
 
     private List<Chain> CreateChains(List<Link> links) {

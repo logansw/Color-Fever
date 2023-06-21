@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Initialize() {
-        RoundsRemaining = 3;
+        RoundsRemaining = 18;
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
     }
 

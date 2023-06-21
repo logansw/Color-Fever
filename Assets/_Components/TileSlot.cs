@@ -7,6 +7,7 @@ public class TileSlot : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
+    [SerializeField] private SpriteRenderer _backgroundSR;
 
     public delegate void OnTileSelected(TileSlot tileSlot);
     public static OnTileSelected e_OnTileSelected;
@@ -28,6 +29,7 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.sprite = null;
         ParentTilePool = tilePool;
         Index = ParentTilePool.Index;
+        _backgroundSR.color = new Color32(255, 255, 255, 0);
     }
 
     private void SelectTile() {
@@ -42,6 +44,7 @@ public class TileSlot : MonoBehaviour
         TileData = tileData;
         _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
         _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
+        _backgroundSR.color = new Color32(255, 255, 255, 255);
     }
 
     public void Disable() {
@@ -49,6 +52,7 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.sprite = null;
         _spriteRenderer.color = Color.white;
         _touchable.Disable();
+        _backgroundSR.color = new Color32(255, 255, 255, 0);
     }
 
     public void Enable() {
@@ -57,15 +61,18 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
         _touchable.enabled = true;
         _touchable.Enable();
+        _backgroundSR.color = new Color32(255, 255, 255, 255);
     }
 
     public void Show() {
         _spriteRenderer.enabled = true;
         _touchable.Enable();
+        _backgroundSR.color = new Color32(255, 255, 255, 255);
     }
 
     public void Hide() {
         _spriteRenderer.enabled = false;
         _touchable.Disable();
+        _backgroundSR.color = new Color32(255, 255, 255, 0);
     }
 }

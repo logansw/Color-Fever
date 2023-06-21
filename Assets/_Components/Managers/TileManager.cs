@@ -159,14 +159,14 @@ public class TileManager : MonoBehaviour
     }
 
     public Sprite TileDataToSprite(TileData tileData) {
-        if (tileData.Color == TileData.TileColor.p || tileData.Color == TileData.TileColor.o ||
+        if (tileData.IsStarred) {
+            return TileSpriteStar;
+        } else if (tileData.Color == TileData.TileColor.p || tileData.Color == TileData.TileColor.o ||
             tileData.Color == TileData.TileColor.y || tileData.Color == TileData.TileColor.g ||
             tileData.Color == TileData.TileColor.b || tileData.Color == TileData.TileColor.s) {
             return TileSpriteSquare;
         } else if (tileData.Color == TileData.TileColor.S) {
             return TileSpriteSpecial;
-        } else if (tileData.IsStarred) {
-            return TileSpriteStar;
         } else {
             return null;
         }
