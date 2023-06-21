@@ -10,13 +10,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text _roundsRemainingText;
     public delegate void OnGameEnd();
     public static event OnGameEnd e_OnGameEnd;
+    [SerializeField] private GameObject _endCard;
 
     private void Awake() {
         s_instance = this;
     }
 
     public void Initialize() {
-        RoundsRemaining = 34;
+        RoundsRemaining = 3;
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
     }
 
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
         RoundsRemaining--;
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
         if (RoundsRemaining < 0) {
-            Debug.Log("Game over!");
+            _endCard.gameObject.SetActive(true);
             e_OnGameEnd?.Invoke();
         }
     }

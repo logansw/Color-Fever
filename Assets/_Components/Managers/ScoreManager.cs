@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
     [Header("ExternalReferences")]
     [SerializeField] private ScoreCalculator[] _scoreCalculators;
     [SerializeField] private TMP_Text _totalScoreText;
+    [SerializeField] private TMP_Text _totalScoreFinalText;
     private int[] _individualScores;
     private int _totalScore;
 
@@ -193,7 +194,6 @@ public class ScoreManager : MonoBehaviour
     }
 
     public void RecordScores() {
-        Debug.Log("Recording scores");
         HighscoreData singleData = JSONTool.ReadData<HighscoreData>("SingleScores.json");
         HighscoreData doubleData = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
 
@@ -207,7 +207,17 @@ public class ScoreManager : MonoBehaviour
         if (count == 2) {
             doubleData.Highscores.Add(scores[0] + scores[1]);
         }
+
+        _totalScoreFinalText.text = _totalScore.ToString();
         JSONTool.WriteData<HighscoreData>(singleData, "SingleScores.json");
         JSONTool.WriteData<HighscoreData>(doubleData, "DoubleScores.json");
+    }
+
+    public int[] GetSingleScores() {
+        return _individualScores;
+    }
+
+    public int GetDoubleScore() {
+        return _individualScores[0] + _individualScores[1];
     }
 }
