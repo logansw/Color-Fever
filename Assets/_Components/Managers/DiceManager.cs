@@ -76,7 +76,7 @@ public class DiceManager : MonoBehaviour
     }
 
     public void SetDiceByDoubles() {
-        if (DiceValues[0] == DiceValues[1]) {
+        if (DiceValues[0] == DiceValues[1] && DiceValues[0] != -1) {
             EnableRoll();
         } else {
             DisableRoll();
@@ -85,6 +85,7 @@ public class DiceManager : MonoBehaviour
 
     public void ZeroDice() {
         for (int i = 0; i < _diceRenderers.Length; i++) {
+            DiceValues[i] = -1;
             _diceRenderers[i].sprite = _diceZeroSprite;
         }
     }

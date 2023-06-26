@@ -17,7 +17,7 @@ public class BoardManager : MonoBehaviour
         TileManager.e_OnSlotEmptied += ClearHighlightTiles;
         SpecialManager.e_OnMoveModeBegun += HighlightLowest;
         SpecialManager.e_OnCornerModeSet += HighlightCorners;
-        SpecialManager.e_OnMoveModeSet += HighlightMovable;
+        SpecialManager.e_OnMoveModeSet += HighlightTiles;
         SpecialManager.e_OnMoveModeBegun += UnhighlightMovable;
         SpecialManager.e_OnRemoveModeSet += HighlightTiles;
         SpecialManager.e_OnSwapModeSet += HighlightTiles;
@@ -29,7 +29,7 @@ public class BoardManager : MonoBehaviour
         TileManager.e_OnSlotEmptied -= ClearHighlightTiles;
         SpecialManager.e_OnMoveModeBegun -= HighlightLowest;
         SpecialManager.e_OnCornerModeSet -= HighlightCorners;
-        SpecialManager.e_OnMoveModeSet -= HighlightMovable;
+        SpecialManager.e_OnMoveModeSet -= HighlightTiles;
         SpecialManager.e_OnMoveModeBegun -= UnhighlightMovable;
         SpecialManager.e_OnRemoveModeSet -= HighlightTiles;
         SpecialManager.e_OnSwapModeSet -= HighlightTiles;
