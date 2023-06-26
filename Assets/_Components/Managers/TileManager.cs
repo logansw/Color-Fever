@@ -41,7 +41,7 @@ public class TileManager : MonoBehaviour
             DrawStartTiles(_tilePools[i]);
         }
         if (ConfigurationManager.s_instance.DebugMode) {
-            DebugTile = TileData.p;
+            DebugTile = TileData.r;
         }
     }
 
@@ -73,11 +73,16 @@ public class TileManager : MonoBehaviour
                 tilePool.IsSpecial = true;
             }
         }
-
     }
 
     private void SelectTile(TileSlot tileSlot) {
         SelectedTileSlot = tileSlot;
+        foreach (TilePool tilePool in _tilePools) {
+            foreach (TileSlot slot in tilePool.TileSlots) {
+                slot.Unhighlight();
+            }
+        }
+        tileSlot.Highlight();
     }
 
     public void DisableSelectedTile() {
@@ -90,6 +95,7 @@ public class TileManager : MonoBehaviour
         }
         e_OnTilePlaced?.Invoke();
         SelectedTileSlot.Disable();
+        SelectedTileSlot.Unhighlight();
         SelectedTileSlot = null;
     }
 
@@ -161,7 +167,7 @@ public class TileManager : MonoBehaviour
     public Sprite TileDataToSprite(TileData tileData) {
         if (tileData.IsStarred) {
             return TileSpriteStar;
-        } else if (tileData.Color == TileData.TileColor.p || tileData.Color == TileData.TileColor.o ||
+        } else if (tileData.Color == TileData.TileColor.r || tileData.Color == TileData.TileColor.o ||
             tileData.Color == TileData.TileColor.y || tileData.Color == TileData.TileColor.g ||
             tileData.Color == TileData.TileColor.b || tileData.Color == TileData.TileColor.s) {
             return TileSpriteSquare;
@@ -173,8 +179,8 @@ public class TileManager : MonoBehaviour
     }
 
     public Color32 TileDataToColor(TileData TileData) {
-        if (TileData.Color == TileData.TileColor.p) {
-            return ColorManager.s_colorMap[TileData.p];
+        if (TileData.Color == TileData.TileColor.r) {
+            return ColorManager.s_colorMap[TileData.r];
         } else if (TileData.Color == TileData.TileColor.o) {
             return ColorManager.s_colorMap[TileData.o];
         } else if (TileData.Color == TileData.TileColor.y) {
@@ -202,8 +208,8 @@ public class TileManager : MonoBehaviour
         if (!a.IsNormal() || !b.IsNormal()) {
             return false;
         }
-        if (a.Color == TileData.TileColor.p) {
-            return b.Color == TileData.TileColor.p;
+        if (a.Color == TileData.TileColor.r) {
+            return b.Color == TileData.TileColor.r;
         } else if (a.Color == TileData.TileColor.o) {
             return b.Color == TileData.TileColor.o;
         } else if (a.Color == TileData.TileColor.y) {
@@ -222,7 +228,7 @@ public class TileManager : MonoBehaviour
 
     public void DebugForceTilePlacement() {
         e_OnTilePlaced?.Invoke();
-        if (DebugTile.Equals(TileData.p)) {
+        if (DebugTile.Equals(TileData.r)) {
             DebugTile = TileData.o;
         } else if (DebugTile.Equals(TileData.o)) {
             DebugTile = TileData.y;
@@ -231,7 +237,7 @@ public class TileManager : MonoBehaviour
         } else if (DebugTile.Equals(TileData.g)) {
             DebugTile = TileData.b;
         } else if (DebugTile.Equals(TileData.b)) {
-            DebugTile = TileData.p;
+            DebugTile = TileData.r;
         }
     }
 

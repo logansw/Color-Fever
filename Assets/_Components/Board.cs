@@ -89,7 +89,7 @@ public class Board : MonoBehaviour
                     case "Space":
                         boardString += "0 ";
                         break;
-                    case "Pink":
+                    case "Red":
                         boardString += "P ";
                         break;
                     case "Orange":

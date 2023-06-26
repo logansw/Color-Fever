@@ -16,7 +16,7 @@ public struct TileData {
         s, // space
         n, // null
         S, // special
-        p, // pink
+        r, // red
         o, // orange
         y, // yellow
         g, // green
@@ -38,12 +38,12 @@ public struct TileData {
         IsHighlighted = isHighlighted;
     }
 
-    public static TileData p = new TileData(TileColor.p, false, false);
+    public static TileData r = new TileData(TileColor.r, false, false);
     public static TileData o = new TileData(TileColor.o, false, false);
     public static TileData y = new TileData(TileColor.y, false, false);
     public static TileData g = new TileData(TileColor.g, false, false);
     public static TileData b = new TileData(TileColor.b, false, false);
-    public static TileData P = new TileData(TileColor.p, true, false);
+    public static TileData R = new TileData(TileColor.r, true, false);
     public static TileData O = new TileData(TileColor.o, true, false);
     public static TileData Y = new TileData(TileColor.y, true, false);
     public static TileData G = new TileData(TileColor.g, true, false);

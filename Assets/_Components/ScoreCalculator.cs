@@ -234,7 +234,7 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool IsRainbow(HashSet<TileData> tiles) {
-        return ((tiles.Contains(TileData.p) || tiles.Contains(TileData.P)) &&
+        return ((tiles.Contains(TileData.r) || tiles.Contains(TileData.R)) &&
             (tiles.Contains(TileData.o) || tiles.Contains(TileData.O)) &&
             (tiles.Contains(TileData.y) || tiles.Contains(TileData.Y)) &&
             (tiles.Contains(TileData.g) || tiles.Contains(TileData.G)) &&

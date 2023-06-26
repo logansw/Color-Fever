@@ -16,6 +16,11 @@ public class CustomButton : MonoBehaviour
 
     public UnityEvent OnClick = new UnityEvent();
     public bool Interactable;
+    public Bounds Bounds {
+        get {
+            return _boxCollider2D.bounds;
+        }
+    }
 
     public void Update() {
         if (Interactable) {

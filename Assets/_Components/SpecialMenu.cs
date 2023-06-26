@@ -11,9 +11,11 @@ public class SpecialMenu : MonoBehaviour
     [SerializeField] private CustomButton _removeButton;
     [SerializeField] private CustomButton _passButton;
     [SerializeField] private TimelineInstance _timelineInstance;
+
     public Dictionary<CustomButton, bool> ButtonsRemaining;
     public int Index;
     public bool ReadyToContinue;
+    [SerializeField] private bool _horizontal;
 
     public void Initialize() {
         ButtonsRemaining = new Dictionary<CustomButton, bool>();
@@ -75,11 +77,21 @@ public class SpecialMenu : MonoBehaviour
             }
         }
         int i = 0;
-        foreach (CustomButton button in ButtonsRemaining.Keys) {
-            if (ButtonsRemaining[button]) {
-                Vector3 leftMost = new Vector3(-((float)count - 1f) / 2f, 0, 0) * 1.1f;
-                button.transform.localPosition = leftMost + new Vector3(i * 1.1f, 0, 0);
-                i++;
+        if (_horizontal) {
+            foreach (CustomButton button in ButtonsRemaining.Keys) {
+                if (ButtonsRemaining[button]) {
+                    Vector3 leftMost = new Vector3(-((float)count - 1f) / 2f * button.Bounds.size.x, 0, 0) * 1.05f;
+                    button.transform.localPosition = leftMost + new Vector3(i * 1.05f * button.Bounds.size.x, 0, 0);
+                    i++;
+                }
+            }
+        } else {
+            foreach (CustomButton button in ButtonsRemaining.Keys) {
+                if (ButtonsRemaining[button]) {
+                    Vector3 topMost = new Vector3(0, ((float)count - 1f) / 2f * button.Bounds.size.y, 0) * 1.05f;
+                    button.transform.localPosition = topMost + new Vector3(0, -i * 1.05f * button.Bounds.size.y, 0);
+                    i++;
+                }
             }
         }
     }

@@ -9,6 +9,10 @@ public class TileSlot : MonoBehaviour
     [SerializeField] private Touchable _touchable;
     [SerializeField] private SpriteRenderer _backgroundSR;
 
+    [Header("External References")]
+    [SerializeField] private SpriteRenderer _outlineSR;
+    [SerializeField] private SpriteRenderer _shadowSR;
+
     public delegate void OnTileSelected(TileSlot tileSlot);
     public static OnTileSelected e_OnTileSelected;
     public delegate void OnSpecialSelected(TileSlot tileSlot);
@@ -30,6 +34,8 @@ public class TileSlot : MonoBehaviour
         ParentTilePool = tilePool;
         Index = ParentTilePool.Index;
         _backgroundSR.color = new Color32(255, 255, 255, 0);
+        _outlineSR.enabled = false;
+        _shadowSR.enabled = false;
     }
 
     private void SelectTile() {
@@ -74,5 +80,15 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.enabled = false;
         _touchable.Disable();
         _backgroundSR.color = new Color32(255, 255, 255, 0);
+    }
+
+    public void Highlight() {
+        _outlineSR.enabled = true;
+        _shadowSR.enabled = true;
+    }
+
+    public void Unhighlight() {
+        _outlineSR.enabled = false;
+        _shadowSR.enabled = false;
     }
 }

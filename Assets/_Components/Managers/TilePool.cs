@@ -21,8 +21,8 @@ public class TilePool : MonoBehaviour
     public void Initialize(int index) {
         Index = index;
         _tilePool = new Dictionary<TileData, int>() {
-            {TileData.p, 18},
-            {TileData.P, 1},
+            {TileData.r, 18},
+            {TileData.R, 1},
             {TileData.o, 18},
             {TileData.O, 1},
             {TileData.y, 18},
@@ -107,40 +107,40 @@ public class TilePool : MonoBehaviour
     public TileData DrawRandomTile() {
         TileData tile;
         int randomNumber = Random.Range(0, _totalTiles);
-        int pink = _tilePool[TileData.p];
+        int red = _tilePool[TileData.r];
         int orange = _tilePool[TileData.o];
         int yellow = _tilePool[TileData.y];
         int green = _tilePool[TileData.g];
         int blue = _tilePool[TileData.b];
         switch (randomNumber) {
-            case int n when (n < pink):
-                tile = TileData.p;
+            case int n when (n < red):
+                tile = TileData.r;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P]):
-                tile = TileData.P;
+            case int n when (n < red + _tilePool[TileData.R]):
+                tile = TileData.R;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + orange):
+            case int n when (n < red + _tilePool[TileData.R] + orange):
                 tile = TileData.o;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O]):
+            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O]):
                 tile = TileData.O;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow):
+            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow):
                 tile = TileData.y;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y]):
+            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y]):
                 tile = TileData.Y;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green):
+            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green):
                 tile = TileData.g;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G]):
+            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G]):
                 tile = TileData.G;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + pink + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue):
+            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue):
                 tile = TileData.b;
                 break;
-            case int n when (n < pink + _tilePool[TileData.P] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue + _tilePool[TileData.B]):
+            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue + _tilePool[TileData.B]):
                 tile = TileData.B;
                 break;
             default:
@@ -183,7 +183,7 @@ public class TilePool : MonoBehaviour
         foreach(TileSlot tileSlot in CornerTileSlots) {
             tileSlot.Enable();
         }
-        CornerTileSlots[0].SetTile(TileData.p);
+        CornerTileSlots[0].SetTile(TileData.r);
         CornerTileSlots[1].SetTile(TileData.o);
         CornerTileSlots[2].SetTile(TileData.y);
         CornerTileSlots[3].SetTile(TileData.g);
@@ -251,8 +251,8 @@ public class TilePool : MonoBehaviour
         foreach (TileData tileData in _tilePool.Keys) {
             string tileName;
             switch (tileData.Color) {
-                case TileData.TileColor.p:
-                    tileName = "Pink";
+                case TileData.TileColor.r:
+                    tileName = "Red";
                     break;
                 case TileData.TileColor.o:
                     tileName = "Orange";

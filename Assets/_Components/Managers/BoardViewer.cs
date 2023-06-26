@@ -42,7 +42,7 @@ public class BoardViewer : MonoBehaviour
                 Tile tile = Instantiate(_tilePrefab, board.transform.position + new Vector3(i, j, 0), Quaternion.identity);
                 tile.Initialize(board, i, j);
                 tile.SetColor(board.GetTile(i, j));
-                tile.transform.localScale = new Vector3(0.9f, 0.9f, 1.0f);
+                tile.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 tile.transform.SetParent(board.transform);
                 tileObjects[i, j] = tile;
                 if (j == 4 && (i == 1 || i == 4 || i == 7 || i == 10)) {

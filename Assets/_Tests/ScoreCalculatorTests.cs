@@ -99,7 +99,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.O, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
@@ -107,7 +107,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
@@ -115,7 +115,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.O, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
@@ -123,7 +123,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
@@ -131,7 +131,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.P, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.R, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s},
         });
@@ -139,7 +139,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.P, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.R, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.s, TileData.s, TileData.s},
         });
@@ -147,7 +147,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.P, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.R, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.s, TileData.s},
         });
@@ -155,7 +155,7 @@ public class ScoreCalculatorTests : TestBase
         SetBoard(new TileData[,] {
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.P, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.R, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.s},
         });
@@ -165,7 +165,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.P},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.R},
         });
         TestsPassed = RunTest("3 column 10  STAR", ScoreManager.ScoreGridStarColumns[0, 9]) ? TestsPassed + 1 : TestsPassed;
     }
@@ -218,7 +218,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.P, TileData.O, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.R, TileData.O, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("3 row basic STAR", 3000) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -226,7 +226,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.P, TileData.O, TileData.Y, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.R, TileData.O, TileData.Y, TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("4 row basic STAR", 3200) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -234,7 +234,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.P, TileData.O, TileData.Y, TileData.G, TileData.B, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.R, TileData.O, TileData.Y, TileData.G, TileData.B, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("5 row basic STAR", ScoreManager.ScoreGridStarRows[2, 0, 5] + ScoreManager.ScoreGridRainbowRows[0, 0]) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -242,11 +242,11 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.G, TileData.g, TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.G, TileData.g, TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("Without star", 0) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.O, TileData.P},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.G, TileData.O, TileData.R},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
@@ -261,7 +261,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("rainbow diagonal up (1,1)", 600) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -269,7 +269,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.Y, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("rainbow diagonal up (1,1) with star", 600) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -277,7 +277,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("rainbow diagonal up (2,1)", 600) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -285,7 +285,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("rainbow diagonal up (5,1)", 1000) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
@@ -293,12 +293,12 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("rainbow diagonal up (6,1)", 1250) ? TestsPassed + 1 : TestsPassed;
 
         SetBoard(new TileData[,] {
-            {TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
@@ -306,7 +306,7 @@ public class ScoreCalculatorTests : TestBase
         });
         TestsPassed = RunTest("rainbow diagonal down (1,5)", 600) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
-            {TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
@@ -314,7 +314,7 @@ public class ScoreCalculatorTests : TestBase
         });
         TestsPassed = RunTest("rainbow diagonal down (2,5)", 600) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s},
@@ -322,7 +322,7 @@ public class ScoreCalculatorTests : TestBase
         });
         TestsPassed = RunTest("rainbow diagonal down (6,5)", 1250) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.o, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.y, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s},
@@ -330,7 +330,7 @@ public class ScoreCalculatorTests : TestBase
         });
         TestsPassed = RunTest("rainbow diagonal down (5, 5)", 1000) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
-            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.p, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.r, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.O, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.Y, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s},
@@ -384,7 +384,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.O, TileData.s, TileData.O, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
-            {TileData.s, TileData.P, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.R, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.G, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("diagonal up star (1,1)", 1600) ? TestsPassed + 1 : TestsPassed;
