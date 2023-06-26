@@ -73,4 +73,12 @@ public class DiceManager : MonoBehaviour
     public void DisableRollAlias(int index) {
         Rolled = true;
     }
+
+    public void SetDiceByDoubles() {
+        if (DiceValues[0] == DiceValues[1]) {
+            EnableRoll();
+        } else {
+            DisableRoll();
+        }
+    }
 }
