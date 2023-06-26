@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     [HideInInspector] public static ScoreManager s_instance;
 
     [Header("ExternalReferences")]
-    [SerializeField] private ScoreCalculator[] _scoreCalculators;
+    public ScoreCalculator[] ScoreCalculators;
     [SerializeField] private TMP_Text _totalScoreText;
     [SerializeField] private TMP_Text _totalScoreFinalText;
     private int[] _individualScores;
@@ -160,18 +160,16 @@ public class ScoreManager : MonoBehaviour
 
     private void OnEnable() {
         Board.e_OnBoardChange += UpdateScore;
-        GameManager.e_OnGameEnd += RecordScores;
     }
 
     private void OnDisable() {
         Board.e_OnBoardChange -= UpdateScore;
-        GameManager.e_OnGameEnd -= RecordScores;
     }
 
     public void Initialize() {
         _totalScore = 0;
         _totalScoreText.text = _totalScore.ToString();
-        _individualScores = new int[_scoreCalculators.Length];
+        _individualScores = new int[ScoreCalculators.Length];
         if (!JSONTool.FileExists("SingleScores.json")) {
             HighscoreData data = new HighscoreData();
             data = data.CreateNewFile();
@@ -186,31 +184,11 @@ public class ScoreManager : MonoBehaviour
 
     public void UpdateScore(Board board) {
         _totalScore = 0;
-        for (int i = 0; i < _scoreCalculators.Length; i++) {
-            _individualScores[i] = _scoreCalculators[i].GetScore();
+        for (int i = 0; i < ScoreCalculators.Length; i++) {
+            _individualScores[i] = ScoreCalculators[i].GetScore();
             _totalScore += _individualScores[i];
         }
         _totalScoreText.text = _totalScore.ToString();
-    }
-
-    public void RecordScores() {
-        HighscoreData singleData = JSONTool.ReadData<HighscoreData>("SingleScores.json");
-        HighscoreData doubleData = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
-
-        int count = _scoreCalculators.Length;
-        int[] scores = new int[count];
-        for (int i = 0; i < count; i++) {
-            scores[i] = _scoreCalculators[i].GetScore();
-            singleData.Highscores.Add(scores[i]);
-        }
-
-        if (count == 2) {
-            doubleData.Highscores.Add(scores[0] + scores[1]);
-        }
-
-        _totalScoreFinalText.text = _totalScore.ToString();
-        JSONTool.WriteData<HighscoreData>(singleData, "SingleScores.json");
-        JSONTool.WriteData<HighscoreData>(doubleData, "DoubleScores.json");
     }
 
     public int[] GetSingleScores() {
