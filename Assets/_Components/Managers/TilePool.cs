@@ -18,21 +18,9 @@ public class TilePool : MonoBehaviour
     [SerializeField] private TimelineInstance _timelineInstance;
     public bool IsSpecial;
 
-    public void Initialize(int index) {
+    public void Initialize(int index, Dictionary<TileData, int> tilePoolData) {
         Index = index;
-        _tilePool = new Dictionary<TileData, int>() {
-            {TileData.r, 18},
-            {TileData.R, 1},
-            {TileData.o, 18},
-            {TileData.O, 1},
-            {TileData.y, 18},
-            {TileData.Y, 1},
-            {TileData.g, 18},
-            {TileData.G, 1},
-            {TileData.b, 18},
-            {TileData.B, 1},
-            {TileData.S, 2},
-        };
+        _tilePool = CopyTilePool(tilePoolData);
 
         foreach (TileData tileData in _tilePool.Keys) {
             _totalTiles += _tilePool[tileData];

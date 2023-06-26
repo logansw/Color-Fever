@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TileManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class TileManager : MonoBehaviour
     public TileData ForcedDraw;
     [SerializeField] private TimelineInstance[] _timelineInstances;
     [SerializeField] private SpecialMenu[] _specialMenus;
+    private Dictionary<TileData, int> _tileCounts;
 
     // Events
     public delegate void OnSlotEmptied(int index);
@@ -37,12 +39,9 @@ public class TileManager : MonoBehaviour
         for (int i = 0; i < SelectedTileSlot.Length; i++) {
             SelectedTileSlot[i] = null;
         }
-        TilesRemaining = new int[_tilePools.Length];
         ForcedDraw = TileData.n;
-        for (int i = 0; i < _tilePools.Length; i++) {
-            _tilePools[i].Initialize(i);
-            DrawStartTiles(_tilePools[i]);
-        }
+        TilesRemaining = new int[_tilePools.Length];
+        InitializeTilePools();
         if (ConfigurationManager.s_instance.DebugMode) {
             DebugTile = TileData.r;
         }
@@ -74,6 +73,136 @@ public class TileManager : MonoBehaviour
                 tilePool.IsSpecial = true;
             }
         }
+    }
+
+    private void InitializeTilePools() {
+        if (SceneManager.GetActiveScene().name.Equals("Single")) {
+            _tileCounts = new Dictionary<TileData, int>() {
+                {TileData.r, 9},
+                {TileData.R, 1},
+                {TileData.o, 9},
+                {TileData.O, 1},
+                {TileData.y, 9},
+                {TileData.Y, 1},
+                {TileData.g, 9},
+                {TileData.G, 1},
+                {TileData.b, 9},
+                {TileData.B, 1},
+                {TileData.S, 2},
+            };
+            _tilePools[0].Initialize(0, _tileCounts);
+            DrawStartTiles(_tilePools[0]);
+        } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
+            _tileCounts = new Dictionary<TileData, int>() {
+                {TileData.r, 10},
+                {TileData.R, 1},
+                {TileData.o, 10},
+                {TileData.O, 1},
+                {TileData.y, 10},
+                {TileData.Y, 1},
+                {TileData.g, 10},
+                {TileData.G, 1},
+                {TileData.b, 10},
+                {TileData.B, 1},
+                {TileData.S, 0},
+            };
+
+            Dictionary<TileData, int> poolA = new Dictionary<TileData, int>() {
+                {TileData.r, 4},
+                {TileData.R, 0},
+                {TileData.o, 4},
+                {TileData.O, 0},
+                {TileData.y, 4},
+                {TileData.Y, 0},
+                {TileData.g, 4},
+                {TileData.G, 0},
+                {TileData.b, 4},
+                {TileData.B, 0},
+                {TileData.S, 2},
+            };
+
+            Dictionary<TileData, int> poolB = new Dictionary<TileData, int>() {
+                {TileData.r, 4},
+                {TileData.R, 0},
+                {TileData.o, 4},
+                {TileData.O, 0},
+                {TileData.y, 4},
+                {TileData.Y, 0},
+                {TileData.g, 4},
+                {TileData.G, 0},
+                {TileData.b, 4},
+                {TileData.B, 0},
+                {TileData.S, 2},
+            };
+
+            int tilesRemaining = GetTotalCounts(_tileCounts);
+            while (tilesRemaining > 27)
+            {
+                TileData tile;
+                int randomNumber = Random.Range(0, tilesRemaining);
+                int red = _tileCounts[TileData.r];
+                int orange = _tileCounts[TileData.o];
+                int yellow = _tileCounts[TileData.y];
+                int green = _tileCounts[TileData.g];
+                int blue = _tileCounts[TileData.b];
+                switch (randomNumber)
+                {
+                    case int n when (n < red):
+                        tile = TileData.r;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R]):
+                        tile = TileData.R;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + orange):
+                        tile = TileData.o;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O]):
+                        tile = TileData.O;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow):
+                        tile = TileData.y;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y]):
+                        tile = TileData.Y;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green):
+                        tile = TileData.g;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G]):
+                        tile = TileData.G;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G] + blue):
+                        tile = TileData.b;
+                        break;
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G] + blue + _tileCounts[TileData.B]):
+                        tile = TileData.B;
+                        break;
+                    default:
+                        tile = TileData.S;
+                        break;
+                }
+                tilesRemaining--;
+                _tileCounts[tile]--;
+                poolA[tile]++;
+            }
+
+            foreach (TileData tileData in _tileCounts.Keys) {
+                poolB[tileData] += _tileCounts[tileData];
+            }
+
+            _tilePools[0].Initialize(0, poolA);
+            DrawStartTiles(_tilePools[0]);
+            _tilePools[1].Initialize(1, poolB);
+            DrawStartTiles(_tilePools[1]);
+        }
+    }
+
+    private int GetTotalCounts(Dictionary<TileData, int> tileCounts) {
+        int total = 0;
+        foreach (TileData tileData in tileCounts.Keys) {
+            total += tileCounts[tileData];
+        }
+        return total;
     }
 
     private void SelectTile(TileSlot tileSlot) {
