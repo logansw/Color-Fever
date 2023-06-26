@@ -62,7 +62,7 @@ public class TimelineInstance : MonoBehaviour
         ToggleUndoButtonStatus();
     }
 
-    public void Undo() {
+    public void Undo(int index) {
         if (GameManager.s_instance.RoundsRemaining == 34) {
             BoardTimeline.Undo(1);
             TilePoolTimeline.Undo(1);
@@ -79,7 +79,7 @@ public class TimelineInstance : MonoBehaviour
             ButtonsRemainingTimeline.UndoUntilLock();
         }
 
-        _tileManager.SelectedTileSlot = null;
+        _tileManager.SelectedTileSlot[index] = null;
         _board.MatchToTimeline();
         _tilePool.MatchToTimeline();
         _specialMenu.MatchToTimeline();

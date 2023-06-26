@@ -73,7 +73,7 @@ public class TilePool : MonoBehaviour
         }
     }
 
-    public void SetRandomTile() {
+    public TileData SetRandomTile() {
         TileData tile = DrawTile();
         TileSlots[0].SetTile(tile);
         if (tile.Color == TileData.TileColor.S) {
@@ -83,6 +83,7 @@ public class TilePool : MonoBehaviour
         }
         ShowTileSlots();
         _timelineInstance.QueueLock();
+        return tile;
     }
 
     public void ForceSpecialTile(int index) {

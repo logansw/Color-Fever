@@ -94,7 +94,7 @@ public class SpecialManager : MonoBehaviour
 
     public void SpecialActionComplete(int index) {
         SpecialMenus[index].ReadyToContinue = true;
-        TileManager.s_instance.DisableSelectedTile();
+        TileManager.s_instance.DisableSelectedTile(index);
     }
 
     public void Pass(int index) {

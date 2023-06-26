@@ -4171,7 +4171,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1500160681}
         m_TargetAssemblyTypeName: TimelineInstance, Assembly-CSharp
         m_MethodName: Undo
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4354,7 +4354,7 @@ MonoBehaviour:
   TileSpriteSquare: {fileID: 21300000, guid: 37b3a2ccffe89c943920baed232b2d26, type: 3}
   TileSpriteStar: {fileID: 21300000, guid: 19b9ae2daaf1299409c5b43d26eca7a7, type: 3}
   TileSpriteSpecial: {fileID: 21300000, guid: ae70b6d879cf20a458eb538d97ebee66, type: 3}
-  SelectedTileSlot: {fileID: 602053822}
+  SelectedTileSlot: []
   _tilePools:
   - {fileID: 1212361317}
   TilesRemaining: 

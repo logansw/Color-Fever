@@ -11,7 +11,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Sprite TileSpriteStar;
     [SerializeField] private Sprite TileSpriteSpecial;
 
-    public TileSlot SelectedTileSlot;
+    public TileSlot[] SelectedTileSlot;
     [SerializeField] private TilePool[] _tilePools;
     public int[] TilesRemaining;
     /// True if the last tile drawn was a special tile.
@@ -33,7 +33,10 @@ public class TileManager : MonoBehaviour
     }
 
     public void Initialize() {
-        SelectedTileSlot = null;
+        SelectedTileSlot = new TileSlot[_tilePools.Length];
+        for (int i = 0; i < SelectedTileSlot.Length; i++) {
+            SelectedTileSlot[i] = null;
+        }
         TilesRemaining = new int[_tilePools.Length];
         ForcedDraw = TileData.n;
         for (int i = 0; i < _tilePools.Length; i++) {
@@ -74,7 +77,7 @@ public class TileManager : MonoBehaviour
     }
 
     private void SelectTile(TileSlot tileSlot) {
-        SelectedTileSlot = tileSlot;
+        SelectedTileSlot[tileSlot.Index] = tileSlot;
         foreach (TilePool tilePool in _tilePools) {
             foreach (TileSlot slot in tilePool.TileSlots) {
                 slot.Unhighlight();
@@ -83,18 +86,18 @@ public class TileManager : MonoBehaviour
         tileSlot.Highlight();
     }
 
-    public void DisableSelectedTile() {
-        if (SelectedTileSlot == null) {
+    public void DisableSelectedTile(int index) {
+        if (SelectedTileSlot[index] == null) {
             return;
         }
-        TilesRemaining[SelectedTileSlot.ParentTilePool.Index]--;
-        if (TilesRemaining[SelectedTileSlot.ParentTilePool.Index] == 0) {
-            e_OnSlotEmptied?.Invoke(SelectedTileSlot.ParentTilePool.Index);
+        TilesRemaining[index]--;
+        if (TilesRemaining[index] == 0) {
+            e_OnSlotEmptied?.Invoke(index);
         }
         e_OnTilePlaced?.Invoke();
-        SelectedTileSlot.Disable();
-        SelectedTileSlot.Unhighlight();
-        SelectedTileSlot = null;
+        SelectedTileSlot[index].Disable();
+        SelectedTileSlot[index].Unhighlight();
+        SelectedTileSlot[index] = null;
     }
 
     private void DrawStartTiles(TilePool tilePool) {
@@ -123,8 +126,12 @@ public class TileManager : MonoBehaviour
 
     public void DrawNewTiles() {
         foreach (TilePool tilePool in _tilePools) {
-            tilePool.SetRandomTile();
+            TileData tile = tilePool.SetRandomTile();
             TilesRemaining[tilePool.Index] = 1;
+            if (!tile.Equals(TileData.S)) {
+                SelectedTileSlot[tilePool.Index] = tilePool.TileSlots[0];
+                tilePool.TileSlots[0].TileData = tile;
+            }
         }
     }
 

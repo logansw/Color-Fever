@@ -71,14 +71,14 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardCorner() {
-        TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot;
+        TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot[Index];
         if (selectedTileSlot == null) {
             return;
         }
 
-        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileData, X, Y);
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, selectedTileSlot.TileData, X, Y);
         if (result) {
-            TileManager.s_instance.DisableSelectedTile();
+            TileManager.s_instance.DisableSelectedTile(Index);
             SpecialManager.s_instance.SetNormalMode(Index);
             SpecialManager.s_instance.SpecialActionComplete(Index);
             TileManager.s_instance.HideCenterSlot(Index);
@@ -88,14 +88,14 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoardNormal() {
-        TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot;
-        if (selectedTileSlot == null || selectedTileSlot.Index != Index) {
+        TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot[Index];
+        if (selectedTileSlot == null) {
             return;
         }
 
-        bool result = BoardManager.s_instance.SetTile(_parentBoard, TileManager.s_instance.SelectedTileSlot.TileData, X, Y);
+        bool result = BoardManager.s_instance.SetTile(_parentBoard, selectedTileSlot.TileData, X, Y);
         if (result) {
-            TileManager.s_instance.DisableSelectedTile();
+            TileManager.s_instance.DisableSelectedTile(Index);
         } else {
             // Do nothing
         }
