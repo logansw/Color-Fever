@@ -1978,7 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac139648460752f4897039ad7b1ea89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreCalculators:
+  ScoreCalculators:
   - {fileID: 718769490}
   _totalScoreText: {fileID: 741775218}
   _totalScoreFinalText: {fileID: 1551353495}

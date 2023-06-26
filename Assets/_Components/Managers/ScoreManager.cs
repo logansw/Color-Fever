@@ -160,10 +160,12 @@ public class ScoreManager : MonoBehaviour
 
     private void OnEnable() {
         Board.e_OnBoardChange += UpdateScore;
+        GameManager.e_OnGameEnd += DisplayFinalScore;
     }
 
     private void OnDisable() {
         Board.e_OnBoardChange -= UpdateScore;
+        GameManager.e_OnGameEnd -= DisplayFinalScore;
     }
 
     public void Initialize() {
@@ -197,5 +199,9 @@ public class ScoreManager : MonoBehaviour
 
     public int GetDoubleScore() {
         return _individualScores[0] + _individualScores[1];
+    }
+
+    private void DisplayFinalScore() {
+        _totalScoreFinalText.text = _totalScore.ToString();
     }
 }
