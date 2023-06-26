@@ -15,8 +15,6 @@ public class TileSlot : MonoBehaviour
 
     public delegate void OnTileSelected(TileSlot tileSlot);
     public static OnTileSelected e_OnTileSelected;
-    public delegate void OnSpecialSelected(TileSlot tileSlot);
-    public static OnSpecialSelected e_OnSpecialSelected;
     public TileData TileData;
     public TilePool ParentTilePool { get; private set; }
     [HideInInspector] public int Index;
@@ -40,7 +38,7 @@ public class TileSlot : MonoBehaviour
 
     private void SelectTile() {
         if (TileData.Equals(TileData.S)) {
-            e_OnSpecialSelected?.Invoke(this);
+            return;
         } else {
             e_OnTileSelected?.Invoke(this);
         }

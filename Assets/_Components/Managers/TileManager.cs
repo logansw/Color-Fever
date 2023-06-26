@@ -47,14 +47,12 @@ public class TileManager : MonoBehaviour
 
     private void OnEnable() {
         TileSlot.e_OnTileSelected += SelectTile;
-        TileSlot.e_OnSpecialSelected += SelectTile;
         SpecialManager.e_OnCornerModeSet += ConfigureForCornerMode;
         SpecialManager.e_OnNormalModeSet += EnableCenterSlots;
     }
 
     private void OnDisable() {
         TileSlot.e_OnTileSelected -= SelectTile;
-        TileSlot.e_OnSpecialSelected -= SelectTile;
         SpecialManager.e_OnCornerModeSet -= ConfigureForCornerMode;
         SpecialManager.e_OnNormalModeSet -= EnableCenterSlots;
     }
