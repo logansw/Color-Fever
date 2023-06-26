@@ -9,6 +9,7 @@ public class DiceManager : MonoBehaviour
 
     [Header("Asset References")]
     [SerializeField] private Sprite[] _diceSprites;
+    [SerializeField] private Sprite _diceZeroSprite;
 
     [Header("External References")]
     [SerializeField] private SpriteRenderer[] _diceRenderers;
@@ -79,6 +80,12 @@ public class DiceManager : MonoBehaviour
             EnableRoll();
         } else {
             DisableRoll();
+        }
+    }
+
+    public void ZeroDice() {
+        for (int i = 0; i < _diceRenderers.Length; i++) {
+            _diceRenderers[i].sprite = _diceZeroSprite;
         }
     }
 }

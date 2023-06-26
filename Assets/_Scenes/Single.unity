@@ -2521,7 +2521,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 862f089bb758ddf4a99dfe983606d929, type: 3}
   - {fileID: 21300000, guid: 9f07ff90edc12d348ac05743c79e7b77, type: 3}
   - {fileID: 21300000, guid: d91eef9331ea108409dbfd3c54f7a109, type: 3}
-  - {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
+  _diceZeroSprite: {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
   _diceRenderers:
   - {fileID: 541740612}
   - {fileID: 1444207799}

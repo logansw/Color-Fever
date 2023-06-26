@@ -540,7 +540,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 862f089bb758ddf4a99dfe983606d929, type: 3}
   - {fileID: 21300000, guid: 9f07ff90edc12d348ac05743c79e7b77, type: 3}
   - {fileID: 21300000, guid: d91eef9331ea108409dbfd3c54f7a109, type: 3}
-  - {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
+  _diceZeroSprite: {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
   _diceRenderers:
   - {fileID: 1573464830}
   - {fileID: 1659658582}
@@ -7467,6 +7467,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 90909651}
+        m_TargetAssemblyTypeName: DiceManager, Assembly-CSharp
+        m_MethodName: ZeroDice
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Interactable: 0
 --- !u!4 &1549917899
 Transform:
@@ -8016,7 +8028,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: efb48060097fab147b3cf322c30e9edd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8434,7 +8446,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 397415a53a0c71842a8bd421fd94a426, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb64cc86a4aa67a4f9c91cf8d62cec1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
