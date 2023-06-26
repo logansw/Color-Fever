@@ -128,10 +128,15 @@ public class TileManager : MonoBehaviour
         foreach (TilePool tilePool in _tilePools) {
             TileData tile = tilePool.SetRandomTile();
             TilesRemaining[tilePool.Index] = 1;
-            if (!tile.Equals(TileData.S)) {
-                SelectedTileSlot[tilePool.Index] = tilePool.TileSlots[0];
-                tilePool.TileSlots[0].TileData = tile;
-            }
+            AutoSetSelected(tilePool.Index);
+        }
+    }
+
+    public void AutoSetSelected(int index) {
+        TileData tileData = _tilePools[index].TileSlots[0].TileData;
+        if (!tileData.Equals(TileData.S)) {
+            SelectedTileSlot[index] = _tilePools[index].TileSlots[0];
+            _tilePools[index].TileSlots[0].TileData = tileData;
         }
     }
 

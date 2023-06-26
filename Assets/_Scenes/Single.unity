@@ -4228,6 +4228,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 943462211}
+        m_TargetAssemblyTypeName: TileManager, Assembly-CSharp
+        m_MethodName: AutoSetSelected
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Interactable: 0
 --- !u!61 &896328490
 BoxCollider2D:
@@ -5460,7 +5472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e47fa997527874988eaa1e4ef4b795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoundsRemaining: 7
+  RoundsRemaining: 34
   _roundsRemainingText: {fileID: 429586498}
   _endCard: {fileID: 190199715}
 --- !u!114 &1332701771
