@@ -21,14 +21,17 @@ public class Board : MonoBehaviour
         for (int i = 1; i <= Width; i++) {
             for (int j = 1; j <= Height; j++) {
                 BoardData[i, j] = TileData.s;
-                if (j == 1) {
-                    BoardData[i, j].SetHighlight(true);
-                } else {
-                    BoardData[i, j].SetHighlight(false);
-                }
             }
         }
         _updateQueued = true;
+    }
+
+    private void OnEnable() {
+        GameManager.e_OnGameStart += HighlightLowest;
+    }
+
+    private void OnDisable() {
+        GameManager.e_OnGameStart -= HighlightLowest;
     }
 
     private void Update() {
@@ -148,5 +151,12 @@ public class Board : MonoBehaviour
     public void MatchToTimeline() {
         BoardData = CopyBoard(_timelineInstance.BoardTimeline.GetCurrentFrame());
         e_OnBoardChange?.Invoke(this);
+    }
+
+    private void HighlightLowest() {
+        for (int i = 1; i <= Width; i++) {
+            BoardData[i, 1].SetHighlight(true);
+        }
+        _updateQueued = true;
     }
 }

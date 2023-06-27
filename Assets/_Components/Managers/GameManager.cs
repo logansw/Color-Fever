@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour
     public static event OnGameStart e_OnGameStart;
     [SerializeField] private GameObject _endCard;
     [SerializeField] private CustomButton _startButton;
+    public static GameState State;
+
+    public enum GameState {
+        PreStart,
+        Midgame,
+        Endgame
+    }
 
     private void Awake() {
         s_instance = this;
@@ -22,11 +29,14 @@ public class GameManager : MonoBehaviour
     public void Initialize() {
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
         _startButton.Interactable = true;
+        State = GameState.PreStart;
+
     }
 
     public void StartGame() {
         e_OnGameStart?.Invoke();
         _startButton.gameObject.SetActive(false);
+        State = GameState.Midgame;
     }
 
     public void AdvanceTurn() {
@@ -35,6 +45,7 @@ public class GameManager : MonoBehaviour
         if (RoundsRemaining < 0) {
             _endCard.gameObject.SetActive(true);
             e_OnGameEnd?.Invoke();
+            State = GameState.Endgame;
         }
     }
 }

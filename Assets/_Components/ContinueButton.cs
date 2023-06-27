@@ -32,6 +32,10 @@ public class ContinueButton : MonoBehaviour
     }
 
     private void Update() {
+        if (GameManager.State == GameManager.GameState.PreStart) {
+            _button.Interactable = false;
+            return;
+        }
         switch(CurrentContinueState) {
             case ContinueState.WaitingForRoll:
                 if (DiceManager.s_instance.Rolled) {
