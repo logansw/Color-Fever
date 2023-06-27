@@ -47,6 +47,9 @@ TagManager:
   - name: Board
     uniqueID: 1825765651
     locked: 0
+  - name: ScoreMarks
+    uniqueID: 3368598969
+    locked: 0
   - name: Outline
     uniqueID: 1220204393
     locked: 0

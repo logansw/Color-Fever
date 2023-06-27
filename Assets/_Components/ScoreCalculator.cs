@@ -11,7 +11,7 @@ public class ScoreCalculator : MonoBehaviour
     [SerializeField] private ScoreDisplayer _scoreDisplayer;
 
     public int GetScore() {
-        // _scoreDisplayer.ClearMarks();
+        _scoreDisplayer.ClearMarks();
 
         int score = 0;
         score += ScoreColumns();
@@ -31,7 +31,7 @@ public class ScoreCalculator : MonoBehaviour
 
     private int ScoreColumns() {
         int score = 0;
-        for (int x = 0; x < board.Width + 1; x++) {
+        for (int x = 1; x <= board.Width; x++) {
             score += ScoreColumn(x);
         }
         return score;
@@ -46,13 +46,17 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
-                score += ScoreManager.ScoreGridColumns[chain.Length-3, chain.Origin.x-1];
+                int addedScore = ScoreManager.ScoreGridColumns[chain.Length - 3, chain.Origin.x - 1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         chains = CreateStarChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
-                score += ScoreManager.ScoreGridStarColumns[chain.Length-3, chain.Origin.x-1];
+                int addedScore = ScoreManager.ScoreGridStarColumns[chain.Length - 3, chain.Origin.x - 1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         return score;
@@ -75,13 +79,17 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += ScoreManager.ScoreGridRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+                int addedScore = ScoreManager.ScoreGridRows[chain.Length - 3, chain.Origin.y - 1, chain.Origin.x - 1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         chains = CreateStarChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += ScoreManager.ScoreGridStarRows[chain.Length-3, chain.Origin.y-1, chain.Origin.x-1];
+                int addedScore = ScoreManager.ScoreGridStarRows[chain.Length - 3, chain.Origin.y - 1, chain.Origin.x - 1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         return score;
@@ -117,13 +125,17 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
-                score += ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         chains = CreateStarChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
-                score += ScoreManager.ScoreGridStarDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                int addedScore = ScoreManager.ScoreGridStarDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         return score;
@@ -140,13 +152,19 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                score += addedScore;
+                Debug.Log(chain.FirstLink == null);
+                Debug.Log(chain.LastLink == null);
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         chains = CreateStarChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                score += ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                int addedScore = ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform);
             }
         }
         return score;
@@ -328,17 +346,31 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = new List<Chain>();
         int currentConsecutive = 1;
         Vector2Int origin = links[0].Position;
+        Link firstLink = links[0];
         for (int i = 0; i < links.Count-1; i++) {
+            Link lastLink = links[i];
             if (TileManager.TilesChainable(links[i].TileData, links[i+1].TileData)) {
                 currentConsecutive++;
                 origin = links[i+1].Position;
             } else {
-                chains.Add(new Chain(currentConsecutive, origin));
-                currentConsecutive = 1;
                 origin = links[i].Position;
+                Chain chain = new Chain(currentConsecutive, origin);
+                chain.FirstLink = firstLink;
+                chain.LastLink = lastLink;
+                chains.Add(chain);
+                currentConsecutive = 1;
+                firstLink = links[i+1];
             }
         }
-        chains.Add(new Chain(currentConsecutive, origin));
+        Chain lastChain = new Chain(currentConsecutive, links[links.Count-1].Position);
+        lastChain.FirstLink = firstLink;
+        lastChain.LastLink = links[links.Count-1];
+        chains.Add(lastChain);
+
+        foreach (Chain chain in chains) {
+            // Debug.Log(chain.ToString());
+        }
+
         return chains;
     }
 
