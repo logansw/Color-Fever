@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text _roundsRemainingText;
     public delegate void OnGameEnd();
     public static event OnGameEnd e_OnGameEnd;
+    public delegate void OnGameStart();
+    public static event OnGameStart e_OnGameStart;
     [SerializeField] private GameObject _endCard;
+    [SerializeField] private CustomButton _startButton;
 
     private void Awake() {
         s_instance = this;
@@ -18,6 +21,12 @@ public class GameManager : MonoBehaviour
 
     public void Initialize() {
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
+        _startButton.Interactable = true;
+    }
+
+    public void StartGame() {
+        e_OnGameStart?.Invoke();
+        _startButton.gameObject.SetActive(false);
     }
 
     public void AdvanceTurn() {

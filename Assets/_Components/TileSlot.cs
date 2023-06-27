@@ -49,6 +49,7 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
         _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
         _backgroundSR.color = new Color32(255, 255, 255, 255);
+        _spriteRenderer.enabled = true;
     }
 
     public void Disable() {
@@ -60,7 +61,6 @@ public class TileSlot : MonoBehaviour
     }
 
     public void Enable() {
-        TileData = TileData.s;
         _spriteRenderer.sprite = TileManager.s_instance.TileDataToSprite(TileData);
         _spriteRenderer.color = TileManager.s_instance.TileDataToColor(TileData);
         _touchable.enabled = true;

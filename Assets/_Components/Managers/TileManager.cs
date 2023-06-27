@@ -92,6 +92,7 @@ public class TileManager : MonoBehaviour
             };
             _tilePools[0].Initialize(0, _tileCounts);
             DrawStartTiles(_tilePools[0]);
+            _tilePools[0].HideStartingTiles();
         } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
             _tileCounts = new Dictionary<TileData, int>() {
                 {TileData.r, 10},
@@ -192,8 +193,10 @@ public class TileManager : MonoBehaviour
 
             _tilePools[0].Initialize(0, poolA);
             DrawStartTiles(_tilePools[0]);
+            _tilePools[0].HideStartingTiles();
             _tilePools[1].Initialize(1, poolB);
             DrawStartTiles(_tilePools[1]);
+            _tilePools[1].HideStartingTiles();
         }
     }
 
@@ -231,30 +234,9 @@ public class TileManager : MonoBehaviour
 
     private void DrawStartTiles(TilePool tilePool) {
         List<TileData> startTiles = new List<TileData>();
-        // Dictionary<TileData, int> tileCounts = new Dictionary<TileData, int>();
         while (startTiles.Count < 4) {
             TileData tile = tilePool.DrawNextTile();
             startTiles.Add(tile);
-            // if (tileCounts.ContainsKey(tile)) {
-            //     tileCounts[tile] += 1;
-            // } else {
-            //     tileCounts.Add(tile, 1);
-            // }
-
-            // if (TileIsValid(tilePool, tile)) {
-            //     startTiles.Add(tile);
-            //     if (tileCounts.ContainsKey(tile)) {
-            //         tileCounts[tile] += 1;
-            //     } else {
-            //         tileCounts.Add(tile, 1);
-            //     }
-
-            //     if (tileCounts[tile] >= 3) {
-            //         tilePool.ReturnTile(tile);
-            //         startTiles.Remove(tile);
-            //         tileCounts[tile] -= 1;
-            //     }
-            // }
         }
         TilesRemaining[tilePool.Index] += 4;
         tilePool.SetStartingTiles(startTiles);
@@ -274,44 +256,6 @@ public class TileManager : MonoBehaviour
             SelectedTileSlot[index] = _tilePools[index].TileSlots[0];
             _tilePools[index].TileSlots[0].TileData = tileData;
         }
-    }
-
-    // TODO: Complete these rules
-    public bool TileIsValid(TilePool tilePool, TileData tile) {
-        GameManager gameManager = GameManager.s_instance;
-
-        if (ConfigurationManager.s_instance.DisableValidTileChecker && gameManager.RoundsRemaining != 34) {
-            return true;
-        }
-
-        if (!tile.Equals(TileData.S)) {
-            if (tilePool._tilePool[TileData.S] == 2 && gameManager.RoundsRemaining == 6) {
-                ForcedDraw = TileData.S;
-                return false;
-            }
-            if (tilePool._tilePool[TileData.S] == 1 && gameManager.RoundsRemaining == 4) {
-                ForcedDraw = TileData.S;
-                return false;
-            }
-        }
-
-        if (tile.IsStarred) {
-            if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 5) {
-                return false;
-            }
-        }
-
-        if (tile.Equals(TileData.S)) {
-            if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 4) {
-                return false;
-            }
-        }
-
-        if (tilePool.SpecialTilesRemaining + tilePool.StarTilesRemaining == gameManager.RoundsRemaining - 5) {
-
-        }
-
-        return true;
     }
 
     public Sprite TileDataToSprite(TileData tileData) {

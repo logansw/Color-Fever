@@ -89,7 +89,7 @@ public class Tile : MonoBehaviour
 
     private void UpdateBoardNormal() {
         TileSlot selectedTileSlot = TileManager.s_instance.SelectedTileSlot[Index];
-        if (selectedTileSlot == null) {
+        if (selectedTileSlot == null || selectedTileSlot.TileData.Equals(TileData.s) || selectedTileSlot.TileData.Equals(TileData.n)) {
             return;
         }
 
