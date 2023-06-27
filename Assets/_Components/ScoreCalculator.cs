@@ -186,7 +186,9 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInColumn.Add(board.BoardData[x, y]);
             }
             if (IsRainbow(tilesInColumn)) {
-                score += ScoreManager.ScoreGridRainbowColumns[x-1];
+                int addedScore = ScoreManager.ScoreGridRainbowColumns[x-1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreColumn(new Link(new Vector2Int(x, 1), board.BoardData[x, 1]), new Link(new Vector2Int(x, board.Height), board.BoardData[x, board.Height]), addedScore, board.transform);
             }
         }
         return score;
@@ -205,7 +207,9 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInRowRight.Add(board.BoardData[x, y]);
             }
             if (IsRainbow(tilesInRowLeft) && IsRainbow(tilesInRowRight)) {
-                score += ScoreManager.ScoreGridDoubleRainbow[y-1];
+                int addedScore = ScoreManager.ScoreGridDoubleRainbow[y-1];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(1, y), board.BoardData[1, y]), new Link(new Vector2Int(board.Width, y), board.BoardData[board.Width, y]), addedScore, board.transform);
                 continue;
             }
 
@@ -216,7 +220,9 @@ public class ScoreCalculator : MonoBehaviour
                     tilesInRow.Add(board.BoardData[x + i, y]);
                 }
                 if (IsRainbow(tilesInRow)) {
-                    score += ScoreManager.ScoreGridRainbowRows[y - 1, x - 1];
+                    int addedScore = ScoreManager.ScoreGridRainbowRows[y-1, x-1];
+                    score += addedScore;
+                    _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(x, y), board.BoardData[x, y]), new Link(new Vector2Int(x+4, y), board.BoardData[x+4, y]), addedScore, board.transform);
                     break;
                 }
             }
@@ -233,7 +239,9 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInDiagonal.Add(board.BoardData[x+i+1, i+1]);
             }
             if (IsRainbow(tilesInDiagonal)) {
-                score += ScoreManager.ScoreGridRainbowDiagonal[x];
+                int addedScore = ScoreManager.ScoreGridRainbowDiagonal[x];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, 1), board.BoardData[x+1, 1]), new Link(new Vector2Int(x+5, 5), board.BoardData[x+5, 5]), addedScore, board.transform);
             }
         }
 
@@ -244,7 +252,9 @@ public class ScoreCalculator : MonoBehaviour
                 tilesInDiagonal.Add(board.BoardData[x+i+1, board.Height-i]);
             }
             if (IsRainbow(tilesInDiagonal)) {
-                score += ScoreManager.ScoreGridRainbowDiagonal[x];
+                int addedScore = ScoreManager.ScoreGridRainbowDiagonal[x];
+                score += addedScore;
+                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, board.Height), board.BoardData[x+1, board.Height]), new Link(new Vector2Int(x+5, board.Height-4), board.BoardData[x+5, board.Height-4]), addedScore, board.transform);
             }
         }
 
