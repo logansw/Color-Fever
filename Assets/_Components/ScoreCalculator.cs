@@ -234,11 +234,22 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     private bool IsRainbow(HashSet<TileData> tiles) {
-        return ((tiles.Contains(TileData.r) || tiles.Contains(TileData.R)) &&
-            (tiles.Contains(TileData.o) || tiles.Contains(TileData.O)) &&
-            (tiles.Contains(TileData.y) || tiles.Contains(TileData.Y)) &&
-            (tiles.Contains(TileData.g) || tiles.Contains(TileData.G)) &&
-            (tiles.Contains(TileData.b) || tiles.Contains(TileData.B)));
+        bool r = false, o = false, y = false, g = false, b = false;
+        foreach (TileData tileData in tiles) {
+            if (tileData.Color == TileData.TileColor.r) {
+                r = true;
+            } else if (tileData.Color == TileData.TileColor.o) {
+                o = true;
+            } else if (tileData.Color == TileData.TileColor.y) {
+                y = true;
+            } else if (tileData.Color == TileData.TileColor.g) {
+                g = true;
+            } else if (tileData.Color == TileData.TileColor.b) {
+                b = true;
+            }
+        }
+
+        return (r && o && y && g && b);
     }
 
     private int ScoreStars() {
