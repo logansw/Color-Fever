@@ -30,6 +30,8 @@ public class SpecialManager : MonoBehaviour
     public static OnMoveModeBegun e_OnMoveModeBegun;
     public delegate void OnNormalModeSet(int index);
     public static OnNormalModeSet e_OnNormalModeSet;
+    [SerializeField] private GuidingText[] _guidingTexts;
+
 
     private void Awake() {
         s_instance = this;
@@ -59,6 +61,9 @@ public class SpecialManager : MonoBehaviour
         e_OnCornerModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "Place any color in any open corner");
+        }
     }
 
     public void SetMoveMode(int index) {
@@ -66,6 +71,9 @@ public class SpecialManager : MonoBehaviour
         e_OnMoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "Move any tile to another column");
+        }
     }
 
     public void SetSwapMode(int index) {
@@ -73,6 +81,9 @@ public class SpecialManager : MonoBehaviour
         e_OnSwapModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "Switch any two tiles");
+        }
     }
 
     public void InvokeMoveModeBegun(int index) {
@@ -84,12 +95,18 @@ public class SpecialManager : MonoBehaviour
         e_OnRemoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "Remove any tile");
+        }
     }
 
     public void SetNormalMode(int index) {
         CurrentSelectionMode = SelectionMode.Normal;
         e_OnNormalModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "normal");
+        }
     }
 
     public void SpecialActionComplete(int index) {

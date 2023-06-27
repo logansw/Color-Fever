@@ -11,6 +11,7 @@ public class SpecialMenu : MonoBehaviour
     [SerializeField] private CustomButton _removeButton;
     [SerializeField] private CustomButton _passButton;
     [SerializeField] private TimelineInstance _timelineInstance;
+    [SerializeField] private GuidingText[] _guidingTexts;
 
     public Dictionary<CustomButton, bool> ButtonsRemaining;
     public int Index;
@@ -39,6 +40,10 @@ public class SpecialMenu : MonoBehaviour
 
     public void ActivateMenu(int index) {
         if (index != Index) { return; }
+
+        foreach (GuidingText guidingText in _guidingTexts) {
+            guidingText.SetText(index, "Choose an Action");
+        }
 
         foreach (CustomButton button in ButtonsRemaining.Keys) {
             if (ButtonsRemaining[button]) {
