@@ -5051,6 +5051,8 @@ MonoBehaviour:
   Index: 0
   _timelineInstance: {fileID: 1500160681}
   IsSpecial: 0
+  SpecialTilesRemaining: 0
+  StarTilesRemaining: 0
 --- !u!4 &1212361318
 Transform:
   m_ObjectHideFlags: 0
@@ -5484,7 +5486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e47fa997527874988eaa1e4ef4b795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoundsRemaining: 10
+  RoundsRemaining: 34
   _roundsRemainingText: {fileID: 429586498}
   _endCard: {fileID: 190199715}
 --- !u!114 &1332701771

@@ -17,8 +17,13 @@ public class TilePool : MonoBehaviour
     public static OnNormalDrawn e_OnNormalDrawn;
     [SerializeField] private TimelineInstance _timelineInstance;
     public bool IsSpecial;
+    public int SpecialTilesRemaining;
+    public int StarTilesRemaining;
+    private List<TileData> _drawOrderList;
+    private int _currentIndex;
 
     public void Initialize(int index, Dictionary<TileData, int> tilePoolData) {
+        _currentIndex = 34 - GameManager.s_instance.RoundsRemaining;
         Index = index;
         _tilePool = CopyTilePool(tilePoolData);
 
@@ -34,6 +39,8 @@ public class TilePool : MonoBehaviour
             tileSlot.Initialize(this);
             tileSlot.Disable();
         }
+
+        InitializeDrawOrderList();
     }
 
     private void OnEnable() {
@@ -61,16 +68,85 @@ public class TilePool : MonoBehaviour
         }
     }
 
-    public TileData SetRandomTile() {
-        TileData tile = DrawTile();
+    private void InitializeDrawOrderList() {
+        _drawOrderList = new List<TileData>();
+        foreach (TileData tileData in _tilePool.Keys) {
+            for (int i = 0; i < _tilePool[tileData]; i++) {
+                _drawOrderList.Add(tileData);
+            }
+        }
+        ShuffleDrawOrderList();
+        while (!DrawOrderValid()) {
+            ShuffleDrawOrderList();
+        }
+        DebugPrintDrawOrderList();
+    }
+
+    private void ShuffleDrawOrderList() {
+        int n = _drawOrderList.Count;
+        while (n > 1) {
+            n--;
+            int k = Random.Range(0, n + 1);
+            TileData value = _drawOrderList[k];
+            _drawOrderList[k] = _drawOrderList[n];
+            _drawOrderList[n] = value;
+        }
+    }
+
+    private bool DrawOrderValid() {
+        // Ensure starting tiles have at most 2 of a kind
+        Dictionary<TileData, int> tileCounts = new Dictionary<TileData, int>();
+        for (int i = 0; i < 4; i++) {
+            if (tileCounts.ContainsKey(_drawOrderList[i])) {
+                tileCounts[_drawOrderList[i]]++;
+            } else {
+                tileCounts.Add(_drawOrderList[i], 1);
+            }
+        }
+        if (tileCounts.ContainsValue(3) || tileCounts.ContainsValue(4)) {
+            return false;
+        }
+
+        for (int i = 0; i < _drawOrderList.Count; i++) {
+            // Special before 18 rounds remaining
+            if (i < (34 - 18 + 4) && _drawOrderList[i].Equals(TileData.S))
+            {
+                return false;
+            }
+            // Special after 4 rounds remaining
+            if (i > (34 - 4 + 4) && _drawOrderList[i].Equals(TileData.S))
+            {
+                return false;
+            }
+            // Consecutive Specials
+            if (i > 0 && _drawOrderList[i].Equals(TileData.S) && _drawOrderList[i - 1].Equals(TileData.S))
+            {
+                return false;
+            }
+            // Star before 18 rounds remaining
+            if (i < (34 - 18 + 4) && _drawOrderList[i].IsStarred)
+            {
+                return false;
+            }
+            // Star after 5 rounds remaining
+            if (i > (34 - 5 + 4) && _drawOrderList[i].IsStarred)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public TileData SetNextTile() {
+        TileData tile = _drawOrderList[_currentIndex];
         TileSlots[0].SetTile(tile);
         if (tile.Color == TileData.TileColor.S) {
             e_OnSpecialDrawn?.Invoke(Index);
         } else {
             e_OnNormalDrawn?.Invoke(Index);
         }
-        ShowTileSlots();
         _timelineInstance.QueueLock();
+        _currentIndex++;
         return tile;
     }
 
@@ -82,77 +158,110 @@ public class TilePool : MonoBehaviour
         e_OnSpecialDrawn?.Invoke(index);
     }
 
-    public TileData DrawTile() {
-        if (!TileManager.s_instance.ForcedDraw.Equals(TileData.n)) {
-            TileData tileToDraw = TileManager.s_instance.ForcedDraw;
-            TileManager.s_instance.ForcedDraw = TileData.n;
-            _tilePool[tileToDraw]--;
-            return tileToDraw;
-        } else {
-            return DrawRandomTile();
-        }
+    // public TileData SetRandomTile() {
+    //     TileData tile = DrawTile();
+    //     TileSlots[0].SetTile(tile);
+    //     if (tile.Color == TileData.TileColor.S) {
+    //         e_OnSpecialDrawn?.Invoke(Index);
+    //     } else {
+    //         e_OnNormalDrawn?.Invoke(Index);
+    //     }
+    //     ShowTileSlots();
+    //     _timelineInstance.QueueLock();
+    //     return tile;
+    // }
+
+    // public void ForceSpecialTile(int index) {
+    //     TileSlot tileSlot = TileSlots[0];
+    //     ReturnTile(tileSlot.TileData);
+    //     tileSlot.SetTile(TileData.S);
+    //     _tilePool[tileSlot.TileData]--;
+    //     e_OnSpecialDrawn?.Invoke(index);
+    // }
+
+    // public TileData DrawTile() {
+    //     if (!TileManager.s_instance.ForcedDraw.Equals(TileData.n)) {
+    //         TileData tileToDraw = TileManager.s_instance.ForcedDraw;
+    //         TileManager.s_instance.ForcedDraw = TileData.n;
+    //         _tilePool[tileToDraw]--;
+    //         return tileToDraw;
+    //     } else {
+    //         return DrawRandomTile();
+    //     }
+    // }
+
+    public TileData DrawNextTile() {
+        TileData tile = _drawOrderList[_currentIndex];
+        _currentIndex++;
+        return tile;
     }
 
-    public TileData DrawRandomTile() {
-        TileData tile;
-        int randomNumber = Random.Range(0, _totalTiles);
-        int red = _tilePool[TileData.r];
-        int orange = _tilePool[TileData.o];
-        int yellow = _tilePool[TileData.y];
-        int green = _tilePool[TileData.g];
-        int blue = _tilePool[TileData.b];
-        switch (randomNumber) {
-            case int n when (n < red):
-                tile = TileData.r;
-                break;
-            case int n when (n < red + _tilePool[TileData.R]):
-                tile = TileData.R;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + orange):
-                tile = TileData.o;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O]):
-                tile = TileData.O;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow):
-                tile = TileData.y;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y]):
-                tile = TileData.Y;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green):
-                tile = TileData.g;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G]):
-                tile = TileData.G;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue):
-                tile = TileData.b;
-                break;
-            case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue + _tilePool[TileData.B]):
-                tile = TileData.B;
-                break;
-            default:
-                tile = TileData.S;
-                break;
-        }
+    // public TileData DrawRandomTile() {
+    //     TileData tile;
+    //     int randomNumber = Random.Range(0, _totalTiles);
+    //     int red = _tilePool[TileData.r];
+    //     int orange = _tilePool[TileData.o];
+    //     int yellow = _tilePool[TileData.y];
+    //     int green = _tilePool[TileData.g];
+    //     int blue = _tilePool[TileData.b];
+    //     switch (randomNumber) {
+    //         case int n when (n < red):
+    //             tile = TileData.r;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R]):
+    //             tile = TileData.R;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + orange):
+    //             tile = TileData.o;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O]):
+    //             tile = TileData.O;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow):
+    //             tile = TileData.y;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y]):
+    //             tile = TileData.Y;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green):
+    //             tile = TileData.g;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G]):
+    //             tile = TileData.G;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + red + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue):
+    //             tile = TileData.b;
+    //             break;
+    //         case int n when (n < red + _tilePool[TileData.R] + orange + _tilePool[TileData.O] + yellow + _tilePool[TileData.Y] + green + _tilePool[TileData.G] + blue + _tilePool[TileData.B]):
+    //             tile = TileData.B;
+    //             break;
+    //         default:
+    //             tile = TileData.S;
+    //             break;
+    //     }
 
-        if (TileManager.s_instance.TileIsValid(this, tile)) {
-            _tilePool[tile]--;
-            _totalTiles--;
-            if (_tilePool[tile] < 0) {
-                Debug.Log(tile.Color);
-            }
-            Assert.AreNotEqual(-1, _tilePool[tile]);
-            return tile;
-        } else {
-            return DrawTile();
-        }
-    }
+    //     if (TileManager.s_instance.TileIsValid(this, tile)) {
+    //         _tilePool[tile]--;
+    //         _totalTiles--;
+    //         if (_tilePool[tile] < 0) {
+    //             Debug.Log(tile.Color);
+    //         }
+    //         Assert.AreNotEqual(-1, _tilePool[tile]);
+    //         return tile;
+    //     } else {
+    //         return DrawTile();
+    //     }
+    // }
 
     public void ReturnTile(TileData tile) {
         if (_tilePool.ContainsKey(tile)) {
             _tilePool[tile] += 1;
+        }
+        for (int i = _currentIndex; i < _drawOrderList.Count; i++) {
+            if (_drawOrderList[i].Equals(TileData.S)) {
+                _drawOrderList[i] = tile;
+                break;
+            }
         }
     }
 
@@ -270,6 +379,42 @@ public class TilePool : MonoBehaviour
             sb.AppendLine("" + _tilePool[tileData]);
         }
         sb.AppendLine("Total Tiles Remaining: " + _totalTiles);
+        Debug.Log(sb.ToString());
+    }
+
+    private void DebugPrintDrawOrderList() {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Draw Order: ");
+        for (int i = 0; i < _drawOrderList.Count; i++) {
+            string tileName;
+            switch (_drawOrderList[i].Color) {
+                case TileData.TileColor.r:
+                    tileName = "Red";
+                    break;
+                case TileData.TileColor.o:
+                    tileName = "Orange";
+                    break;
+                case TileData.TileColor.y:
+                    tileName = "Yellow";
+                    break;
+                case TileData.TileColor.g:
+                    tileName = "Green";
+                    break;
+                case TileData.TileColor.b:
+                    tileName = "Blue";
+                    break;
+                case TileData.TileColor.S:
+                    tileName = "Special";
+                    break;
+                default:
+                    tileName = "Error";
+                    break;
+            }
+            if (_drawOrderList[i].IsStarred) {
+                tileName += " Star";
+            }
+            sb.AppendLine(38 - i + ": " + tileName);
+        }
         Debug.Log(sb.ToString());
     }
 }

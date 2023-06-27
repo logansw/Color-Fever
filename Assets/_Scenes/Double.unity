@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e47fa997527874988eaa1e4ef4b795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoundsRemaining: 34
+  RoundsRemaining: 20
   _roundsRemainingText: {fileID: 1059497794}
   _endCard: {fileID: 1087690937}
 --- !u!114 &377803476
@@ -3029,6 +3029,8 @@ MonoBehaviour:
   Index: 1
   _timelineInstance: {fileID: 489994897}
   IsSpecial: 0
+  SpecialTilesRemaining: 0
+  StarTilesRemaining: 0
 --- !u!1001 &775648314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11050,6 +11052,8 @@ MonoBehaviour:
   Index: 0
   _timelineInstance: {fileID: 292220707}
   IsSpecial: 0
+  SpecialTilesRemaining: 0
+  StarTilesRemaining: 0
 --- !u!1 &2041413054
 GameObject:
   m_ObjectHideFlags: 0

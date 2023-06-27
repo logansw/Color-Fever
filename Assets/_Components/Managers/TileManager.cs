@@ -231,23 +231,30 @@ public class TileManager : MonoBehaviour
 
     private void DrawStartTiles(TilePool tilePool) {
         List<TileData> startTiles = new List<TileData>();
-        Dictionary<TileData, int> tileCounts = new Dictionary<TileData, int>();
+        // Dictionary<TileData, int> tileCounts = new Dictionary<TileData, int>();
         while (startTiles.Count < 4) {
-            TileData tile = tilePool.DrawRandomTile();
-            if (TileIsValid(tilePool, tile)) {
-                startTiles.Add(tile);
-                if (tileCounts.ContainsKey(tile)) {
-                    tileCounts[tile] += 1;
-                } else {
-                    tileCounts.Add(tile, 1);
-                }
+            TileData tile = tilePool.DrawNextTile();
+            startTiles.Add(tile);
+            // if (tileCounts.ContainsKey(tile)) {
+            //     tileCounts[tile] += 1;
+            // } else {
+            //     tileCounts.Add(tile, 1);
+            // }
 
-                if (tileCounts[tile] >= 3) {
-                    tilePool.ReturnTile(tile);
-                    startTiles.Remove(tile);
-                    tileCounts[tile] -= 1;
-                }
-            }
+            // if (TileIsValid(tilePool, tile)) {
+            //     startTiles.Add(tile);
+            //     if (tileCounts.ContainsKey(tile)) {
+            //         tileCounts[tile] += 1;
+            //     } else {
+            //         tileCounts.Add(tile, 1);
+            //     }
+
+            //     if (tileCounts[tile] >= 3) {
+            //         tilePool.ReturnTile(tile);
+            //         startTiles.Remove(tile);
+            //         tileCounts[tile] -= 1;
+            //     }
+            // }
         }
         TilesRemaining[tilePool.Index] += 4;
         tilePool.SetStartingTiles(startTiles);
@@ -255,7 +262,7 @@ public class TileManager : MonoBehaviour
 
     public void DrawNewTiles() {
         foreach (TilePool tilePool in _tilePools) {
-            TileData tile = tilePool.SetRandomTile();
+            TileData tile = tilePool.SetNextTile();
             TilesRemaining[tilePool.Index] = 1;
             AutoSetSelected(tilePool.Index);
         }
@@ -298,6 +305,10 @@ public class TileManager : MonoBehaviour
             if (gameManager.RoundsRemaining > 18 || gameManager.RoundsRemaining < 4) {
                 return false;
             }
+        }
+
+        if (tilePool.SpecialTilesRemaining + tilePool.StarTilesRemaining == gameManager.RoundsRemaining - 5) {
+
         }
 
         return true;
