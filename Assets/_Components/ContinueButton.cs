@@ -7,6 +7,9 @@ public class ContinueButton : MonoBehaviour
 {
     public static ContinueButton s_instance;
     [SerializeField] private CustomButton _button;
+    [SerializeField] private Sprite _continueSpriteActive;
+    [SerializeField] private Sprite _continueSpritePressed;
+    [SerializeField] private Sprite _continueSpriteDisabled;
 
     public enum ContinueState {
         WaitingForRoll,
@@ -74,5 +77,9 @@ public class ContinueButton : MonoBehaviour
         CurrentContinueState = ContinueState.WaitingForPlacement;
         _button.Interactable = false;
         // SpecialManager.s_instance.ReadyToContinue is set within TileManager.cs. This is sketchy.
+    }
+
+    public void SetGraphicToContinue() {
+        _button.SetSprites(_continueSpriteActive, _continueSpritePressed, _continueSpriteDisabled);
     }
 }

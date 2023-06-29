@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -201,7 +202,20 @@ public class ScoreManager : MonoBehaviour
         return _individualScores[0] + _individualScores[1];
     }
 
-    private void DisplayFinalScore() {
-        _totalScoreFinalText.text = _totalScore.ToString();
+    private void DisplayFinalScore()
+    {
+        if (SceneManager.GetActiveScene().name.Equals("Single")) {
+            _totalScoreFinalText.text = GetFinalSingleText();
+        } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
+            _totalScoreFinalText.text = GetFinalDoubleText();
+        }
+    }
+
+    private string GetFinalSingleText() {
+        return _totalScore.ToString();
+    }
+
+    private string GetFinalDoubleText() {
+        return $"Total Score: {_totalScore}\n Top Board:{_individualScores[0]}\n Bottom Board:{_individualScores[1]}";
     }
 }

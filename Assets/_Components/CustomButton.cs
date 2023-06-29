@@ -40,4 +40,10 @@ public class CustomButton : MonoBehaviour
             _spriteRenderer.sprite = _disabledSprite;
         }
     }
+
+    public void SetSprites(Sprite active, Sprite pressed, Sprite disabled) {
+        _activeSprite = active;
+        _pressedSprite = pressed;
+        _disabledSprite = disabled;
+    }
 }

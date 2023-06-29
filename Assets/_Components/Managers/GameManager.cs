@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public static event OnGameEnd e_OnGameEnd;
     public delegate void OnGameStart();
     public static event OnGameStart e_OnGameStart;
-    [SerializeField] private GameObject _endCard;
     [SerializeField] private CustomButton _startButton;
+    [SerializeField] private ContinueButton _continueButton;
     public static GameState State;
 
     public enum GameState {
@@ -39,13 +39,20 @@ public class GameManager : MonoBehaviour
         State = GameState.Midgame;
     }
 
+    public void EndGame() {
+        e_OnGameEnd?.Invoke();
+        State = GameState.Endgame;
+        _roundsRemainingText.text = "Game Over";
+    }
+
     public void AdvanceTurn() {
         RoundsRemaining--;
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
-        if (RoundsRemaining < 0) {
-            _endCard.gameObject.SetActive(true);
-            e_OnGameEnd?.Invoke();
-            State = GameState.Endgame;
+        if (RoundsRemaining == 0) {
+            _continueButton.SetGraphicToContinue();
+        }
+        else if (RoundsRemaining < 0) {
+            EndGame();
         }
     }
 }

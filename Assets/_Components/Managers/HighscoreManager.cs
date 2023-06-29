@@ -12,19 +12,15 @@ public class HighscoreManager : MonoBehaviour
     private HighscoreData _singleScores;
     private HighscoreData _doubleScores;
     private bool _writeRequested;
+    [SerializeField] private TMP_InputField _nameInputField;
 
     private void Awake() {
         s_instance = this;
         _singleScores = JSONTool.ReadData<HighscoreData>("SingleScores.json");
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
-    }
-
-    private void OnEnable() {
-        GameManager.e_OnGameEnd += OnGameEnd;
-    }
-
-    private void OnDisable() {
-        GameManager.e_OnGameEnd -= OnGameEnd;
+        if (_nameInputField != null) {
+            _nameInputField.text = _singleScores.PreviousName;
+        }
     }
 
     private void Update() {
@@ -33,11 +29,6 @@ public class HighscoreManager : MonoBehaviour
             JSONTool.WriteData(_doubleScores, "DoubleScores.json");
             _writeRequested = false;
         }
-    }
-
-    private void OnGameEnd() {
-        RecordHighScores();
-        DisplayScores();
     }
 
     private void DisplayScores() {
@@ -53,7 +44,7 @@ public class HighscoreManager : MonoBehaviour
         _singleScores.Highscores.Sort((x, y) => y.CompareTo(x));
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _singleScores.Highscores.Count; i++) {
-            sb.Append($"{i + 1}. {_singleScores.Highscores[i]}\n");
+            sb.Append($"{i + 1}. {_singleScores.Highscores[i].ToString()}\n");
         }
         _highscoreText.text = sb.ToString();
     }
@@ -62,22 +53,26 @@ public class HighscoreManager : MonoBehaviour
         _doubleScores.Highscores.Sort((x, y) => y.CompareTo(x));
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _doubleScores.Highscores.Count; i++) {
-            sb.Append($"{i + 1}. {_doubleScores.Highscores[i]}\n");
+            sb.Append($"{i + 1}. {_doubleScores.Highscores[i].ToString()}\n");
         }
         _highscoreText.text = sb.ToString();
     }
 
     public void RecordHighScores() {
         int count = ScoreManager.s_instance.ScoreCalculators.Length;
+        string name = _nameInputField.text;
         int[] scores = new int[count];
         for (int i = 0; i < count; i++) {
             scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-            _singleScores.Highscores.Add(scores[i]);
+            _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
         }
 
         if (count == 2) {
-            _doubleScores.Highscores.Add(scores[0] + scores[1]);
+            _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
         }
+
+        _singleScores.PreviousName = name;
+        _doubleScores.PreviousName = name;
 
         _writeRequested = true;
     }
