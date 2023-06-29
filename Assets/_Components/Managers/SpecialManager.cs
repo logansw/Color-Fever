@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpecialManager : MonoBehaviour
 {
     public static SpecialManager s_instance;
-    public SelectionMode CurrentSelectionMode;
+    public SelectionMode[] CurrentSelectionMode;
     public bool ReadyToContinue;
     public SpecialMenu[] SpecialMenus;
     public enum SelectionMode {
@@ -17,6 +17,7 @@ public class SpecialManager : MonoBehaviour
     }
     public Tile SelectedTile;
     public int SelectedIndex;
+    public int Count;
 
     public delegate void OnCornerModeSet(int index);
     public static OnCornerModeSet e_OnCornerModeSet;
@@ -38,7 +39,10 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void Initialize() {
-        CurrentSelectionMode = SelectionMode.Normal;
+        CurrentSelectionMode = new SelectionMode[Count];
+        for (int i = 0; i < Count; i++) {
+            CurrentSelectionMode[i] = SelectionMode.Normal;
+        }
         ReadyToContinue = true;
         foreach (SpecialMenu specialMenu in SpecialMenus) {
             specialMenu.Initialize();
@@ -57,7 +61,7 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void SetCornerMode(int index) {
-        CurrentSelectionMode = SelectionMode.Corner;
+        CurrentSelectionMode[index] = SelectionMode.Corner;
         e_OnCornerModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
@@ -67,7 +71,7 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void SetMoveMode(int index) {
-        CurrentSelectionMode = SelectionMode.MoveA;
+        CurrentSelectionMode[index] = SelectionMode.MoveA;
         e_OnMoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
@@ -77,7 +81,7 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void SetSwapMode(int index) {
-        CurrentSelectionMode = SelectionMode.SwapA;
+        CurrentSelectionMode[index] = SelectionMode.SwapA;
         e_OnSwapModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
@@ -91,7 +95,7 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void SetRemoveMode(int index) {
-        CurrentSelectionMode = SelectionMode.Remove;
+        CurrentSelectionMode[index] = SelectionMode.Remove;
         e_OnRemoveModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
@@ -101,11 +105,11 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void SetNormalMode(int index) {
-        CurrentSelectionMode = SelectionMode.Normal;
+        CurrentSelectionMode[index] = SelectionMode.Normal;
         e_OnNormalModeSet?.Invoke(index);
         SpecialMenus[index].DeactivateMenu(index);
         foreach (GuidingText guidingText in _guidingTexts) {
-            guidingText.SetText(index, "normal");
+            guidingText.SetText(index, "");
         }
     }
 

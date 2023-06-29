@@ -2754,7 +2754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 410974057}
-  Indexes: 0000000001000000
+  Indexes: 00000000
 --- !u!114 &410974057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5910,15 +5910,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d087856ef9a6d429424d0a6841e2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentSelectionMode: 0
+  CurrentSelectionMode: 
   ReadyToContinue: 0
   SpecialMenus:
   - {fileID: 2059906647}
   - {fileID: 406092725}
   SelectedTile: {fileID: 0}
   SelectedIndex: 0
+  Count: 2
   _guidingTexts:
   - {fileID: 410974056}
+  - {fileID: 1820715101}
 --- !u!4 &850824437
 Transform:
   m_ObjectHideFlags: 0
@@ -13418,7 +13420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1820715099}
-  Indexes: 0000000001000000
+  Indexes: 01000000
 --- !u!224 &1820715102
 RectTransform:
   m_ObjectHideFlags: 0

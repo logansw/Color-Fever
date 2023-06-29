@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour
     }
 
     private void UpdateBoard() {
-        switch(SpecialManager.s_instance.CurrentSelectionMode) {
+        switch(SpecialManager.s_instance.CurrentSelectionMode[Index]) {
             case SpecialManager.SelectionMode.Normal:
                 UpdateBoardNormal();
                 break;
@@ -106,14 +106,14 @@ public class Tile : MonoBehaviour
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
-        SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveB;
+        SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.MoveB;
         SpecialManager.s_instance.InvokeMoveModeBegun(Index);
     }
 
     private void UpdateBoardMoveB() {
         if (SpecialManager.s_instance.SelectedTile == this) {
             SpecialManager.s_instance.SelectedTile = null;
-            SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.MoveA;
+            SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.MoveA;
             BoardManager.s_instance.ClearHighlightTiles(Index);
         }
         if (TileData.IsHighlighted && SpecialManager.s_instance.SelectedIndex == Index) {
@@ -132,7 +132,7 @@ public class Tile : MonoBehaviour
             return;
         }
         SpecialManager.s_instance.SelectedTile = this;
-        SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.SwapB;
+        SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.SwapB;
         _parentBoard.HighlightTile(X, Y, false);
     }
 
@@ -143,7 +143,7 @@ public class Tile : MonoBehaviour
         // Deselect
         if (SpecialManager.s_instance.SelectedTile == this) {
             SpecialManager.s_instance.SelectedTile = null;
-            SpecialManager.s_instance.CurrentSelectionMode = SpecialManager.SelectionMode.SwapA;
+            SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.SwapA;
         } else {
             Tile other = SpecialManager.s_instance.SelectedTile;
             TileData thisTileData = this.TileData;
