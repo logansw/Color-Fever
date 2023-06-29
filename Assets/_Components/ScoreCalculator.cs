@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScoreCalculator : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ScoreCalculator : MonoBehaviour
 
     [Header("External References")]
     [SerializeField] private ScoreDisplayer _scoreDisplayer;
+    [SerializeField] private TMP_Text _individualScoreText;
 
     public int GetScore() {
         _scoreDisplayer.ClearMarks(board.Index);
@@ -20,6 +22,10 @@ public class ScoreCalculator : MonoBehaviour
         score += ScoreRainbows();
         score += ScoreStars();
         score += ScoreCorners();
+
+        if (_individualScoreText != null) {
+            _individualScoreText.text = score.ToString();
+        }
 
         return score;
     }

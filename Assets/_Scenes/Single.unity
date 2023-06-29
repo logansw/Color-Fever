@@ -3094,6 +3094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 718769488}
   _scoreDisplayer: {fileID: 378682727}
+  _individualScoreText: {fileID: 0}
 --- !u!1 &724276647
 GameObject:
   m_ObjectHideFlags: 0
@@ -5861,7 +5862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ece20c245a8e14d90ee23224393601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 1
+  DebugMode: 0
   TestsEnabled: 0
   DisableValidTileChecker: 0
 --- !u!1001 &1410065725
