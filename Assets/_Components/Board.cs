@@ -13,6 +13,7 @@ public class Board : MonoBehaviour
     public int Index;
     public bool _updateQueued;
     [SerializeField] private TimelineInstance _timelineInstance;
+    public bool UpsideDown;
 
     public void Initialize() {
         Width = 10;

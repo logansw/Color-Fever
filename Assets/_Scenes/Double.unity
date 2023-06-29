@@ -1359,7 +1359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoundsRemaining: 1
   _roundsRemainingText: {fileID: 1059497794}
-  _startButton: {fileID: 2085761335}
+  _startButtons:
+  - {fileID: 2085761335}
   _continueButton: {fileID: 1549917897}
 --- !u!114 &377803476
 MonoBehaviour:
@@ -6136,6 +6137,7 @@ MonoBehaviour:
   Index: 1
   _updateQueued: 0
   _timelineInstance: {fileID: 489994897}
+  UpsideDown: 0
 --- !u!1001 &1246662807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12805,10 +12807,10 @@ MonoBehaviour:
       - m_Target: {fileID: 377803475}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: StartGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2085761335}
+          m_ObjectArgumentAssemblyTypeName: CustomButton, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13622,6 +13624,7 @@ MonoBehaviour:
   Index: 0
   _updateQueued: 0
   _timelineInstance: {fileID: 292220707}
+  UpsideDown: 0
 --- !u!114 &2122365842
 MonoBehaviour:
   m_ObjectHideFlags: 0

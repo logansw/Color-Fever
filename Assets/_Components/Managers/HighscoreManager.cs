@@ -67,7 +67,7 @@ public class HighscoreManager : MonoBehaviour
             _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
         }
 
-        if (count == 2) {
+        if (SceneManager.GetActiveScene().name.Equals("Double")) {
             _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
         }
 

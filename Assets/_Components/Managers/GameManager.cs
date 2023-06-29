@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
     public static event OnGameEnd e_OnGameEnd;
     public delegate void OnGameStart();
     public static event OnGameStart e_OnGameStart;
-    [SerializeField] private CustomButton _startButton;
+    [SerializeField] private CustomButton[] _startButtons;
     [SerializeField] private ContinueButton _continueButton;
     public static GameState State;
+    int _playersReady;
 
     public enum GameState {
         PreStart,
@@ -28,15 +29,21 @@ public class GameManager : MonoBehaviour
 
     public void Initialize() {
         _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
-        _startButton.Interactable = true;
+        foreach (CustomButton startButton in _startButtons) {
+            startButton.Interactable = true;
+        }
+        _playersReady = 0;
         State = GameState.PreStart;
 
     }
 
-    public void StartGame() {
-        e_OnGameStart?.Invoke();
-        _startButton.gameObject.SetActive(false);
-        State = GameState.Midgame;
+    public void StartGame(CustomButton startButton) {
+        _playersReady++;
+        startButton.gameObject.SetActive(false);
+        if (_playersReady == _startButtons.Length) {
+            e_OnGameStart?.Invoke();
+            State = GameState.Midgame;
+        }
     }
 
     public void EndGame() {

@@ -208,6 +208,8 @@ public class ScoreManager : MonoBehaviour
             _totalScoreFinalText.text = GetFinalSingleText();
         } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
             _totalScoreFinalText.text = GetFinalDoubleText();
+        } else if (SceneManager.GetActiveScene().name.Equals("Versus")) {
+            Debug.Log("TODO: Versus mode final score");
         }
     }
 

@@ -93,7 +93,7 @@ public class TileManager : MonoBehaviour
             _tilePools[0].Initialize(0, _tileCounts);
             DrawStartTiles(_tilePools[0]);
             _tilePools[0].HideStartingTiles();
-        } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
+        } else if (SceneManager.GetActiveScene().name.Equals("Double") || SceneManager.GetActiveScene().name.Equals("Versus")) {
             _tileCounts = new Dictionary<TileData, int>() {
                 {TileData.r, 10},
                 {TileData.R, 1},

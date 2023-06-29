@@ -50,6 +50,11 @@ public class BoardViewer : MonoBehaviour
                 }
             }
         }
+
+        if (board.UpsideDown) {
+            board.transform.up = Vector2.down;
+            board.transform.position += new Vector3(0, board.Height + 1, 0);
+        }
         return tileObjects;
     }
 
