@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e47fa997527874988eaa1e4ef4b795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoundsRemaining: 20
+  RoundsRemaining: 34
   _roundsRemainingText: {fileID: 1059497794}
   _endCard: {fileID: 1087690937}
   _startButton: {fileID: 2085761335}
@@ -2191,6 +2191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 628333978}
   - component: {fileID: 628333977}
+  - component: {fileID: 628333979}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -2210,7 +2211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac139648460752f4897039ad7b1ea89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreCalculators: []
+  ScoreCalculators:
+  - {fileID: 2122365842}
+  - {fileID: 1192843867}
   _totalScoreText: {fileID: 1140761681}
   _totalScoreFinalText: {fileID: 1564732865}
 --- !u!4 &628333978
@@ -2228,6 +2231,19 @@ Transform:
   m_Father: {fileID: 1114100085}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &628333979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628333976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bb69edd26c88f4d975f9ebd3d70a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreMarkPrefab: {fileID: 3934356104580137201, guid: 61c2ab21ca863254fa7b301c859419c0, type: 3}
 --- !u!1 &630382348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4529,7 +4545,7 @@ SortingGroup:
   m_GameObject: {fileID: 1087690937}
   m_Enabled: 1
   m_SortingLayerID: 775250989
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
 --- !u!4 &1087690939
 Transform:
@@ -5142,7 +5158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1192843869}
-  _scoreDisplayer: {fileID: 0}
+  _scoreDisplayer: {fileID: 628333979}
 --- !u!4 &1192843868
 Transform:
   m_ObjectHideFlags: 0
@@ -12429,7 +12445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 2122365841}
-  _scoreDisplayer: {fileID: 0}
+  _scoreDisplayer: {fileID: 628333979}
 --- !u!4 &2122365843
 Transform:
   m_ObjectHideFlags: 0

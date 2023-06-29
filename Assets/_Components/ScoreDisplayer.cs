@@ -7,51 +7,53 @@ public class ScoreDisplayer : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private ScoreMark _scoreMarkPrefab;
 
-    private List<ScoreMark> _scoreMarks;
+    private List<ScoreMark>[] _scoreMarks;
 
     private void Start() {
-        _scoreMarks = new List<ScoreMark>();
+        _scoreMarks = new List<ScoreMark>[2];
+        _scoreMarks[0] = new List<ScoreMark>();
+        _scoreMarks[1] = new List<ScoreMark>();
     }
 
-    public void DisplayScoreRow(Link start, Link end, int score, Transform boardOrigin) {
+    public void DisplayScoreRow(Link start, Link end, int score, Transform boardOrigin, int index) {
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfRow(start, end);
         mark.SetText(score);
-        _scoreMarks.Add(mark);
+        _scoreMarks[index].Add(mark);
     }
 
-    public void DisplayScoreColumn(Link start, Link end, int score, Transform boardOrigin) {
+    public void DisplayScoreColumn(Link start, Link end, int score, Transform boardOrigin, int index) {
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfColumn(start, end);
         mark.SetText(score);
-        _scoreMarks.Add(mark);
+        _scoreMarks[index].Add(mark);
     }
 
-    public void DisplayScoreDiagonal(Link start, Link end, int score, Transform boardOrigin) {
+    public void DisplayScoreDiagonal(Link start, Link end, int score, Transform boardOrigin, int index) {
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfDiagonal(start, end);
         mark.SetText(score);
-        _scoreMarks.Add(mark);
+        _scoreMarks[index].Add(mark);
     }
 
-    public void DisplayScoreStar(Link link, int score, Transform boardOrigin) {
+    public void DisplayScoreStar(Link link, int score, Transform boardOrigin, int index) {
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfStar(link);
         mark.SetText(score);
-        _scoreMarks.Add(mark);
+        _scoreMarks[index].Add(mark);
     }
 
-    public void DisplayScoreCorner(Link link, int score, Transform boardOrigin) {
+    public void DisplayScoreCorner(Link link, int score, Transform boardOrigin, int index) {
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfCorner(link);
         mark.SetText(score);
-        _scoreMarks.Add(mark);
+        _scoreMarks[index].Add(mark);
     }
 
-    public void ClearMarks() {
-        foreach (ScoreMark mark in _scoreMarks) {
+    public void ClearMarks(int index) {
+        foreach (ScoreMark mark in _scoreMarks[index]) {
             Destroy(mark.gameObject);
         }
-        _scoreMarks.Clear();
+        _scoreMarks[index].Clear();
     }
 }

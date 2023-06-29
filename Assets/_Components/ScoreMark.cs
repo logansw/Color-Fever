@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScoreMark : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private TMP_Text _scoreText;
 
     public void PositionSelfRow(Link start, Link end) {
         _spriteRenderer.size = new Vector2(Vector2.Distance(start.Position, end.Position), 0.2f);
@@ -28,14 +30,17 @@ public class ScoreMark : MonoBehaviour
     }
 
     public void PositionSelfStar(Link link) {
-
+        _spriteRenderer.size = new Vector2(0.5f, 0.2f);
+        transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
     }
 
     public void PositionSelfCorner(Link link) {
-
+        _spriteRenderer.size = new Vector2(0.5f, 0.2f);
+        transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
     }
 
     public void SetText(int score) {
-
+        _scoreText.text = score.ToString();
+        _scoreText.transform.localPosition = new Vector3(-_spriteRenderer.size.x/2f + 0.25f, 0f, 0f);
     }
 }
