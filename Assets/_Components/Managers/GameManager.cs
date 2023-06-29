@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager s_instance;
     public int RoundsRemaining;
-    [SerializeField] private TMP_Text _roundsRemainingText;
+    [SerializeField] private TMP_Text[] _roundsRemainingTexts;
     public delegate void OnGameEnd();
     public static event OnGameEnd e_OnGameEnd;
     public delegate void OnGameStart();
@@ -28,7 +28,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void Initialize() {
-        _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
+        foreach (TMP_Text roundsRemainingText in _roundsRemainingTexts) {
+            roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
+        }
         foreach (CustomButton startButton in _startButtons) {
             startButton.Interactable = true;
         }
@@ -49,12 +51,16 @@ public class GameManager : MonoBehaviour
     public void EndGame() {
         e_OnGameEnd?.Invoke();
         State = GameState.Endgame;
-        _roundsRemainingText.text = "Game Over";
+        foreach (TMP_Text roundsRemainingText in _roundsRemainingTexts) {
+            roundsRemainingText.text = "Game Over";
+        }
     }
 
     public void AdvanceTurn() {
         RoundsRemaining--;
-        _roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
+        foreach (TMP_Text roundsRemainingText in _roundsRemainingTexts) {
+            roundsRemainingText.text = $"{RoundsRemaining} rounds remaining";
+        }
         if (RoundsRemaining == 0) {
             _continueButton.SetGraphicToContinue();
         }

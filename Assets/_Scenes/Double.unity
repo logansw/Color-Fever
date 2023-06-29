@@ -1358,7 +1358,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoundsRemaining: 1
-  _roundsRemainingText: {fileID: 1059497794}
+  _roundsRemainingTexts:
+  - {fileID: 1059497794}
   _startButtons:
   - {fileID: 2085761335}
   _continueButton: {fileID: 1549917897}
