@@ -71,6 +71,7 @@ public class HighscoreManager : MonoBehaviour
                     string name = _nameInputFields[i].text;
                     int score = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
                     _singleScores.Highscores.Add(new HighscoreData.Entry(name, score));
+                    _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
                 }
                 _singleScores.PreviousName = name;
                 EndCard.Hide();
@@ -82,10 +83,12 @@ public class HighscoreManager : MonoBehaviour
             for (int i = 0; i < count; i++) {
                 scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
                 _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
+                _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
             }
 
             if (SceneManager.GetActiveScene().name.Equals("Double")) {
                 _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
+                _doubleScores.Highscores = SortAndTruncateHighscores(_doubleScores.Highscores);
             }
 
             _singleScores.PreviousName = name;
@@ -93,5 +96,14 @@ public class HighscoreManager : MonoBehaviour
 
         }
         _writeRequested = true;
+    }
+
+    private List<HighscoreData.Entry> SortAndTruncateHighscores(List<HighscoreData.Entry> highscores) {
+        List<HighscoreData.Entry> highscoresTruncated = new List<HighscoreData.Entry>();
+        highscores.Sort((x, y) => y.CompareTo(x));
+        for (int i = 0; i < 20; i++) {
+            highscoresTruncated.Add(highscores[i]);
+        }
+        return highscoresTruncated;
     }
 }

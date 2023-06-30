@@ -220,7 +220,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     private string GetFinalDoubleText() {
-        return $"Total Score: {_totalScore}\n Top Board:{_individualScores[0]}\n Bottom Board:{_individualScores[1]}";
+        return $"Total Score: {_totalScore}\n Top Board:{_individualScores[1]}\n Bottom Board:{_individualScores[0]}";
     }
 
     private string GetFinalVersusText(int index) {
