@@ -12,14 +12,19 @@ public class HighscoreManager : MonoBehaviour
     private HighscoreData _singleScores;
     private HighscoreData _doubleScores;
     private bool _writeRequested;
-    [SerializeField] private TMP_InputField _nameInputField;
+    [SerializeField] private TMP_InputField[] _nameInputFields;
+    private int _playersReady;
+    public EndCard EndCard;
 
     private void Awake() {
         s_instance = this;
         _singleScores = JSONTool.ReadData<HighscoreData>("SingleScores.json");
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
-        if (_nameInputField != null) {
-            _nameInputField.text = _singleScores.PreviousName;
+        _playersReady = 0;
+        if (_nameInputFields != null && _nameInputFields[0] != null) {
+            for (int i = 0; i < _nameInputFields.Length; i++) {
+                _nameInputFields[i].text = _singleScores.PreviousName;
+            }
         }
     }
 
@@ -59,21 +64,34 @@ public class HighscoreManager : MonoBehaviour
     }
 
     public void RecordHighScores() {
-        int count = ScoreManager.s_instance.ScoreCalculators.Length;
-        string name = _nameInputField.text;
-        int[] scores = new int[count];
-        for (int i = 0; i < count; i++) {
-            scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-            _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
+        if (SceneManager.GetActiveScene().name.Equals("Versus")) {
+            _playersReady++;
+            if (_playersReady == _nameInputFields.Length) {
+                for (int i = 0; i < _nameInputFields.Length; i++) {
+                    string name = _nameInputFields[i].text;
+                    int score = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
+                    _singleScores.Highscores.Add(new HighscoreData.Entry(name, score));
+                }
+                _singleScores.PreviousName = name;
+                EndCard.Hide();
+            }
+        } else {
+            int count = ScoreManager.s_instance.ScoreCalculators.Length;
+            string name = _nameInputFields[0].text;
+            int[] scores = new int[count];
+            for (int i = 0; i < count; i++) {
+                scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
+                _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
+            }
+
+            if (SceneManager.GetActiveScene().name.Equals("Double")) {
+                _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
+            }
+
+            _singleScores.PreviousName = name;
+            _doubleScores.PreviousName = name;
+
         }
-
-        if (SceneManager.GetActiveScene().name.Equals("Double")) {
-            _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
-        }
-
-        _singleScores.PreviousName = name;
-        _doubleScores.PreviousName = name;
-
         _writeRequested = true;
     }
 }

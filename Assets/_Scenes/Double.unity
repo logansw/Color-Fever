@@ -282,7 +282,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highscoreText: {fileID: 0}
-  _nameInputField: {fileID: 1359770402}
+  _nameInputFields:
+  - {fileID: 1359770402}
+  EndCard: {fileID: 1087451760}
 --- !u!1 &90909650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,6 +2645,7 @@ MonoBehaviour:
   - {fileID: 1192843867}
   _totalScoreText: {fileID: 1140761681}
   _totalScoreFinalText: {fileID: 470406760}
+  VersusScoreTexts: []
 --- !u!4 &628333978
 Transform:
   m_ObjectHideFlags: 0
@@ -12137,13 +12140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d087856ef9a6d429424d0a6841e2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentSelectionMode: 0
+  CurrentSelectionMode: 
   ReadyToContinue: 0
   SpecialMenus:
   - {fileID: 1838281616}
   - {fileID: 1681747420}
   SelectedTile: {fileID: 0}
   SelectedIndex: 0
+  Count: 2
   _guidingTexts:
   - {fileID: 573931696}
 --- !u!4 &1960991014

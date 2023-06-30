@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour
     public ScoreCalculator[] ScoreCalculators;
     [SerializeField] private TMP_Text _totalScoreText;
     [SerializeField] private TMP_Text _totalScoreFinalText;
+    public TMP_Text[] VersusScoreTexts;
     private int[] _individualScores;
     private int _totalScore;
 
@@ -209,7 +210,8 @@ public class ScoreManager : MonoBehaviour
         } else if (SceneManager.GetActiveScene().name.Equals("Double")) {
             _totalScoreFinalText.text = GetFinalDoubleText();
         } else if (SceneManager.GetActiveScene().name.Equals("Versus")) {
-            Debug.Log("TODO: Versus mode final score");
+            VersusScoreTexts[0].text = GetFinalVersusText(0);
+            VersusScoreTexts[1].text = GetFinalVersusText(1);
         }
     }
 
@@ -219,5 +221,14 @@ public class ScoreManager : MonoBehaviour
 
     private string GetFinalDoubleText() {
         return $"Total Score: {_totalScore}\n Top Board:{_individualScores[0]}\n Bottom Board:{_individualScores[1]}";
+    }
+
+    private string GetFinalVersusText(int index) {
+        int other = (index == 0) ? 1 : 0;
+        if (_individualScores[index] < _individualScores[other]) {
+            return $"Defeat\n{_individualScores[index]}";
+        } else {
+            return $"Victory!\n{_individualScores[index]}";
+        }
     }
 }

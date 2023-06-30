@@ -46,4 +46,9 @@ public class CustomButton : MonoBehaviour
         _pressedSprite = pressed;
         _disabledSprite = disabled;
     }
+
+    public void HideSelf() {
+        _spriteRenderer.enabled = false;
+        _boxCollider2D.enabled = false;
+    }
 }

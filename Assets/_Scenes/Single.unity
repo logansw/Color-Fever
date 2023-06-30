@@ -2660,6 +2660,7 @@ MonoBehaviour:
   - {fileID: 718769490}
   _totalScoreText: {fileID: 741775218}
   _totalScoreFinalText: {fileID: 1551353495}
+  VersusScoreTexts: []
 --- !u!4 &378682726
 Transform:
   m_ObjectHideFlags: 0
@@ -6172,7 +6173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highscoreText: {fileID: 0}
-  _nameInputField: {fileID: 457113608}
+  _nameInputFields:
+  - {fileID: 457113608}
+  EndCard: {fileID: 190199718}
 --- !u!4 &1047087004
 Transform:
   m_ObjectHideFlags: 0
@@ -10382,12 +10385,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d087856ef9a6d429424d0a6841e2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentSelectionMode: 0
+  CurrentSelectionMode: 
   ReadyToContinue: 0
   SpecialMenus:
   - {fileID: 1694156647}
   SelectedTile: {fileID: 0}
   SelectedIndex: 0
+  Count: 1
   _guidingTexts:
   - {fileID: 1176069081}
 --- !u!4 &2020386383
