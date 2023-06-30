@@ -19,6 +19,7 @@ public class DiceManager : MonoBehaviour
     public delegate void OnDiceRoll();
     public static OnDiceRoll e_OnDiceRoll;
     public bool Rolled;
+    private int[,] _previousRolls;
 
     private void Awake() {
         s_instance = this;
@@ -34,14 +35,29 @@ public class DiceManager : MonoBehaviour
 
     public void Initialize() {
         DiceValues = new int[2];
+        _previousRolls = new int[2, 2];
         DisableRoll();
     }
 
     public void Roll() {
-        for (int i = 0; i < DiceValues.Length; i++) {
-            DiceValues[i] = Random.Range(1, 7);
-            _diceRenderers[i].sprite = _diceSprites[DiceValues[i] - 1];
+        bool goodRoll = false;
+        while (!goodRoll) {
+            for (int i = 0; i < DiceValues.Length; i++) {
+                DiceValues[i] = Random.Range(1, 7);
+                _diceRenderers[i].sprite = _diceSprites[DiceValues[i] - 1];
+            }
+            if ((DiceValues[0] == _previousRolls[1, 0] || DiceValues[0] == _previousRolls[1, 1]) &&
+                (DiceValues[1] == _previousRolls[1, 0] || DiceValues[1] == _previousRolls[1, 1]) &&
+                (_previousRolls[1, 0] == _previousRolls[0, 0] || _previousRolls[1, 0] == _previousRolls[0, 1]) &&
+                (_previousRolls[1, 1] == _previousRolls[0, 0] || _previousRolls[1, 1] == _previousRolls[0, 1])) {
+                continue;
+            } else {
+                goodRoll = true;
+            }
         }
+
+        RecordRoll();
+
         if (DiceValues[0] == DiceValues[1]) {
             EnableRoll();
         } else {
@@ -49,6 +65,13 @@ public class DiceManager : MonoBehaviour
         }
         e_OnDiceRoll?.Invoke();
         Rolled = true;
+    }
+
+    private void RecordRoll() {
+        _previousRolls[0, 0] = _previousRolls[1, 0];
+        _previousRolls[0, 1] = _previousRolls[1, 1];
+        _previousRolls[1, 0] = DiceValues[0];
+        _previousRolls[1, 1] = DiceValues[1];
     }
 
     private void Update() {
