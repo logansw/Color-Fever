@@ -119,8 +119,10 @@ public class SpecialManager : MonoBehaviour
     }
 
     public void Pass(int index) {
-        SpecialMenus[index].ReadyToContinue = true;
+        SpecialManager.s_instance.SpecialActionComplete(index);
         SpecialMenus[index].DeactivateMenu(index);
         SelectedIndex = index;
+        SpecialManager.s_instance.SetNormalMode(index);
+        TileManager.s_instance.HideCenterSlot(index);
     }
 }
