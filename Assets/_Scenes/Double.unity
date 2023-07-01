@@ -1377,7 +1377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ece20c245a8e14d90ee23224393601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 0
+  DebugMode: 1
   TestsEnabled: 0
   DisableValidTileChecker: 0
 --- !u!114 &377803477

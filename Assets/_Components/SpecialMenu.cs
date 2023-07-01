@@ -32,10 +32,12 @@ public class SpecialMenu : MonoBehaviour
 
     private void OnEnable() {
         TilePool.e_OnSpecialDrawn += ActivateMenu;
+        Board.e_OnBoardChange += CheckCorners;
     }
 
     private void OnDisable() {
         TilePool.e_OnSpecialDrawn -= ActivateMenu;
+        Board.e_OnBoardChange -= CheckCorners;
     }
 
     public void ActivateMenu(int index) {
@@ -135,6 +137,15 @@ public class SpecialMenu : MonoBehaviour
             if (!ready) {
                 SpecialManager.s_instance.ReadyToContinue = false;
             }
+        }
+    }
+
+    private void CheckCorners(Board board) {
+        if (board.Index != Index) { return; }
+        if (board.OpenCorners()) {
+            RestoreButton(_cornerButton);
+        } else {
+            RemoveButton(_cornerButton);
         }
     }
 }

@@ -160,4 +160,15 @@ public class Board : MonoBehaviour
         }
         _updateQueued = true;
     }
+
+    public bool OpenCorners() {
+        if (BoardData[1, 1].Color.Equals(TileData.TileColor.s) ||
+            BoardData[Width, 1].Color.Equals(TileData.TileColor.s) ||
+            BoardData[1, Height].Color.Equals(TileData.TileColor.s) ||
+            BoardData[Width, Height].Color.Equals(TileData.TileColor.s)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
