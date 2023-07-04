@@ -15,6 +15,9 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text[] VersusScoreTexts;
     private int[] _individualScores;
     private int _totalScore;
+    private int _previousScore;
+    [SerializeField] private AudioSource _smallScoreAudioSource;
+    [SerializeField] private AudioSource _bigScoreAudioSource;
 
     public static int[,] ScoreGridColumns = {
         {400, 400, 400, 400, 400, 400, 450, 540, 660, 800},
@@ -172,6 +175,7 @@ public class ScoreManager : MonoBehaviour
 
     public void Initialize() {
         _totalScore = 0;
+        _previousScore = 0;
         _totalScoreText.text = _totalScore.ToString();
         _individualScores = new int[ScoreCalculators.Length];
         if (!JSONTool.FileExists("SingleScores.json")) {
@@ -193,6 +197,14 @@ public class ScoreManager : MonoBehaviour
             _totalScore += _individualScores[i];
         }
         _totalScoreText.text = _totalScore.ToString();
+        if (_totalScore - _previousScore > 0) {
+            if (_totalScore - _previousScore >= 1000) {
+                _bigScoreAudioSource.Play();
+            } else {
+                _smallScoreAudioSource.Play();
+            }
+        }
+        _previousScore = _totalScore;
     }
 
     public int[] GetSingleScores() {
