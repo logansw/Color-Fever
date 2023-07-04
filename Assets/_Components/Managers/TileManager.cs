@@ -42,6 +42,12 @@ public class TileManager : MonoBehaviour
         ForcedDraw = TileData.n;
         TilesRemaining = new int[_tilePools.Length];
         InitializeTilePools();
+        if (SceneManager.GetActiveScene().name.Equals("Double") || SceneManager.GetActiveScene().name.Equals("Versus")) {
+            SynchronizeTilePools();
+        }
+        foreach (TilePool tilePool in _tilePools) {
+            tilePool.DebugPrintDrawOrderList();
+        }
         if (ConfigurationManager.s_instance.DebugMode) {
             DebugTile = TileData.r;
         }
@@ -250,6 +256,10 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Automatically selects tiles when there is only one to choose (aka. at the start of each round)
+    /// </summary>
+    /// <param name="index"></param>
     public void AutoSetSelected(int index) {
         TileData tileData = _tilePools[index].TileSlots[0].TileData;
         if (!tileData.Equals(TileData.S)) {
@@ -353,5 +363,41 @@ public class TileManager : MonoBehaviour
 
     public bool TilePoolIsSpecial(int index) {
         return _tilePools[index].IsSpecial;
+    }
+
+    public void SynchronizeTilePools() {
+        List<TileData> tilePoolATiles = _tilePools[0].GetDrawOrderList();
+        List<TileData> tilePoolBTiles = _tilePools[1].GetDrawOrderList();
+        int a1 = -1, a2 = -1, b1 = -1, b2 = -1;
+        for (int i = 0; i < tilePoolATiles.Count; i++) {
+            if (a1 == -1 && tilePoolATiles[i].Equals(TileData.S)){
+                a1 = i;
+            }
+            if (a1 != -1 && tilePoolATiles[i].Equals(TileData.S)) {
+                a2 = i;
+            }
+        }
+
+        for (int i = 0; i < tilePoolBTiles.Count; i++) {
+            if (b1 == -1 && tilePoolBTiles[i].Equals(TileData.S)){
+                b1 = i;
+            }
+            if (b1 != -1 && tilePoolBTiles[i].Equals(TileData.S)) {
+                b2 = i;
+            }
+        }
+
+        int firstIndex = Mathf.Min(a1, b1);
+        int secondIndex = Mathf.Min(a2, b2);
+        Swap<TileData>(tilePoolATiles, firstIndex, a1);
+        Swap<TileData>(tilePoolBTiles, firstIndex, b1);
+        Swap<TileData>(tilePoolATiles, secondIndex, a2);
+        Swap<TileData>(tilePoolBTiles, secondIndex, b2);
+    }
+
+    private void Swap<T>(List<T> list, int indexA, int indexB) {
+        T temp = list[indexA];
+        list[indexA] = list[indexB];
+        list[indexB] = temp;
     }
 }

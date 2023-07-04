@@ -81,7 +81,6 @@ public class TilePool : MonoBehaviour
         while (!DrawOrderValid()) {
             ShuffleDrawOrderList();
         }
-        DebugPrintDrawOrderList();
     }
 
     private void ShuffleDrawOrderList() {
@@ -307,7 +306,7 @@ public class TilePool : MonoBehaviour
         Debug.Log(sb.ToString());
     }
 
-    private void DebugPrintDrawOrderList() {
+    public void DebugPrintDrawOrderList() {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("Draw Order: ");
         for (int i = 0; i < _drawOrderList.Count; i++) {
@@ -341,5 +340,12 @@ public class TilePool : MonoBehaviour
             sb.AppendLine(38 - i + ": " + tileName);
         }
         Debug.Log(sb.ToString());
+    }
+
+    public List<TileData> GetDrawOrderList() {
+        return _drawOrderList;
+    }
+    public void SetDrawOrderList(List<TileData> drawOrderList) {
+        _drawOrderList = drawOrderList;
     }
 }
