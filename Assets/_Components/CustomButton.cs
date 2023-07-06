@@ -8,6 +8,9 @@ public class CustomButton : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private AudioSource _buttonAudioSource;
+    [SerializeField] private AudioSource _undoAudioSource;
+    [SerializeField] private AudioSource _diceAudioSource;
 
     [Header("Asset References")]
     [SerializeField] private Sprite _activeSprite;
@@ -34,6 +37,7 @@ public class CustomButton : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Ended && _boxCollider2D.bounds.IntersectRay(ray)) {
                     OnClick.Invoke();
+                    PlayButtonSound();
                 }
             }
         } else {
@@ -50,5 +54,17 @@ public class CustomButton : MonoBehaviour
     public void HideSelf() {
         _spriteRenderer.enabled = false;
         _boxCollider2D.enabled = false;
+    }
+
+    public void PlayButtonSound() {
+        _buttonAudioSource.Play();
+    }
+
+    public void PlayUndoSound() {
+        _undoAudioSource.Play();
+    }
+
+    public void PlayDiceSound() {
+        _diceAudioSource.Play();
     }
 }

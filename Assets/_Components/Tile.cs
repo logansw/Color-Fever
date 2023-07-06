@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
+    [SerializeField] private AudioSource _buttonAudioSource;
 
     [Header("External References")]
     public SpriteRenderer OutlineSR;
@@ -82,6 +83,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SetNormalMode(Index);
             SpecialManager.s_instance.SpecialActionComplete(Index);
             TileManager.s_instance.HideCenterSlot(Index);
+            _buttonAudioSource.Play();
         } else {
             // Do nothing
         }
@@ -96,6 +98,7 @@ public class Tile : MonoBehaviour
         bool result = BoardManager.s_instance.SetTile(_parentBoard, selectedTileSlot.TileData, X, Y);
         if (result) {
             TileManager.s_instance.DisableSelectedTile(Index);
+            _buttonAudioSource.Play();
         } else {
             // Do nothing
         }
@@ -108,6 +111,7 @@ public class Tile : MonoBehaviour
         SpecialManager.s_instance.SelectedTile = this;
         SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.MoveB;
         SpecialManager.s_instance.InvokeMoveModeBegun(Index);
+        _buttonAudioSource.Play();
     }
 
     private void UpdateBoardMoveB() {
@@ -115,6 +119,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SelectedTile = null;
             SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.MoveA;
             BoardManager.s_instance.ClearHighlightTiles(Index);
+            _buttonAudioSource.Play();
         }
         if (TileData.IsHighlighted && SpecialManager.s_instance.SelectedIndex == Index) {
             Tile original = SpecialManager.s_instance.SelectedTile;
@@ -124,6 +129,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SetNormalMode(Index);
             SpecialManager.s_instance.SpecialActionComplete(Index);
             TileManager.s_instance.HideCenterSlot(Index);
+            _buttonAudioSource.Play();
         }
     }
 
@@ -134,6 +140,7 @@ public class Tile : MonoBehaviour
         SpecialManager.s_instance.SelectedTile = this;
         SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.SwapB;
         _parentBoard.HighlightTile(X, Y, false);
+        _buttonAudioSource.Play();
     }
 
     private void UpdateBoardSwapB() {
@@ -144,6 +151,7 @@ public class Tile : MonoBehaviour
         if (SpecialManager.s_instance.SelectedTile == this) {
             SpecialManager.s_instance.SelectedTile = null;
             SpecialManager.s_instance.CurrentSelectionMode[Index] = SpecialManager.SelectionMode.SwapA;
+            _buttonAudioSource.Play();
         } else {
             Tile other = SpecialManager.s_instance.SelectedTile;
             TileData thisTileData = this.TileData;
@@ -152,6 +160,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SetNormalMode(Index);
             SpecialManager.s_instance.SpecialActionComplete(Index);
             TileManager.s_instance.HideCenterSlot(Index);
+            _buttonAudioSource.Play();
         }
     }
 
@@ -165,6 +174,7 @@ public class Tile : MonoBehaviour
             SpecialManager.s_instance.SetNormalMode(Index);
             SpecialManager.s_instance.SpecialActionComplete(Index);
             TileManager.s_instance.HideCenterSlot(Index);
+            _buttonAudioSource.Play();
         }
     }
 

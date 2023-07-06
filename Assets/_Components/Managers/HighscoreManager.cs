@@ -21,7 +21,7 @@ public class HighscoreManager : MonoBehaviour
         _singleScores = JSONTool.ReadData<HighscoreData>("SingleScores.json");
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
         _playersReady = 0;
-        if (_nameInputFields != null && _nameInputFields[0] != null) {
+        if (_nameInputFields.Length > 0 && _nameInputFields[0] != null) {
             for (int i = 0; i < _nameInputFields.Length; i++) {
                 _nameInputFields[i].text = _singleScores.PreviousName;
             }

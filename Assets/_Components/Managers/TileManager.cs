@@ -45,9 +45,6 @@ public class TileManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Equals("Double") || SceneManager.GetActiveScene().name.Equals("Versus")) {
             SynchronizeTilePools();
         }
-        foreach (TilePool tilePool in _tilePools) {
-            tilePool.DebugPrintDrawOrderList();
-        }
         if (ConfigurationManager.s_instance.DebugMode) {
             DebugTile = TileData.r;
         }
