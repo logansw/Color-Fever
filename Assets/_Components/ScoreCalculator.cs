@@ -54,7 +54,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridColumns[chain.Length - 3, chain.Origin.x - 1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         chains = CreateStarChains(links);
@@ -62,7 +62,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridStarColumns[chain.Length - 3, chain.Origin.x - 1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreColumn(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         return score;
@@ -87,7 +87,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridRows[chain.Length - 3, chain.Origin.y - 1, chain.Origin.x - 1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         chains = CreateStarChains(links);
@@ -95,7 +95,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridStarRows[chain.Length - 3, chain.Origin.y - 1, chain.Origin.x - 1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreRow(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         return score;
@@ -133,7 +133,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
                 int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         chains = CreateStarChains(links);
@@ -141,7 +141,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-chain.Length >= 0 && chain.Origin.y-chain.Length >= 0) {
                 int addedScore = ScoreManager.ScoreGridStarDiagonalUp[chain.Length-3, chain.Origin.y-chain.Length, chain.Origin.x-chain.Length];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         return score;
@@ -160,7 +160,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         chains = CreateStarChains(links);
@@ -168,7 +168,7 @@ public class ScoreCalculator : MonoBehaviour
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
                 int addedScore = ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
         }
         return score;
@@ -192,7 +192,7 @@ public class ScoreCalculator : MonoBehaviour
             if (IsRainbow(tilesInColumn)) {
                 int addedScore = ScoreManager.ScoreGridRainbowColumns[x-1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreColumn(new Link(new Vector2Int(x, 1), board.BoardData[x, 1]), new Link(new Vector2Int(x, board.Height), board.BoardData[x, board.Height]), addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreColumn(new Link(new Vector2Int(x, 1), board.BoardData[x, 1]), new Link(new Vector2Int(x, board.Height), board.BoardData[x, board.Height]), addedScore, board, board.Index);
             }
         }
         return score;
@@ -213,7 +213,7 @@ public class ScoreCalculator : MonoBehaviour
             if (IsRainbow(tilesInRowLeft) && IsRainbow(tilesInRowRight)) {
                 int addedScore = ScoreManager.ScoreGridDoubleRainbow[y-1];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(1, y), board.BoardData[1, y]), new Link(new Vector2Int(board.Width, y), board.BoardData[board.Width, y]), addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(1, y), board.BoardData[1, y]), new Link(new Vector2Int(board.Width, y), board.BoardData[board.Width, y]), addedScore, board, board.Index);
                 continue;
             }
 
@@ -226,7 +226,7 @@ public class ScoreCalculator : MonoBehaviour
                 if (IsRainbow(tilesInRow)) {
                     int addedScore = ScoreManager.ScoreGridRainbowRows[y-1, x-1];
                     score += addedScore;
-                    _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(x, y), board.BoardData[x, y]), new Link(new Vector2Int(x+4, y), board.BoardData[x+4, y]), addedScore, board.transform, board.Index);
+                    _scoreDisplayer.DisplayScoreRow(new Link(new Vector2Int(x, y), board.BoardData[x, y]), new Link(new Vector2Int(x+4, y), board.BoardData[x+4, y]), addedScore, board, board.Index);
                     break;
                 }
             }
@@ -245,7 +245,7 @@ public class ScoreCalculator : MonoBehaviour
             if (IsRainbow(tilesInDiagonal)) {
                 int addedScore = ScoreManager.ScoreGridRainbowDiagonal[x];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, 1), board.BoardData[x+1, 1]), new Link(new Vector2Int(x+5, 5), board.BoardData[x+5, 5]), addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, 1), board.BoardData[x+1, 1]), new Link(new Vector2Int(x+5, 5), board.BoardData[x+5, 5]), addedScore, board, board.Index);
             }
         }
 
@@ -258,7 +258,7 @@ public class ScoreCalculator : MonoBehaviour
             if (IsRainbow(tilesInDiagonal)) {
                 int addedScore = ScoreManager.ScoreGridRainbowDiagonal[x];
                 score += addedScore;
-                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, board.Height), board.BoardData[x+1, board.Height]), new Link(new Vector2Int(x+5, board.Height-4), board.BoardData[x+5, board.Height-4]), addedScore, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreDiagonal(new Link(new Vector2Int(x+1, board.Height), board.BoardData[x+1, board.Height]), new Link(new Vector2Int(x+5, board.Height-4), board.BoardData[x+5, board.Height-4]), addedScore, board, board.Index);
             }
         }
 
@@ -289,22 +289,22 @@ public class ScoreCalculator : MonoBehaviour
         if (IsStar(board.BoardData[1, 4])) {
             int addedScore = 600;
             score += addedScore;
-            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(1, 4), board.BoardData[1, 4]), addedScore, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(1, 4), board.BoardData[1, 4]), addedScore, board, board.Index);
         }
         if (IsStar(board.BoardData[4, 4])) {
             int addedScore = 600;
             score += addedScore;
-            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(4, 4), board.BoardData[4, 4]), addedScore, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(4, 4), board.BoardData[4, 4]), addedScore, board, board.Index);
         }
         if (IsStar(board.BoardData[7, 4])) {
             int addedScore = 900;
             score += addedScore;
-            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(7, 4), board.BoardData[7, 4]), addedScore, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(7, 4), board.BoardData[7, 4]), addedScore, board, board.Index);
         }
         if (IsStar(board.BoardData[10, 4])) {
             int addedScore = 1200;
             score += addedScore;
-            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(10, 4), board.BoardData[10, 4]), addedScore, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreStar(new Link(new Vector2Int(10, 4), board.BoardData[10, 4]), addedScore, board, board.Index);
         }
         return score;
     }
@@ -338,58 +338,58 @@ public class ScoreCalculator : MonoBehaviour
         if (cornerTypes.ContainsValue(4)) {
             int addedScore = 475 * 4;
             score += addedScore;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 475, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 475, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 475, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 475, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 475, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 475, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 475, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 475, board, board.Index);
             return score;
         } else if (cornerTypes.ContainsValue(3)) {
             int addedScore = 260 * 3;
             score += addedScore;
             if (ValidCornerTriple(bottomLeft, topLeft, topRight)) {
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board, board.Index);
             } else if (ValidCornerTriple(topLeft, topRight, bottomRight)) {
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board, board.Index);
             } else if (ValidCornerTriple(topRight, bottomRight, bottomLeft)) {
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board, board.Index);
             } else if (ValidCornerTriple(bottomRight, bottomLeft, topLeft)) {
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board.transform, board.Index);
-                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board.transform, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 260, board, board.Index);
+                _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 260, board, board.Index);
             }
             return score;
         }
 
         if (ValidCornerPair(bottomLeft, bottomRight)) {
             score += 180 * 2;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 180, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 180, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 180, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 180, board, board.Index);
         }
         if (ValidCornerPair(bottomLeft, topLeft)) {
             score += 180 * 2;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 180, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 180, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 180, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 180, board, board.Index);
         }
         if (ValidCornerPair(topLeft, bottomRight)) {
             score += 210 * 2;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 210, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 210, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 210, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 210, board, board.Index);
         }
         if (ValidCornerPair(bottomLeft, topRight)) {
             score += 220 * 2;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 220, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 220, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, 1), TileData.n), 220, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 220, board, board.Index);
         }
         if (ValidCornerPair(bottomRight, topRight)) {
             score += 240 * 2;
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 240, board.transform, board.Index);
-            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 240, board.transform, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 240, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 240, board, board.Index);
         }
 
         return score;

@@ -7,19 +7,27 @@ public class ScoreMark : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private TMP_Text _scoreText;
+    public int HorizontalStart;
+    public int Length;
 
     public void PositionSelfRow(Link start, Link end) {
+        HorizontalStart = start.Position.x;
+        Length = end.Position.x - start.Position.x;
         _spriteRenderer.size = new Vector2(Vector2.Distance(start.Position, end.Position), 0.2f);
         transform.position += new Vector3((start.Position.x + end.Position.x) / 2f, (start.Position.y + end.Position.y) / 2f, 0f);
     }
 
     public void PositionSelfColumn(Link start, Link end) {
+        HorizontalStart = start.Position.x;
+        Length = end.Position.x - start.Position.x;
         _spriteRenderer.size = new Vector2(Vector2.Distance(start.Position, end.Position), 0.2f);
         transform.position += new Vector3((start.Position.x + end.Position.x) / 2f, (start.Position.y + end.Position.y) / 2f, 0f);
         transform.right = Vector2.up;
     }
 
     public void PositionSelfDiagonal(Link start, Link end) {
+        HorizontalStart = start.Position.x;
+        Length = end.Position.x - start.Position.x;
         _spriteRenderer.size = new Vector2(Vector2.Distance(start.Position, end.Position), 0.2f);
         transform.position += new Vector3((start.Position.x + end.Position.x) / 2f, (start.Position.y + end.Position.y) / 2f, 0f);
         if (start.Position.y < end.Position.y) {
@@ -30,11 +38,13 @@ public class ScoreMark : MonoBehaviour
     }
 
     public void PositionSelfStar(Link link) {
+        HorizontalStart = link.Position.x;
         _spriteRenderer.size = new Vector2(0.5f, 0.2f);
         transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
     }
 
     public void PositionSelfCorner(Link link) {
+        HorizontalStart = link.Position.x;
         _spriteRenderer.size = new Vector2(0.5f, 0.2f);
         transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
     }
