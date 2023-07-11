@@ -28,11 +28,11 @@ public class Board : MonoBehaviour
     }
 
     private void OnEnable() {
-        GameManager.e_OnGameStart += HighlightLowest;
+        GameManager.e_OnGameStart += OnGameStart;
     }
 
     private void OnDisable() {
-        GameManager.e_OnGameStart -= HighlightLowest;
+        GameManager.e_OnGameStart -= OnGameStart;
     }
 
     private void Update() {
@@ -40,6 +40,12 @@ public class Board : MonoBehaviour
             e_OnBoardChange(this);
             _updateQueued = false;
         }
+    }
+
+    private void OnGameStart() {
+        HighlightLowest();
+        _timelineInstance.QueueAdvance();
+        _timelineInstance.QueueLock();
     }
 
     public void SetTile(int x, int y, TileData TileData) {
@@ -89,30 +95,27 @@ public class Board : MonoBehaviour
         string boardString = "";
         for (int j = Height; j > 0; j--) {
             for (int i = 1; i <= Width; i++) {
-                switch (BoardData[i, j].ToString()) {
-                    case "Space":
-                        boardString += "0 ";
+                switch (BoardData[i, j].Color) {
+                    case TileData.TileColor.s:
+                        boardString += BoardData[i,j].IsHighlighted ? "H " : "0 ";
                         break;
-                    case "Red":
-                        boardString += "P ";
+                    case TileData.TileColor.r:
+                        boardString += "r ";
                         break;
-                    case "Orange":
-                        boardString += "O ";
+                    case TileData.TileColor.o:
+                        boardString += "o ";
                         break;
-                    case "Yellow":
-                        boardString += "Y ";
+                    case TileData.TileColor.y:
+                        boardString += "y ";
                         break;
-                    case "Green":
-                        boardString += "G ";
+                    case TileData.TileColor.g:
+                        boardString += "g ";
                         break;
-                    case "Blue":
-                        boardString += "B ";
-                        break;
-                    case "Highlight":
-                        boardString += "H ";
+                    case TileData.TileColor.b:
+                        boardString += "b ";
                         break;
                     default:
-                        boardString += "X ";
+                        boardString += "x ";
                         break;
                 }
             }

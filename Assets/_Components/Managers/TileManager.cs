@@ -259,7 +259,7 @@ public class TileManager : MonoBehaviour
     /// <param name="index"></param>
     public void AutoSetSelected(int index) {
         TileData tileData = _tilePools[index].TileSlots[0].TileData;
-        if (!tileData.Equals(TileData.S)) {
+        if (!tileData.Equals(TileData.S) && !tileData.Equals(TileData.n)) {
             SelectedTileSlot[index] = _tilePools[index].TileSlots[0];
             _tilePools[index].TileSlots[0].TileData = tileData;
         }
