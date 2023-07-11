@@ -217,6 +217,9 @@ public class TileManager : MonoBehaviour
             foreach (TileSlot slot in tilePool.TileSlots) {
                 slot.Unhighlight();
             }
+            foreach (TileSlot slot in tilePool.CornerTileSlots) {
+                slot.Unhighlight();
+            }
         }
         tileSlot.Highlight();
     }
@@ -396,5 +399,13 @@ public class TileManager : MonoBehaviour
         T temp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = temp;
+    }
+
+    public void UnhighlightTileSlots() {
+        foreach (TilePool tilePool in _tilePools) {
+            foreach (TileSlot tileSlot in tilePool.TileSlots) {
+                tileSlot.Unhighlight();
+            }
+        }
     }
 }

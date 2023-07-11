@@ -60,6 +60,7 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.color = Color.white;
         _touchable.Disable();
         _backgroundSR.color = new Color32(255, 255, 255, 0);
+        Unhighlight();
     }
 
     public void Enable() {
@@ -80,6 +81,7 @@ public class TileSlot : MonoBehaviour
         _spriteRenderer.enabled = false;
         _touchable.Disable();
         _backgroundSR.color = new Color32(255, 255, 255, 0);
+        Unhighlight();
     }
 
     public void Highlight() {

@@ -100,7 +100,6 @@ public class DiceManager : MonoBehaviour
 
     public void SetDiceByDoubles() {
         for (int i = 0; i < TileManager.s_instance.TilesRemaining.Length; i++) {
-            Debug.Log(TileManager.s_instance.TilesRemaining[i]);
             if (TileManager.s_instance.TilesRemaining[i] != 1) {
                 DisableRoll();
                 return;
