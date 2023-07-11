@@ -99,6 +99,13 @@ public class DiceManager : MonoBehaviour
     }
 
     public void SetDiceByDoubles() {
+        for (int i = 0; i < TileManager.s_instance.TilesRemaining.Length; i++) {
+            Debug.Log(TileManager.s_instance.TilesRemaining[i]);
+            if (TileManager.s_instance.TilesRemaining[i] != 1) {
+                DisableRoll();
+                return;
+            }
+        }
         if (DiceValues[0] == DiceValues[1] && DiceValues[0] != -1) {
             EnableRoll();
         } else {
