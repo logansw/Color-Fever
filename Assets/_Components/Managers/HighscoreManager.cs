@@ -102,6 +102,9 @@ public class HighscoreManager : MonoBehaviour
         List<HighscoreData.Entry> highscoresTruncated = new List<HighscoreData.Entry>();
         highscores.Sort((x, y) => y.CompareTo(x));
         for (int i = 0; i < 20; i++) {
+            if (i >= highscores.Count) {
+                break;
+            }
             highscoresTruncated.Add(highscores[i]);
         }
         return highscoresTruncated;
