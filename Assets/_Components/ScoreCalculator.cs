@@ -158,7 +158,7 @@ public class ScoreCalculator : MonoBehaviour
         List<Chain> chains = CreateChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                int addedScore = ScoreManager.ScoreGridDiagonal[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length];
                 score += addedScore;
                 _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
@@ -166,7 +166,7 @@ public class ScoreCalculator : MonoBehaviour
         chains = CreateStarChains(links);
         foreach (Chain chain in chains) {
             if (chain.Length-3 >= 0 && chain.Origin.x-1 >= 0 && chain.Origin.y-1 >= 0) {
-                int addedScore = ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length+1];
+                int addedScore = ScoreManager.ScoreGridStarDiagonalDown[chain.Length-3, chain.Origin.y-1, chain.Origin.x-chain.Length];
                 score += addedScore;
                 _scoreDisplayer.DisplayScoreDiagonal(chain.FirstLink, chain.LastLink, addedScore, board, board.Index);
             }
@@ -389,6 +389,11 @@ public class ScoreCalculator : MonoBehaviour
         if (ValidCornerPair(bottomRight, topRight)) {
             score += 240 * 2;
             _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, 1), TileData.n), 240, board, board.Index);
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 240, board, board.Index);
+        }
+        if (ValidCornerPair(topLeft, topRight)) {
+            score += 240 * 2;
+            _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(1, board.Height), TileData.n), 240, board, board.Index);
             _scoreDisplayer.DisplayScoreCorner(new Link(new Vector2Int(board.Width, board.Height), TileData.n), 240, board, board.Index);
         }
 
