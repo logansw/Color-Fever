@@ -526,7 +526,7 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
         });
-        TestsPassed = RunTest("UL + UR", 360) ? TestsPassed + 1 : TestsPassed;
+        TestsPassed = RunTest("UL + UR", 480) ? TestsPassed + 1 : TestsPassed;
         SetBoard(new TileData[,] {
             {TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g},
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
