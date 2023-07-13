@@ -9823,7 +9823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugMode: 0
-  TestsEnabled: 1
+  TestsEnabled: 0
   DisableValidTileChecker: 0
 --- !u!1001 &1410065725
 PrefabInstance:

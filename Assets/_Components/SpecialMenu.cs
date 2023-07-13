@@ -76,6 +76,11 @@ public class SpecialMenu : MonoBehaviour
         RenderButtons();
     }
 
+    private void HideButton(CustomButton button) {
+        button.gameObject.SetActive(false);
+        RenderButtons();
+    }
+
     private void RenderButtons() {
         int count = 0;
         foreach (CustomButton button in ButtonsRemaining.Keys) {
@@ -142,10 +147,10 @@ public class SpecialMenu : MonoBehaviour
 
     private void CheckCorners(Board board) {
         if (board.Index != Index) { return; }
-        if (board.OpenCorners()) {
+        if (board.OpenCorners() && ButtonsRemaining[_cornerButton]) {
             RestoreButton(_cornerButton);
         } else {
-            RemoveButton(_cornerButton);
+            HideButton(_cornerButton);
         }
     }
 }
