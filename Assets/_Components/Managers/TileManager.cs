@@ -78,7 +78,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    private void InitializeTilePools() {
+    public void InitializeTilePools() {
         if (SceneManager.GetActiveScene().name.Equals("Single")) {
             _tileCounts = new Dictionary<TileData, int>() {
                 {TileData.r, 9},
@@ -169,13 +169,13 @@ public class TileManager : MonoBehaviour
                     case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y]):
                         tile = TileData.Y;
                         break;
-                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green):
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green):
                         tile = TileData.g;
                         break;
-                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G]):
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G]):
                         tile = TileData.G;
                         break;
-                    case int n when (n < red + _tileCounts[TileData.R] + red + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G] + blue):
+                    case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G] + blue):
                         tile = TileData.b;
                         break;
                     case int n when (n < red + _tileCounts[TileData.R] + orange + _tileCounts[TileData.O] + yellow + _tileCounts[TileData.Y] + green + _tileCounts[TileData.G] + blue + _tileCounts[TileData.B]):
@@ -407,5 +407,9 @@ public class TileManager : MonoBehaviour
                 tileSlot.Unhighlight();
             }
         }
+    }
+
+    public TilePool[] GetTilePools() {
+        return _tilePools;
     }
 }
