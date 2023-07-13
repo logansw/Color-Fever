@@ -11777,6 +11777,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1180532448}
     m_Modifications:
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494650, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926050364431494651, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1926050364687542078, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -11833,11 +11869,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quit Confirmation
       objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
---- !u!4 &1534358224 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1926050365118707373, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
+--- !u!224 &1534358224 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8833025923467048512, guid: 0a059cb281aa25445a9a89fbe7ebd58f, type: 3}
   m_PrefabInstance: {fileID: 1534358223}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1534358225 stripped
