@@ -24,7 +24,7 @@ public class ScoreCalculator : MonoBehaviour
         score += ScoreCorners();
 
         if (_individualScoreText != null) {
-            _individualScoreText.text = score.ToString();
+            _individualScoreText.text = "Score: " + score.ToString();
         }
 
         return score;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GuidingText : MonoBehaviour
-{
+public class GuidingText : MonoBehaviour {
     [SerializeField] private TMP_Text _text;
     public List<int> Indexes;
 

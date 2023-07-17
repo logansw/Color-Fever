@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private AudioSource _smallScoreAudioSource;
     [SerializeField] private AudioSource _bigScoreAudioSource;
 
+    #region ScoreGrids
     public static int[,] ScoreGridColumns = {
         {400, 400, 400, 400, 400, 400, 450, 540, 660, 800},
         {625, 625, 625, 625, 625, 625, 675, 800, 925, 1160},
@@ -194,6 +195,8 @@ public class ScoreManager : MonoBehaviour
         {3200, 3200, 3200, 3200, 3200, 3200, 3500, 4000, 5000, 7000},
     };
 
+    #endregion
+
     private void Awake() {
         s_instance = this;
     }
@@ -211,7 +214,7 @@ public class ScoreManager : MonoBehaviour
     public void Initialize() {
         _totalScore = 0;
         _previousScore = 0;
-        _totalScoreText.text = _totalScore.ToString();
+        _totalScoreText.text = "Score: " + _totalScore.ToString();
         _individualScores = new int[ScoreCalculators.Length];
         if (!JSONTool.FileExists("SingleScores.json")) {
             HighscoreData data = new HighscoreData();
@@ -231,7 +234,7 @@ public class ScoreManager : MonoBehaviour
             _individualScores[i] = ScoreCalculators[i].GetScore();
             _totalScore += _individualScores[i];
         }
-        _totalScoreText.text = _totalScore.ToString();
+        _totalScoreText.text = "Score: " + _totalScore.ToString();
         if (_totalScore - _previousScore > 0) {
             if (_totalScore - _previousScore >= 1000) {
                 _bigScoreAudioSource.Play();
