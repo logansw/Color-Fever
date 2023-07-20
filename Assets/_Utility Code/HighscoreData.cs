@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HighscoreData : IJSONData<HighscoreData>
 {
@@ -18,10 +19,16 @@ public class HighscoreData : IJSONData<HighscoreData>
     public struct Entry {
         public string Name;
         public int Score;
+        public int Day;
+        public int Month;
+        public int Year;
 
-        public Entry(string name, int score) {
+        public Entry(string name, int score, DateTime date) {
             Name = name;
             Score = score;
+            Day = date.Day;
+            Month = date.Month;
+            Year = date.Year;
         }
 
         public int CompareTo(Entry other) {

@@ -8,13 +8,17 @@ using UnityEngine.SceneManagement;
 public class HighscoreManager : MonoBehaviour
 {
     public static HighscoreManager s_instance;
-    [SerializeField] private TMP_Text _highscoreText;
     private HighscoreData _singleScores;
     private HighscoreData _doubleScores;
     private bool _writeRequested;
     [SerializeField] private TMP_InputField[] _nameInputFields;
     private int _playersReady;
     public EndCard EndCard;
+    [SerializeField] private EntryUI[] _entryUIs;
+    [SerializeField] private GameObject _entriesPanel;
+    private int _currentPage;
+    private bool _singleOpen;
+    private bool _doubleOpen;
 
     private void Awake() {
         s_instance = this;
@@ -26,6 +30,7 @@ public class HighscoreManager : MonoBehaviour
                 _nameInputFields[i].text = _singleScores.PreviousName;
             }
         }
+        _currentPage = 0;
     }
 
     private void Update() {
@@ -36,31 +41,80 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 
-    private void DisplayScores() {
+    private void DisplayScores(int page) {
         if (SceneManager.GetActiveScene().name == "Single") {
-            DisplaySingleScores();
+            DisplaySingleScores(page);
         } else if (SceneManager.GetActiveScene().name == "Double") {
-            DisplaySingleScores();
-            DisplayDoubleScores();
+            DisplaySingleScores(page);
+            DisplayDoubleScores(page);
         }
     }
 
-    public void DisplaySingleScores() {
+    public void DisplaySingleScores(int page) {
+        _currentPage = page;
+        _singleOpen = true;
+        _entriesPanel.gameObject.SetActive(true);
         _singleScores.Highscores.Sort((x, y) => y.CompareTo(x));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < _singleScores.Highscores.Count; i++) {
-            sb.Append($"{i + 1}. {_singleScores.Highscores[i].ToString()}\n");
+        int startIndex = page * 10 + 1;
+        for (int i = 0; i < 10; i++) {
+            if (i + startIndex - 1 >= _singleScores.Highscores.Count) {
+                _entryUIs[i].gameObject.SetActive(false);
+            } else {
+                _entryUIs[i].gameObject.SetActive(true);
+                _entryUIs[i].SetEntry(_singleScores.Highscores[i + startIndex - 1], i + startIndex);
+                if (startIndex + i == 1) {
+                    _entryUIs[i].SetColor(new Color(255f/255f, 229f/255f, 0f/255f, 1f));
+                } else if (startIndex + i == 2) {
+                    _entryUIs[i].SetColor(new Color(201/255f, 208/255f, 217f/255f, 1f));
+                } else if (startIndex + i == 3) {
+                    _entryUIs[i].SetColor(new Color(243/255f, 193/255f, 96f/255f, 1f));
+                } else {
+                    _entryUIs[i].SetColor(Color.white);
+                }
+            }
         }
-        _highscoreText.text = sb.ToString();
     }
 
-    public void DisplayDoubleScores() {
+    public void DisplayDoubleScores(int page) {
+        _currentPage = page;
+        _doubleOpen = true;
+        _entriesPanel.gameObject.SetActive(true);
         _doubleScores.Highscores.Sort((x, y) => y.CompareTo(x));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < _doubleScores.Highscores.Count; i++) {
-            sb.Append($"{i + 1}. {_doubleScores.Highscores[i].ToString()}\n");
+        int startIndex = page * 10 + 1;
+        for (int i = 0; i < 10; i++) {
+            if (i + startIndex - 1 >= _doubleScores.Highscores.Count) {
+                _entryUIs[i].gameObject.SetActive(false);
+            } else {
+                _entryUIs[i].gameObject.SetActive(true);
+                _entryUIs[i].SetEntry(_doubleScores.Highscores[i + startIndex - 1], i + startIndex);
+            }
         }
-        _highscoreText.text = sb.ToString();
+    }
+
+    public void ChangePage(int change) {
+        // Check if change is valid
+        if (_currentPage + change < 0) {
+            return;
+        }
+        if (_singleOpen && (_currentPage + change) * 10 > _singleScores.Highscores.Count) {
+            return;
+        }
+        if (_doubleOpen && (_currentPage + change) * 10 > _doubleScores.Highscores.Count) {
+            return;
+        }
+
+        _currentPage += change;
+        if (_singleOpen) {
+            DisplaySingleScores(_currentPage);
+        } else if (_doubleOpen) {
+            DisplayDoubleScores(_currentPage);
+        }
+    }
+
+    public void CloseHighscores() {
+        _singleOpen = false;
+        _doubleOpen = false;
+        _entriesPanel.gameObject.SetActive(false);
     }
 
     public void RecordHighScores() {
@@ -70,7 +124,7 @@ public class HighscoreManager : MonoBehaviour
                 for (int i = 0; i < _nameInputFields.Length; i++) {
                     string name = _nameInputFields[i].text;
                     int score = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-                    _singleScores.Highscores.Add(new HighscoreData.Entry(name, score));
+                    _singleScores.Highscores.Add(new HighscoreData.Entry(name, score, System.DateTime.Now));
                     _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
                 }
                 _singleScores.PreviousName = name;
@@ -82,12 +136,12 @@ public class HighscoreManager : MonoBehaviour
             int[] scores = new int[count];
             for (int i = 0; i < count; i++) {
                 scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-                _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i]));
+                _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i], System.DateTime.Now));
                 _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
             }
 
             if (SceneManager.GetActiveScene().name.Equals("Double")) {
-                _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1]));
+                _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1], System.DateTime.Now));
                 _doubleScores.Highscores = SortAndTruncateHighscores(_doubleScores.Highscores);
             }
 
@@ -101,7 +155,7 @@ public class HighscoreManager : MonoBehaviour
     private List<HighscoreData.Entry> SortAndTruncateHighscores(List<HighscoreData.Entry> highscores) {
         List<HighscoreData.Entry> highscoresTruncated = new List<HighscoreData.Entry>();
         highscores.Sort((x, y) => y.CompareTo(x));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             if (i >= highscores.Count) {
                 break;
             }
