@@ -8,7 +8,6 @@ public class TileSlot : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Touchable _touchable;
     [SerializeField] private SpriteRenderer _backgroundSR;
-    [SerializeField] private AudioSource _buttonAudioSource;
 
     [Header("External References")]
     [SerializeField] private SpriteRenderer _outlineSR;
@@ -42,7 +41,7 @@ public class TileSlot : MonoBehaviour
             return;
         } else {
             e_OnTileSelected?.Invoke(this);
-            _buttonAudioSource.Play();
+            AudioManager.s_instance.PlayButtonSound();
         }
     }
 

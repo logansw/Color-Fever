@@ -163,4 +163,21 @@ public class HighscoreManager : MonoBehaviour
         }
         return highscoresTruncated;
     }
+
+    public bool OnSingleLeaderboard(int newScore) {
+        return OnTheLeaderboard(_singleScores.Highscores, newScore);
+    }
+
+    public bool OnDoubleLeaderboard(int newScore) {
+        return OnTheLeaderboard(_doubleScores.Highscores, newScore);
+    }
+
+    private bool OnTheLeaderboard(List<HighscoreData.Entry> highscores, int newScore) {
+        foreach (HighscoreData.Entry entry in highscores) {
+            if (newScore > entry.Score) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

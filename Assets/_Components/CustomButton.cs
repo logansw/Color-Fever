@@ -8,7 +8,6 @@ public class CustomButton : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private AudioSource _buttonAudioSource;
     [SerializeField] private AudioSource _undoAudioSource;
     [SerializeField] private AudioSource _diceAudioSource;
 
@@ -57,7 +56,7 @@ public class CustomButton : MonoBehaviour
     }
 
     public void PlayButtonSound() {
-        _buttonAudioSource.Play();
+        AudioManager.s_instance.PlayButtonSound();
     }
 
     public void PlayUndoSound() {

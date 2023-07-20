@@ -266,11 +266,33 @@ public class ScoreManager : MonoBehaviour
     }
 
     private string GetFinalSingleText() {
-        return _totalScore.ToString();
+        if (HighscoreManager.s_instance.OnSingleLeaderboard(_totalScore)) {
+            return $"On the leaderboard! {_totalScore}";
+        } else {
+            return _totalScore.ToString();
+        }
     }
 
     private string GetFinalDoubleText() {
-        return $"Total Score: {_totalScore}\n Top Board:{_individualScores[1]}\n Bottom Board:{_individualScores[0]}";
+        string totalScoreText;
+        string scoreOneText;
+        string scoreTwoText;
+        if (HighscoreManager.s_instance.OnDoubleLeaderboard(_totalScore)) {
+            totalScoreText = $"On the leaderboard! {_totalScore}";
+        } else {
+            totalScoreText = _totalScore.ToString();
+        }
+        if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[1])) {
+            scoreOneText = $"On the leaderboard! {_individualScores[1]}";
+        } else {
+            scoreOneText = _individualScores[1].ToString();
+        }
+        if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[0])) {
+            scoreTwoText = $"On the leaderboard! {_individualScores[0]}";
+        } else {
+            scoreTwoText = _individualScores[0].ToString();
+        }
+        return $"Total Score: {totalScoreText}\n Top Board:{scoreOneText}\n Bottom Board:{scoreTwoText}";
     }
 
     private string GetFinalVersusText(int index) {
