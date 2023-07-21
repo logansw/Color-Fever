@@ -6,6 +6,8 @@ public class DiceSet : MonoBehaviour
 {
     [SerializeField] private Transform _positionOne;
     [SerializeField] private Transform _positionTwo;
+    [SerializeField] private GameObject _diceAndRoll;
+    [SerializeField] private GameObject _newTileButton;
     private bool _isPositionOne;
 
     private void Start() {
@@ -14,12 +16,16 @@ public class DiceSet : MonoBehaviour
 
     public void TogglePosition() {
         if (_isPositionOne) {
-            transform.position = _positionTwo.position;
-            transform.rotation = _positionTwo.rotation;
+            _diceAndRoll.transform.position = _positionTwo.position;
+            _diceAndRoll.transform.rotation = _positionTwo.rotation;
+            _newTileButton.transform.position = _positionOne.position;
+            _newTileButton.transform.rotation = _positionOne.rotation;
             _isPositionOne = false;
         } else {
-            transform.position = _positionOne.position;
-            transform.rotation = _positionOne.rotation;
+            _diceAndRoll.transform.position = _positionOne.position;
+            _diceAndRoll.transform.rotation = _positionOne.rotation;
+            _newTileButton.transform.position = _positionTwo.position;
+            _newTileButton.transform.rotation = _positionTwo.rotation;
             _isPositionOne = true;
         }
     }
