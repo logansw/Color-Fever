@@ -87,7 +87,12 @@ public class TilePool : MonoBehaviour
         int n = _drawOrderList.Count;
         while (n > 1) {
             n--;
-            int k = Random.Range(0, n + 1);
+            int k;
+            if (_drawOrderList[n].IsStarred) {
+                k = Random.Range(34 - 18 + 4, 34 - 5 + 4);
+            } else {
+                k = Random.Range(0, n + 1);
+            }
             TileData value = _drawOrderList[k];
             _drawOrderList[k] = _drawOrderList[n];
             _drawOrderList[n] = value;
@@ -108,22 +113,43 @@ public class TilePool : MonoBehaviour
             return false;
         }
 
+        bool specialInHalfTwo = false;
+        bool specialInHalfOne = false;
         for (int i = 0; i < _drawOrderList.Count; i++) {
             // Special before 18 rounds remaining
             if (i < (34 - 18 + 4) && _drawOrderList[i].Equals(TileData.S))
             {
                 return false;
             }
+
             // Special after 4 rounds remaining
             if (i > (34 - 4 + 4) && _drawOrderList[i].Equals(TileData.S))
             {
                 return false;
             }
+
             // Consecutive Specials
             if (i > 0 && _drawOrderList[i].Equals(TileData.S) && _drawOrderList[i - 1].Equals(TileData.S))
             {
                 return false;
             }
+
+            // No two specials in the same half
+            if (_drawOrderList[i].Equals(TileData.S) && i > (34 - 18 + 4) && i < (34 - 11 + 4)) {
+                if (!specialInHalfOne) {
+                    specialInHalfOne = true;
+                } else {
+                    return false;
+                }
+            }
+            if (_drawOrderList[i].Equals(TileData.S) && i > (34 - 11 + 4) && i < (34 - 4 + 4)) {
+                if (!specialInHalfTwo) {
+                    specialInHalfTwo = true;
+                } else {
+                    return false;
+                }
+            }
+
             // Star before 18 rounds remaining
             if (i < (34 - 18 + 4) && _drawOrderList[i].IsStarred)
             {

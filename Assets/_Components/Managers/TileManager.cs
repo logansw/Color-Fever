@@ -388,7 +388,7 @@ public class TileManager : MonoBehaviour
         }
 
         int firstIndex = Mathf.Min(a1, b1);
-        int secondIndex = Mathf.Min(a2, b2);
+        int secondIndex = Mathf.Max(a2, b2);
         Swap<TileData>(tilePoolATiles, firstIndex, a1);
         Swap<TileData>(tilePoolBTiles, firstIndex, b1);
         Swap<TileData>(tilePoolATiles, secondIndex, a2);
