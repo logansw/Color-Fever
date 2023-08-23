@@ -41,16 +41,18 @@ public class ScoreMark : MonoBehaviour
         HorizontalStart = link.Position.x;
         _spriteRenderer.size = new Vector2(0.5f, 0.2f);
         transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
+        transform.position += new Vector3(-0.25f, 0.4f);
     }
 
     public void PositionSelfCorner(Link link) {
         HorizontalStart = link.Position.x;
         _spriteRenderer.size = new Vector2(0.5f, 0.2f);
         transform.position += new Vector3(link.Position.x, link.Position.y, 0f);
+        transform.position += new Vector3(-0.25f, 0.4f);
     }
 
-    public void SetText(int score) {
+    public void SetText(int score, Vector3 offset = default) {
         _scoreText.text = score.ToString();
-        _scoreText.transform.localPosition = new Vector3(-_spriteRenderer.size.x/2f + 0.25f, 0f, 0f);
+        _scoreText.transform.localPosition = new Vector3(-_spriteRenderer.size.x/2f + 0.25f, 0f, 0f) + offset;
     }
 }

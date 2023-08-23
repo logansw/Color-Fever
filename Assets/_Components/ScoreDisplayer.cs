@@ -19,7 +19,7 @@ public class ScoreDisplayer : MonoBehaviour
         Transform boardOrigin = board.transform;
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfRow(start, end);
-        mark.SetText(score);
+        mark.SetText(score, new Vector3(0.25f, 0f, 0f));
         _scoreMarks[index].Add(mark);
         if (board.UpsideDown) {
             RotateMarkAroundBoard(mark, board);
@@ -30,7 +30,7 @@ public class ScoreDisplayer : MonoBehaviour
         Transform boardOrigin = board.transform;
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfColumn(start, end);
-        mark.SetText(score);
+        mark.SetText(score, new Vector3(0.25f, 0f, 0f));
         _scoreMarks[index].Add(mark);
         if (board.UpsideDown) {
             RotateMarkAroundBoard(mark, board);
@@ -41,11 +41,10 @@ public class ScoreDisplayer : MonoBehaviour
         Transform boardOrigin = board.transform;
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfDiagonal(start, end);
-        mark.SetText(score);
+        mark.SetText(score, new Vector3(0.5f, 0f, 0f));
         _scoreMarks[index].Add(mark);
         if (board.UpsideDown) {
             RotateMarkAroundBoard(mark, board);
-            // InvertDiagonalMark(mark);
         }
     }
 
@@ -53,7 +52,7 @@ public class ScoreDisplayer : MonoBehaviour
         Transform boardOrigin = board.transform;
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfStar(link);
-        mark.SetText(score);
+        mark.SetText(score, new Vector3(0.5f, 0f, 0f));
         _scoreMarks[index].Add(mark);
         if (board.UpsideDown) {
             RotateMarkAroundBoard(mark, board);
