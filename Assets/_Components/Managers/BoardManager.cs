@@ -38,11 +38,6 @@ public class BoardManager : MonoBehaviour
 
     private void SetHighlightTiles() {
         ClearHighlightTiles();
-        StartCoroutine(DelayedHighlightTiles());
-    }
-
-    private IEnumerator DelayedHighlightTiles() {
-        yield return new WaitForSeconds(0.5f);
         int[] diceValues = DiceManager.s_instance.DiceValues;
         int a = diceValues[0];
         int b = diceValues[1];
