@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class HighscoreManager : MonoBehaviour
 {
     public static HighscoreManager s_instance;
+    public const int MAX_ENTRIES = 30;
     private HighscoreData _singleScores;
     private HighscoreData _doubleScores;
     private bool _writeRequested;
@@ -23,7 +24,9 @@ public class HighscoreManager : MonoBehaviour
     private void Awake() {
         s_instance = this;
         _singleScores = JSONTool.ReadData<HighscoreData>("SingleScores.json");
+        Debug.Log(_singleScores);
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
+        Debug.Log(_doubleScores);
         _playersReady = 0;
         if (_nameInputFields.Length > 0 && _nameInputFields[0] != null) {
             for (int i = 0; i < _nameInputFields.Length; i++) {
@@ -155,7 +158,7 @@ public class HighscoreManager : MonoBehaviour
     private List<HighscoreData.Entry> SortAndTruncateHighscores(List<HighscoreData.Entry> highscores) {
         List<HighscoreData.Entry> highscoresTruncated = new List<HighscoreData.Entry>();
         highscores.Sort((x, y) => y.CompareTo(x));
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < MAX_ENTRIES; i++) {
             if (i >= highscores.Count) {
                 break;
             }
@@ -173,6 +176,9 @@ public class HighscoreManager : MonoBehaviour
     }
 
     private bool OnTheLeaderboard(List<HighscoreData.Entry> highscores, int newScore) {
+        if (highscores.Count < MAX_ENTRIES) {
+            return true;
+        }
         foreach (HighscoreData.Entry entry in highscores) {
             if (newScore > entry.Score) {
                 return true;

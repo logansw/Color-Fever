@@ -266,33 +266,38 @@ public class ScoreManager : MonoBehaviour
     }
 
     private string GetFinalSingleText() {
-        if (HighscoreManager.s_instance.OnSingleLeaderboard(_totalScore)) {
-            return $"On the leaderboard! {_totalScore}";
-        } else {
-            return _totalScore.ToString();
-        }
+        return _totalScore.ToString();
+        // if (HighscoreManager.s_instance.OnSingleLeaderboard(_totalScore)) {
+        //     return $"On the leaderboard! {_totalScore}";
+        // } else {
+        //     return _totalScore.ToString();
+        // }
     }
 
     private string GetFinalDoubleText() {
-        string totalScoreText;
-        string scoreOneText;
-        string scoreTwoText;
-        if (HighscoreManager.s_instance.OnDoubleLeaderboard(_totalScore)) {
-            totalScoreText = $"On the leaderboard! {_totalScore}";
-        } else {
-            totalScoreText = _totalScore.ToString();
-        }
-        if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[1])) {
-            scoreOneText = $"On the leaderboard! {_individualScores[1]}";
-        } else {
-            scoreOneText = _individualScores[1].ToString();
-        }
-        if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[0])) {
-            scoreTwoText = $"On the leaderboard! {_individualScores[0]}";
-        } else {
-            scoreTwoText = _individualScores[0].ToString();
-        }
-        return $"Total Score: {totalScoreText}\n Top Board:{scoreOneText}\n Bottom Board:{scoreTwoText}";
+        string totalScore = _totalScore.ToString();
+        string topScore = _individualScores[1].ToString();
+        string bottomScore = _individualScores[0].ToString();
+        return $"Total Score: {totalScore}\n Top Board: {topScore}\n Bottom Board: {bottomScore}";
+        // string totalScoreText;
+        // string scoreOneText;
+        // string scoreTwoText;
+        // if (HighscoreManager.s_instance.OnDoubleLeaderboard(_totalScore)) {
+        //     totalScoreText = $"On the leaderboard! {_totalScore}";
+        // } else {
+        //     totalScoreText = _totalScore.ToString();
+        // }
+        // if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[1])) {
+        //     scoreOneText = $"On the leaderboard! {_individualScores[1]}";
+        // } else {
+        //     scoreOneText = _individualScores[1].ToString();
+        // }
+        // if (HighscoreManager.s_instance.OnSingleLeaderboard(_individualScores[0])) {
+        //     scoreTwoText = $"On the leaderboard! {_individualScores[0]}";
+        // } else {
+        //     scoreTwoText = _individualScores[0].ToString();
+        // }
+        // return $"Total Score: {totalScoreText}\n Top Board:{scoreOneText}\n Bottom Board:{scoreTwoText}";
     }
 
     private string GetFinalVersusText(int index) {
