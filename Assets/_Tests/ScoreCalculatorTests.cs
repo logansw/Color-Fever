@@ -484,6 +484,22 @@ public class ScoreCalculatorTests : TestBase
             {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s},
         });
         TestsPassed = RunTest("diagonal down (6,3)", 450) ? TestsPassed + 1 : TestsPassed;
+        SetBoard(new TileData[,] {
+            {TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+        });
+        TestsPassed = RunTest("diagonal down (1,5)", 750) ? TestsPassed + 1 : TestsPassed;
+        SetBoard(new TileData[,] {
+            {TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.g, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+            {TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s, TileData.s},
+        });
+        TestsPassed = RunTest("diagonal down (1,5)", 750) ? TestsPassed + 1 : TestsPassed;
     }
 
     private void TestCorners() {
