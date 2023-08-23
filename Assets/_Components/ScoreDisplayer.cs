@@ -52,7 +52,7 @@ public class ScoreDisplayer : MonoBehaviour
         Transform boardOrigin = board.transform;
         ScoreMark mark = Instantiate(_scoreMarkPrefab, boardOrigin.position, Quaternion.identity);
         mark.PositionSelfStar(link);
-        mark.SetText(score, new Vector3(0.5f, 0f, 0f));
+        mark.SetText(score);
         _scoreMarks[index].Add(mark);
         if (board.UpsideDown) {
             RotateMarkAroundBoard(mark, board);
