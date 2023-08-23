@@ -13,6 +13,15 @@ public class EndCard : MonoBehaviour
     [SerializeField] private TMP_InputField _nameInputField;
     [SerializeField] private TMP_Text _leaderboardTypeText;
     [SerializeField] private TMP_Text _newScoreText;
+    private int _playersReady;
+
+    [SerializeField] private Transform _textArea;
+    [SerializeField] private Transform _placeholder;
+    [SerializeField] private Transform _text;
+
+    void Start() {
+        _playersReady = 0;
+    }
 
     private void OnEnable() {
         GameManager.e_OnGameEnd += Show;
@@ -39,8 +48,14 @@ public class EndCard : MonoBehaviour
         }
     }
 
+    public void PlayerReady() {
+        _playersReady++;
+        if (_playersReady == 2) {
+            CheckHighscore();
+        }
+    }
+
     private void RememberScores() {
-        Debug.Log("RememberScores");
         _scores = new int[3];
         _index = 0;
         if (SceneManager.GetActiveScene().name == "Single") {
@@ -56,48 +71,58 @@ public class EndCard : MonoBehaviour
             _scores[1] = ScoreManager.s_instance.GetSingleScores()[1];
             _scores[2] = -1;
         }
-        Debug.Log("0: " + _scores[0]);
-        Debug.Log("1: " + _scores[1]);
-        Debug.Log("2: " + _scores[2]);
     }
 
     public void CheckHighscore() {
         if (_index == 0) {
             Debug.Log("Index = 0");
             if (_scores[0] != -1 && HighscoreManager.s_instance.OnSingleLeaderboard(_scores[0])) {
-                Debug.Log("Halt!");
                 ShowRecord(_scores[0], true);
+                HighscoreManager.s_instance.AddNewEntry();
+                HighscoreManager.s_instance.CurrentEntry.Score = _scores[0];
+                HighscoreManager.s_instance.CurrentEntry.Single = true;
                 _index++;
             } else {
-                Debug.Log("Skip");
                 _index++;
                 CheckHighscore();
             }
         } else if (_index == 1) {
             Debug.Log("Index = 1");
+            if (SceneManager.GetActiveScene().name == "Versus") {
+                // Rotate everything.
+                foreach (GameObject obj in _recordObjects) {
+                    Rotate180(obj.transform);
+                }
+                // Rotate0(_textArea);
+                // Rotate180(_placeholder);
+                // Rotate180(_text);
+            }
             if (_scores[1] != -1 && HighscoreManager.s_instance.OnSingleLeaderboard(_scores[1])) {
-                Debug.Log("Halt!");
                 ShowRecord(_scores[1], true);
+                HighscoreManager.s_instance.AddNewEntry();
+                HighscoreManager.s_instance.CurrentEntry.Score = _scores[1];
+                HighscoreManager.s_instance.CurrentEntry.Single = true;
                 _index++;
             } else {
-                Debug.Log("Skip");
                 _index++;
                 CheckHighscore();
             }
         } else if (_index == 2) {
             Debug.Log("Index = 2");
             if (_scores[2] != -1 && HighscoreManager.s_instance.OnDoubleLeaderboard(_scores[2])) {
-                Debug.Log("Halt!");
                 ShowRecord(_scores[2], false);
+                HighscoreManager.s_instance.AddNewEntry();
+                HighscoreManager.s_instance.CurrentEntry.Score = _scores[2];
+                HighscoreManager.s_instance.CurrentEntry.Single = false;
                 _index++;
             } else {
-                Debug.Log("Skip");
                 _index++;
                 CheckHighscore();
             }
         } else {
             Debug.Log("Index > 3");
             Hide();
+            HighscoreManager.s_instance.RecordHighScores();
         }
     }
 
@@ -116,10 +141,23 @@ public class EndCard : MonoBehaviour
             _leaderboardTypeText.text = "On the Doubles Leaderboard!";
         }
 
-        if (SceneManager.GetActiveScene().name == "Single" || SceneManager.GetActiveScene().name == "Double") {
-            _nameInputField.text = "";
-        } else if (SceneManager.GetActiveScene().name == "Versus") {
+        if (SceneManager.GetActiveScene().name == "Versus") {
             _nameInputField.text = "";
         }
+    }
+
+    private void Rotate180(Transform t) {
+        Vector3 point = new Vector3(0, 0, 0);
+        Vector3 axis = new Vector3(0,0,1);
+        t.RotateAround(point, axis, 180);
+        foreach (Transform child in t) {
+            Rotate180(child);
+        }
+    }
+
+    private void Rotate0(Transform t) {
+        Vector3 point = new Vector3(0, 0, 0);
+        Vector3 axis = new Vector3(0,0,1);
+        t.RotateAround(point, axis, 180);
     }
 }

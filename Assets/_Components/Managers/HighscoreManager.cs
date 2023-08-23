@@ -13,13 +13,14 @@ public class HighscoreManager : MonoBehaviour
     private HighscoreData _doubleScores;
     private bool _writeRequested;
     [SerializeField] private TMP_InputField[] _nameInputFields;
-    private int _playersReady;
     public EndCard EndCard;
     [SerializeField] private EntryUI[] _entryUIs;
     [SerializeField] private GameObject _entriesPanel;
     private int _currentPage;
     private bool _singleOpen;
     private bool _doubleOpen;
+    List<HighScoreEntry> _queuedEntries;
+    public HighScoreEntry CurrentEntry;
 
     private void Awake() {
         s_instance = this;
@@ -27,13 +28,13 @@ public class HighscoreManager : MonoBehaviour
         Debug.Log(_singleScores);
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
         Debug.Log(_doubleScores);
-        _playersReady = 0;
         if (_nameInputFields.Length > 0 && _nameInputFields[0] != null) {
             for (int i = 0; i < _nameInputFields.Length; i++) {
                 _nameInputFields[i].text = _singleScores.PreviousName;
             }
         }
         _currentPage = 0;
+        _queuedEntries = new List<HighScoreEntry>();
     }
 
     private void Update() {
@@ -120,37 +121,28 @@ public class HighscoreManager : MonoBehaviour
         _entriesPanel.gameObject.SetActive(false);
     }
 
+    public void AddNewEntry() {
+        HighScoreEntry newEntry = new HighScoreEntry("", 0, true);
+        _queuedEntries.Add(newEntry);
+        CurrentEntry = newEntry;
+    }
+
+    public void QueueName() {
+        CurrentEntry.Name = _nameInputFields[0].text;
+        _singleScores.PreviousName = _nameInputFields[0].text;
+        _doubleScores.PreviousName = _nameInputFields[0].text;
+    }
+
     public void RecordHighScores() {
-        if (SceneManager.GetActiveScene().name.Equals("Versus")) {
-            _playersReady++;
-            if (_playersReady == _nameInputFields.Length) {
-                for (int i = 0; i < _nameInputFields.Length; i++) {
-                    string name = _nameInputFields[i].text;
-                    int score = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-                    _singleScores.Highscores.Add(new HighscoreData.Entry(name, score, System.DateTime.Now));
-                    _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
-                }
-                _singleScores.PreviousName = name;
-                EndCard.Hide();
+        Debug.Log(_queuedEntries.Count);
+        for (int i = 0; i < _queuedEntries.Count; i++) {
+            if (_queuedEntries[i].Single) {
+                _singleScores.Highscores.Add(new HighscoreData.Entry(_queuedEntries[i].Name, _queuedEntries[i].Score, System.DateTime.Now));
+            } else {
+                _doubleScores.Highscores.Add(new HighscoreData.Entry(_queuedEntries[i].Name, _queuedEntries[i].Score, System.DateTime.Now));
             }
-        } else {
-            int count = ScoreManager.s_instance.ScoreCalculators.Length;
-            string name = _nameInputFields[0].text;
-            int[] scores = new int[count];
-            for (int i = 0; i < count; i++) {
-                scores[i] = ScoreManager.s_instance.ScoreCalculators[i].GetScore();
-                _singleScores.Highscores.Add(new HighscoreData.Entry(name, scores[i], System.DateTime.Now));
-                _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
-            }
-
-            if (SceneManager.GetActiveScene().name.Equals("Double")) {
-                _doubleScores.Highscores.Add(new HighscoreData.Entry(name, scores[0] + scores[1], System.DateTime.Now));
-                _doubleScores.Highscores = SortAndTruncateHighscores(_doubleScores.Highscores);
-            }
-
-            _singleScores.PreviousName = name;
-            _doubleScores.PreviousName = name;
-
+            _singleScores.Highscores = SortAndTruncateHighscores(_singleScores.Highscores);
+            _doubleScores.Highscores = SortAndTruncateHighscores(_doubleScores.Highscores);
         }
         _writeRequested = true;
     }
@@ -185,5 +177,17 @@ public class HighscoreManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+}
+public class HighScoreEntry {
+    public string Name;
+    public int Score;
+    public bool Single;
+
+    public HighScoreEntry(string name, int score, bool single) {
+        Name = name;
+        Score = score;
+        Single = single;
     }
 }
