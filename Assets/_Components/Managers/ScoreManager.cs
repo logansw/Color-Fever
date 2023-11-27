@@ -16,8 +16,6 @@ public class ScoreManager : MonoBehaviour
     private int[] _individualScores;
     private int _totalScore;
     private int _previousScore;
-    [SerializeField] private AudioSource _smallScoreAudioSource;
-    [SerializeField] private AudioSource _bigScoreAudioSource;
 
     #region ScoreGrids
     public static int[,] ScoreGridColumns = {
@@ -237,9 +235,9 @@ public class ScoreManager : MonoBehaviour
         _totalScoreText.text = "Score: " + _totalScore.ToString();
         if (_totalScore - _previousScore > 0) {
             if (_totalScore - _previousScore >= 1000) {
-                _bigScoreAudioSource.Play();
+                AudioManager.s_instance.PlayScoreBig();
             } else {
-                _smallScoreAudioSource.Play();
+                AudioManager.s_instance.PlayScoreSmall();
             }
         }
         _previousScore = _totalScore;

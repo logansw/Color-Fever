@@ -1,47 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager s_instance;
     [SerializeField] private AudioSource _buttonSource;
-    private bool _firstPlayed;
-    private int _lastIndexPlayed;
-    // private int _tonesPlayedSinceHome;
+    [SerializeField] private AudioSource _smallScoreAudioSource;
+    [SerializeField] private AudioSource _bigScoreAudioSource;
+    [SerializeField] private AudioSource _undoAudioSource;
+    [SerializeField] private AudioSource _diceAudioSource;
+    [SerializeField] private Slider _volumeSlider;
+
+    public float ButtonVolume;
+    public float SmallScoreVolume;
+    public float BigScoreVolume;
+    public float UndoVolume;
+    public float DiceVolume;
 
     private void Awake() {
         s_instance = this;
-        _firstPlayed = false;
+        if (_volumeSlider != null) {
+            _volumeSlider.value = PlayerPrefs.GetFloat("Volume", 1);
+        }
     }
 
     public void PlayButtonSound() {
         _buttonSource.Play();
-        // if (!_firstPlayed) {
-        //     _buttonSource.pitch = Mathf.Pow(1.05946f, -5);
-        //     _buttonSource.Play();
-        //     _lastIndexPlayed = 0;
-        //     _firstPlayed = true;
-        // } else {
-        //     // int[] shiftings = new int[5] { 0, 2, 4, 5, 7 };
-        //     int[] shiftings = new int[4] { 0, 2, 4, 7 };
-        //     int index = Random.Range(0, shiftings.Length);
-        //     while (index == _lastIndexPlayed) {
-        //         index = Random.Range(0, shiftings.Length);
-        //     }
-        //     // if (index == 0) {
-        //     //     _tonesPlayedSinceHome = 0;
-        //     // } else {
-        //     //     _tonesPlayedSinceHome++;
-        //     // }
-        //     // if (_tonesPlayedSinceHome >= 5) {
-        //     //     index = 0;
-        //     //     _tonesPlayedSinceHome = 0;
-        //     // }
-        //     _lastIndexPlayed = index;
-        //     int power = shiftings[index];
-        //     _buttonSource.pitch = Mathf.Pow(1.05946f, power - 5);
-        //     _buttonSource.Play();
-        // }
+    }
+
+    public void PlayScoreSmall() {
+        _smallScoreAudioSource.Play();
+    }
+
+    public void PlayScoreBig() {
+        _bigScoreAudioSource.Play();
+    }
+
+    public void PlayUndoSound() {
+        _undoAudioSource.Play();
+    }
+
+    public void PlayDiceSound() {
+        _diceAudioSource.Play();
+    }
+
+    public void SetVolume(float value) {
+        _buttonSource.volume = ButtonVolume * value;
+        _smallScoreAudioSource.volume = SmallScoreVolume * value;
+        _bigScoreAudioSource.volume = BigScoreVolume * value;
+        _undoAudioSource.volume = UndoVolume * value;
+        _diceAudioSource.volume = DiceVolume * value;
+        PlayerPrefs.SetFloat("Volume", value);
     }
 }

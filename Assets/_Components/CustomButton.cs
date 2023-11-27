@@ -8,8 +8,6 @@ public class CustomButton : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private AudioSource _undoAudioSource;
-    [SerializeField] private AudioSource _diceAudioSource;
 
     [Header("Asset References")]
     [SerializeField] private Sprite _activeSprite;
@@ -60,10 +58,10 @@ public class CustomButton : MonoBehaviour
     }
 
     public void PlayUndoSound() {
-        _undoAudioSource.Play();
+        AudioManager.s_instance.PlayUndoSound();
     }
 
     public void PlayDiceSound() {
-        _diceAudioSource.Play();
+        AudioManager.s_instance.PlayDiceSound();
     }
 }
