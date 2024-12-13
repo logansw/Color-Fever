@@ -653,8 +653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider2D: {fileID: 214910624}
   _spriteRenderer: {fileID: 214910625}
-  _undoAudioSource: {fileID: 214910627}
-  _diceAudioSource: {fileID: 0}
   _activeSprite: {fileID: 21300000, guid: e466b75dda0386b4bbf288bacb0f9768, type: 3}
   _pressedSprite: {fileID: 21300000, guid: d1888b5b47ef0fd40a97a74435c5fc8e, type: 3}
   _disabledSprite: {fileID: 21300000, guid: 78424ed8bc3b30a4c98bab70aeb4fd05, type: 3}
@@ -1261,8 +1259,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider2D: {fileID: 283118977}
   _spriteRenderer: {fileID: 283118978}
-  _undoAudioSource: {fileID: 214910627}
-  _diceAudioSource: {fileID: 0}
   _activeSprite: {fileID: 21300000, guid: ba50069136f0ece4181e9e35dcce5ede, type: 3}
   _pressedSprite: {fileID: 21300000, guid: 6a3a030bcead23340b2ca0c314320abf, type: 3}
   _disabledSprite: {fileID: 21300000, guid: c88957da881cf2a46b570eadac773000, type: 3}
@@ -1602,8 +1598,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider2D: {fileID: 313054574}
   _spriteRenderer: {fileID: 313054575}
-  _undoAudioSource: {fileID: 214910627}
-  _diceAudioSource: {fileID: 0}
   _activeSprite: {fileID: 21300000, guid: b2adbd01bfffeee4caedb2de65a85639, type: 3}
   _pressedSprite: {fileID: 21300000, guid: 27bff5dec82f5aa4590b19bbfb2c76a8, type: 3}
   _disabledSprite: {fileID: 21300000, guid: 2198768d3946f4b42aa9aa7d8d77863a, type: 3}
@@ -2056,8 +2050,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider2D: {fileID: 361695750}
   _spriteRenderer: {fileID: 361695751}
-  _undoAudioSource: {fileID: 214910627}
-  _diceAudioSource: {fileID: 0}
   _activeSprite: {fileID: 21300000, guid: b774e2686409d884a805d16be034eda1, type: 3}
   _pressedSprite: {fileID: 21300000, guid: 10aa33d218e4b0a49907407b650e0492, type: 3}
   _disabledSprite: {fileID: 21300000, guid: a4ee18d9fa2e4004e8473575c52d2c68, type: 3}
@@ -3233,8 +3225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider2D: {fileID: 1123183096}
   _spriteRenderer: {fileID: 1123183097}
-  _undoAudioSource: {fileID: 214910627}
-  _diceAudioSource: {fileID: 0}
   _activeSprite: {fileID: 21300000, guid: b65bd50171d0f4444b573efad504b6bd, type: 3}
   _pressedSprite: {fileID: 21300000, guid: 229ee3d21d6f7be4c8c7f59cbd96a58f, type: 3}
   _disabledSprite: {fileID: 21300000, guid: 18ff74f458b40944caeaefa12517011f, type: 3}
@@ -4320,6 +4310,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonSource: {fileID: 1761104537}
+  _smallScoreAudioSource: {fileID: 0}
+  _bigScoreAudioSource: {fileID: 0}
+  _undoAudioSource: {fileID: 0}
+  _diceAudioSource: {fileID: 0}
+  _volumeSlider: {fileID: 0}
+  ButtonVolume: 0
+  SmallScoreVolume: 0
+  BigScoreVolume: 0
+  UndoVolume: 0
+  DiceVolume: 0
 --- !u!4 &1761104539
 Transform:
   m_ObjectHideFlags: 0

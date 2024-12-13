@@ -387,8 +387,35 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        int firstIndex = Mathf.Min(a1, b1);
-        int secondIndex = Mathf.Max(a2, b2);
+        // Randomly choose 2 Special indices to be the ones to synchronize upon. Make sure they are not consecutive, though.
+        
+        int firstIndex = -1;
+        int secondIndex = -1;
+        while (Mathf.Abs(firstIndex - secondIndex) < 2)
+        {
+            int randomNumber = Random.Range(0, 3);
+            if (randomNumber == 0)
+            {
+                firstIndex = a1;
+                secondIndex = a2;
+            }
+            else if (randomNumber == 1)
+            {
+                firstIndex = a1;
+                secondIndex = b2;
+            }
+            else if (randomNumber == 2)
+            {
+                firstIndex = b1;
+                secondIndex = a2;
+            }
+            else
+            {
+                firstIndex = b1;
+                secondIndex = b2;
+            }
+        }
+
         Swap<TileData>(tilePoolATiles, firstIndex, a1);
         Swap<TileData>(tilePoolBTiles, firstIndex, b1);
         Swap<TileData>(tilePoolATiles, secondIndex, a2);

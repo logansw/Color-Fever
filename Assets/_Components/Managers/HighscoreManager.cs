@@ -25,9 +25,7 @@ public class HighscoreManager : MonoBehaviour
     private void Awake() {
         s_instance = this;
         _singleScores = JSONTool.ReadData<HighscoreData>("SingleScores.json");
-        Debug.Log(_singleScores);
         _doubleScores = JSONTool.ReadData<HighscoreData>("DoubleScores.json");
-        Debug.Log(_doubleScores);
         if (_nameInputFields.Length > 0 && _nameInputFields[0] != null) {
             for (int i = 0; i < _nameInputFields.Length; i++) {
                 _nameInputFields[i].text = _singleScores.PreviousName;
@@ -134,7 +132,6 @@ public class HighscoreManager : MonoBehaviour
     }
 
     public void RecordHighScores() {
-        Debug.Log(_queuedEntries.Count);
         for (int i = 0; i < _queuedEntries.Count; i++) {
             if (_queuedEntries[i].Single) {
                 _singleScores.Highscores.Add(new HighscoreData.Entry(_queuedEntries[i].Name, _queuedEntries[i].Score, System.DateTime.Now));
