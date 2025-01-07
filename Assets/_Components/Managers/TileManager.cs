@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Manages Tiles :)
 public class TileManager : MonoBehaviour
 {
     public static TileManager s_instance;
