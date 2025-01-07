@@ -32,7 +32,7 @@ platform :ios do
   desc "Deliver a new Release build to the App Store"
   lane :release do
     build
-    upload_to_app_store
+    upload_to_app_store(force: true)
   end
 
   desc "Deliver a new Beta build to Apple TestFlight"
