@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class HighscoreManager : MonoBehaviour
 {
     public static HighscoreManager s_instance;
-    public const int MAX_ENTRIES = 40;
+    public const int MAX_ENTRIES = 50;
     private HighscoreData _singleScores;
     private HighscoreData _doubleScores;
     private bool _writeRequested;
