@@ -29,19 +29,6 @@ platform :ios do
     )
   end
 
-  desc "Deliver a new Release build to the App Store"
-  lane :release do
-    build
-    upload_to_app_store(
-      skip_metadata: true,
-      skip_screenshots: true,
-      overwrite_screenshots: true,
-      force: true,
-      submit_for_review: false
-    )
-
-  end
-
   desc "Deliver a new Beta build to Apple TestFlight"
   lane :beta do
     # Missing Export Compliance can also be set through Deliverfile
